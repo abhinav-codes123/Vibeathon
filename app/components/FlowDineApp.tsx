@@ -59,6 +59,7 @@ const money = (value: number) =>
 
 const timeAgo = (iso: string) => {
   const minutes = Math.max(0, Math.floor((Date.now() - new Date(iso).getTime()) / 60_000));
+  if (!Number.isFinite(minutes) || minutes > 7 * 24 * 60) return "now";
   return minutes < 1 ? "now" : `${minutes}m`;
 };
 

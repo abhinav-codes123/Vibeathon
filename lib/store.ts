@@ -14,6 +14,36 @@ declare global {
   var __flowDineLocalState: AppState | undefined;
 }
 
+const timestampKeys = ["createdAt", "updatedAt", "joinedAt"] as const;
+
+function rebaseLiveTimestamps(input: AppState) {
+  const state = structuredClone(input);
+  const sourceTime = new Date(state.updatedAt).getTime();
+  const destinationTime = Date.now();
+  const offset = Number.isFinite(sourceTime) ? destinationTime - sourceTime : 0;
+  const shift = (value: string) => {
+    const time = new Date(value).getTime();
+    return Number.isFinite(time) ? new Date(time + offset).toISOString() : new Date(destinationTime).toISOString();
+  };
+  for (const collection of [state.orders, state.queue, state.serviceRequests, state.movements]) {
+    for (const item of collection) {
+      for (const key of timestampKeys) {
+        if (key in item && typeof item[key as keyof typeof item] === "string") {
+          (item as unknown as Record<string, string>)[key] = shift(
+            item[key as keyof typeof item] as string,
+          );
+        }
+      }
+    }
+  }
+  state.updatedAt = new Date(destinationTime).toISOString();
+  return state;
+}
+
+function freshSeedState() {
+  return rebaseLiveTimestamps(seedState);
+}
+
 async function getDatabase(): Promise<D1DatabaseLike | null> {
   if (process.env.FLOWDINE_LOCAL === "1") return null;
   const workers = await import("cloudflare:workers");
@@ -21,7 +51,7 @@ async function getDatabase(): Promise<D1DatabaseLike | null> {
 }
 
 function localState() {
-  globalThis.__flowDineLocalState ??= structuredClone(seedState);
+  globalThis.__flowDineLocalState ??= freshSeedState();
   return globalThis.__flowDineLocalState;
 }
 
@@ -51,10 +81,11 @@ async function ensureStore() {
     .bind(seedState.restaurant.id)
     .first();
   if (!row) {
+    const fresh = freshSeedState();
     await database.prepare(
       "INSERT INTO app_state (restaurant_id, payload, version, updated_at) VALUES (?, ?, 1, ?)",
     )
-      .bind(seedState.restaurant.id, JSON.stringify(seedState), seedState.updatedAt)
+      .bind(seedState.restaurant.id, JSON.stringify(fresh), fresh.updatedAt)
       .run();
   }
   return database;
@@ -69,7 +100,18 @@ export async function readState(): Promise<AppState> {
     .bind(seedState.restaurant.id)
     .first<StateRow>();
   if (!row) throw new Error("Restaurant state is unavailable.");
-  return JSON.parse(row.payload) as AppState;
+  const state = JSON.parse(row.payload) as AppState;
+  const updatedAt = new Date(state.updatedAt).getTime();
+  if (!Number.isFinite(updatedAt) || updatedAt < Date.now() - 365 * 24 * 60 * 60 * 1_000) {
+    const repaired = rebaseLiveTimestamps(state);
+    await database.prepare(
+      "UPDATE app_state SET payload = ?, version = version + 1, updated_at = ? WHERE restaurant_id = ? AND version = ?",
+    )
+      .bind(JSON.stringify(repaired), repaired.updatedAt, seedState.restaurant.id, row.version)
+      .run();
+    return repaired;
+  }
+  return state;
 }
 
 export async function updateState(
@@ -110,7 +152,7 @@ export async function updateState(
 
 export async function resetState() {
   const database = await ensureStore();
-  const fresh = { ...seedState, updatedAt: new Date().toISOString() };
+  const fresh = freshSeedState();
   if (!database) {
     globalThis.__flowDineLocalState = structuredClone(fresh);
     return fresh;

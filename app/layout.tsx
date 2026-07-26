@@ -2,7 +2,10 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL ??
+      "https://flowdine-ai.abhinavchaudhary484.chatgpt.site",
+  ),
   title: {
     default: "FlowDine AI · Saffron Circuit",
     template: "%s · FlowDine AI",

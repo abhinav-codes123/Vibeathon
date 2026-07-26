@@ -4,6 +4,8 @@
 
 FlowDine AI is a live restaurant digital twin for the fictional flagship restaurant **Saffron Circuit**. It connects guest demand, recipe-aware menu availability, kitchen tickets, table service, inventory, queues, reservations, and manager intelligence in one shared operating state.
 
+[**Open the live public demo →**](https://flowdine-ai.abhinavchaudhary484.chatgpt.site)
+
 ![FlowDine AI social card](public/og.png)
 
 ## Why it exists
@@ -196,6 +198,7 @@ The current state-document model makes the shared demo easy to understand and de
 - [Demo script](docs/DEMO_SCRIPT.md)
 - [Judging criteria](docs/JUDGING_CRITERIA.md)
 - [Implementation plan](docs/IMPLEMENTATION_PLAN.md)
+- [Public deployment](https://flowdine-ai.abhinavchaudhary484.chatgpt.site)
 
 ## Team
 

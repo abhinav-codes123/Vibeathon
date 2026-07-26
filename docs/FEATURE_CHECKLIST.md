@@ -23,4 +23,4 @@
 - [ ] 25–35 item production menu (demo seed has 18)
 - [ ] Runtime Supabase integration and exhaustive RLS policy tests
 - [ ] Live Gemini verification with a user-supplied API key
-- [ ] Production deployment and smoke test
+- [x] Public Sites deployment, D1 first-run seed, and production smoke test

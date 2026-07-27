@@ -1,0 +1,31 @@
+Official VibeAthon template audit
+
+Source
+- /Users/mac/Downloads/Vibeathon_6.0_Vibecoding_Hackathon_July_2026_Idea_Submission_Template.pptx
+- 6 slides, 16:9, 1280 x 720
+
+Inherited structure
+- One PowerPoint master with a black background and title/content layouts.
+- Slide 1 is the official title-page pattern.
+- Slides 2-6 use the same title + five-item body pattern.
+- Official Vibe Coding and NXTGENSEC logos are slide-local assets and must remain visible.
+- The large central N mark is a slide-local visual frame and is the only media slot selected for product imagery.
+- The five small bullet images on slides 2-6 are retained and aligned to the inherited body frame.
+
+Typography and spacing
+- Titles: Trebuchet MS, bold, approximately 52.67 px.
+- Main body: Trebuchet MS, approximately 36.67 px, 150% paragraph spacing.
+- Team badge: Verdana/Calibri, approximately 18 px, centered.
+- White text on black with orange/blue brand accents from the supplied template.
+
+Insertion contract
+- Preserve the original master, layouts, logos, titles, bullet markers, black background, and slide order.
+- Use all six source slides one-to-one.
+- Rewrite only the inherited title-page body, five-item content bodies, and team-name badges listed in template-frame-map.json.
+- Replace only the inherited central visual on each slide with a verified FlowDine project visual.
+- Keep body copy intentionally short so it remains readable beside the inherited visual frame.
+- Add speaker notes with source blocks; do not place notes or production instructions on the visible slide.
+
+Submission boundary
+- Real authentication is not runtime-connected. Email/Google authentication and multi-tenant onboarding are presented as future scope, not completed functionality.
+- Live synchronization is four-second shared-state polling, not WebSocket realtime.

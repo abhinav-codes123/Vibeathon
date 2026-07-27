@@ -1,0 +1,89 @@
+{"kind":"slide","id":"sl/y90nupkv","slide":1,"title":"Vibeathon 6.0 (Vibecoding Hackathon) – July 2026","textShapes":3}
+{"kind":"textbox","id":"sh/65g3298r","slide":1,"textChars":48,"textLines":1}
+{"kind":"textbox","id":"sh/ts7md4r2","slide":1,"textChars":154,"textLines":7}
+{"kind":"textbox","id":"sh/wn6dc7eh","slide":1,"textChars":55,"textLines":2}
+{"kind":"image","id":"im/ipofexcz","slide":1,"name":"object 2","bbox":[1083,0,197,171]}
+{"kind":"image","id":"im/5cze9svq","slide":1,"name":"object 3","bbox":[8,56,212.97,101.71]}
+{"kind":"image","id":"im/kr6xgnu5","slide":1,"name":"object 4","bbox":[1278,718,1,1]}
+{"kind":"image","id":"im/bmxw3ido","slide":1,"name":"","geometry":"roundRect","bbox":[735,205,490,306]}
+{"kind":"slide","id":"sl/hwbqtkby","slide":2,"title":"CURRENT PROBLEM","textShapes":3}
+{"kind":"textbox","id":"sh/b29kza94","slide":2,"textChars":15,"textLines":1}
+{"kind":"textbox","id":"sh/ove9o7yd","slide":2,"textChars":173,"textLines":5}
+{"kind":"textbox","id":"sh/9wnqhczy","slide":2,"textChars":11,"textLines":2}
+{"kind":"image","id":"im/507e5kja","slide":2,"name":"object 2","bbox":[4.33,0.33,156,111]}
+{"kind":"image","id":"im/kzexcfip","slide":2,"name":"object 3","bbox":[1184,0,96,103.87]}
+{"kind":"image","id":"im/vu5wza18","slide":2,"name":"object 5","bbox":[120.9,300,11,11]}
+{"kind":"image","id":"im/atwv650n","slide":2,"name":"object 6","bbox":[120.9,346,11,11]}
+{"kind":"image","id":"im/xwne10je","slide":2,"name":"object 7","bbox":[120.9,392,11,11]}
+{"kind":"image","id":"im/wved8fit","slide":2,"name":"object 8","bbox":[120.9,438,11,11]}
+{"kind":"image","id":"im/nqlwvq1w","slide":2,"name":"object 9","bbox":[120.9,484,11,11]}
+{"kind":"image","id":"im/mpcv2l0b","slide":2,"name":"object 12","bbox":[1278,718,1,1]}
+{"kind":"image","id":"im/q1cfel4j","slide":2,"name":"","geometry":"roundRect","bbox":[720,205,500,313]}
+{"kind":"slide","id":"sl/ofy9wn61","slide":3,"title":"FlowDine","textShapes":3}
+{"kind":"textbox","id":"sh/3ah8rqlg","slide":3,"textChars":11,"textLines":2}
+{"kind":"textbox","id":"sh/obq90bml","slide":3,"textChars":17,"textLines":1}
+{"kind":"textbox","id":"sh/943mhgre","slide":3,"textChars":154,"textLines":5}
+{"kind":"image","id":"im/3q5onqdc","slide":3,"name":"object 2","bbox":[1184,0,96,103.87]}
+{"kind":"image","id":"im/gne5cvel","slide":3,"name":"object 3","bbox":[4.33,0.33,156,111]}
+{"kind":"image","id":"im/hon6lgv6","slide":3,"name":"object 4","bbox":[1105,273.99,144.28,121.5]}
+{"kind":"image","id":"im/ulcnalwf","slide":3,"name":"object 7","bbox":[118.91,349,11,11]}
+{"kind":"image","id":"im/vmlojqd0","slide":3,"name":"object 8","bbox":[118.91,381,11,11]}
+{"kind":"image","id":"im/8ju58bep","slide":3,"name":"object 9","bbox":[118.91,413,11,11]}
+{"kind":"image","id":"im/tk36hgva","slide":3,"name":"object 10","bbox":[118.91,445,11,11]}
+{"kind":"image","id":"im/p4bu58jm","slide":3,"name":"object 11","bbox":[118.91,477,11,11]}
+{"kind":"image","id":"im/o32dw321","slide":3,"name":"object 13","bbox":[1278,718,1,1]}
+{"kind":"image","id":"im/n2tc3y1g","slide":3,"name":"","geometry":"roundRect","bbox":[720,205,500,313]}
+{"kind":"slide","id":"sl/jyx0ra1s","slide":4,"title":"TECHNICAL APPROACH","textShapes":9}
+{"kind":"textbox","id":"sh/0ba143al","slide":4,"textChars":18,"textLines":1}
+{"kind":"textbox","id":"sh/ql8jytsj","slide":4,"textChars":11,"textLines":2}
+{"kind":"textbox","id":"sh/5cva1cfq","slide":4,"textChars":170,"textLines":5}
+{"kind":"textbox","id":"sh/p0batw72","slide":4,"textChars":56,"textLines":2}
+{"kind":"textbox","id":"sh/oz29krqh","slide":4,"textChars":86,"textLines":2}
+{"kind":"textbox","id":"sh/3ytsrmpw","slide":4,"textChars":76,"textLines":2}
+{"kind":"textbox","id":"sh/2xkrih8b","slide":4,"textChars":1,"textLines":1}
+{"kind":"textbox","id":"sh/1wbapc7q","slide":4,"textChars":1,"textLines":1}
+{"kind":"textbox","id":"sh/gv29g7q5","slide":4,"textChars":45,"textLines":1}
+{"kind":"image","id":"im/w7u9kj25","slide":4,"name":"object 2","bbox":[1184,0,96,103.87]}
+{"kind":"image","id":"im/x83qdojq","slide":4,"name":"object 4","bbox":[4.33,0.33,156,111]}
+{"kind":"image","id":"im/q9876pkv","slide":4,"name":"object 6","bbox":[163.24,264,11,11]}
+{"kind":"image","id":"im/bah8zulg","slide":4,"name":"object 7","bbox":[163.24,295,11,11]}
+{"kind":"image","id":"im/tona5s3y","slide":4,"name":"object 8","bbox":[163.24,326,11,11]}
+{"kind":"image","id":"im/s3etcnmd","slide":4,"name":"object 9","bbox":[163.24,357,11,11]}
+{"kind":"image","id":"im/725s3il8","slide":4,"name":"object 10","bbox":[163.24,388,11,11]}
+{"kind":"image","id":"im/61wbax4n","slide":4,"name":"object 12","bbox":[1278,718,1,1]}
+{"kind":"slide","id":"sl/i107q5of","slide":5,"title":"Use Cases & Impact","textShapes":7}
+{"kind":"textbox","id":"sh/cf2tcr61","slide":5,"textChars":18,"textLines":1}
+{"kind":"textbox","id":"sh/m5kbi1oj","slide":5,"textChars":144,"textLines":5}
+{"kind":"textbox","id":"sh/x4vedgvm","slide":5,"textChars":11,"textLines":2}
+{"kind":"textbox","id":"sh/gfi5grih","slide":5,"textChars":8,"textLines":1}
+{"kind":"textbox","id":"sh/ud0ne10b","slide":5,"textChars":7,"textLines":1}
+{"kind":"textbox","id":"sh/4ji5kbid","slide":5,"textChars":6,"textLines":1}
+{"kind":"textbox","id":"sh/2h0ni107","slide":5,"textChars":7,"textLines":1}
+{"kind":"image","id":"im/ulkfaloz","slide":5,"name":"object 2","bbox":[1184,0,96,103.87]}
+{"kind":"image","id":"im/vmdgjqpk","slide":5,"name":"object 4","bbox":[200.8,264,11,11]}
+{"kind":"image","id":"im/5gfi9krm","slide":5,"name":"object 5","bbox":[200.8,296,11,11]}
+{"kind":"image","id":"im/4f6hgfq1","slide":5,"name":"object 6","bbox":[200.8,328,11,11]}
+{"kind":"image","id":"im/jex07a9g","slide":5,"name":"object 7","bbox":[200.8,360,11,11]}
+{"kind":"image","id":"im/id4ze58b","slide":5,"name":"object 8","bbox":[200.8,392,11,11]}
+{"kind":"image","id":"im/t4fid4ry","slide":5,"name":"object 10","bbox":[10.47,0,156,111]}
+{"kind":"image","id":"im/sj61kzqd","slide":5,"name":"object 12","bbox":[1278,718,1,1]}
+{"kind":"image","id":"im/rix0bu9s","slide":5,"name":"","geometry":"roundRect","bbox":[720,190,240,150]}
+{"kind":"image","id":"im/6hozip87","slide":5,"name":"","geometry":"roundRect","bbox":[975,190,240,150]}
+{"kind":"image","id":"im/18zih4ru","slide":5,"name":"","geometry":"roundRect","bbox":[720,365,240,150]}
+{"kind":"image","id":"im/g7q1ozq9","slide":5,"name":"","geometry":"roundRect","bbox":[975,365,240,150]}
+{"kind":"slide","id":"sl/x8f69ofe","slide":6,"title":"FlowDine","textShapes":5}
+{"kind":"textbox","id":"sh/87ipkzal","slide":6,"textChars":11,"textLines":2}
+{"kind":"textbox","id":"sh/98rqt4r6","slide":6,"textChars":25,"textLines":1}
+{"kind":"textbox","id":"sh/w32twb6l","slide":6,"textChars":151,"textLines":5}
+{"kind":"textbox","id":"sh/dcnm98zm","slide":6,"textChars":44,"textLines":1}
+{"kind":"textbox","id":"sh/qpwnet0b","slide":6,"textChars":9,"textLines":1}
+{"kind":"image","id":"im/0b69svap","slide":6,"name":"object 2","bbox":[1184,0,96,103.87]}
+{"kind":"image","id":"im/neh8na9g","slide":6,"name":"object 3","bbox":[4.33,0.33,156,111]}
+{"kind":"image","id":"im/md8ru5sv","slide":6,"name":"object 6","bbox":[194.67,224,11,11]}
+{"kind":"image","id":"im/90zqp0r6","slide":6,"name":"object 7","bbox":[194.67,256,11,11]}
+{"kind":"image","id":"im/ofq9wfal","slide":6,"name":"object 8","bbox":[194.67,288,11,11]}
+{"kind":"image","id":"im/3id8b69w","slide":6,"name":"object 9","bbox":[194.67,320,11,11]}
+{"kind":"image","id":"im/2h47i1sb","slide":6,"name":"object 10","bbox":[194.67,352,11,11]}
+{"kind":"image","id":"im/sn25c7q9","slide":6,"name":"object 12","bbox":[1278,718,1,1]}
+{"kind":"image","id":"im/tob6lc7u","slide":6,"name":"","geometry":"roundRect","bbox":[720,188,500,313]}
+{"kind":"notice","message":"Truncated: omitted 0 lines. Increase maxChars or narrow target."}

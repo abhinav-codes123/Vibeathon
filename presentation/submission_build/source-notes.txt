@@ -1,0 +1,27 @@
+Primary sources
+
+- Official template:
+  /Users/mac/Downloads/Vibeathon_6.0_Vibecoding_Hackathon_July_2026_Idea_Submission_Template.pptx
+- Previous FlowDine presentation:
+  /Users/mac/Desktop/Codex_Projects/Vibeathon/presentation/FlowDine_AI_Official_Template_Submission.pptx
+- Previous detailed presentation:
+  /Users/mac/Desktop/Codex_Projects/Vibeathon/presentation/FlowDine_AI_Pitch_Deck.pptx
+- Problem statement:
+  /Users/mac/Desktop/Codex_Projects/Vibeathon/Vibeathon_6.0_PS.pdf
+- Product sources:
+  README.md, package.json, db/schema.ts, lib/auth.ts, lib/authz.ts,
+  docs/ARCHITECTURE.md, docs/AUTHENTICATION.md, docs/FEATURE_CHECKLIST.md,
+  docs/RELEASE_READINESS.md, app routes, domain services, API routes, and deployment configuration.
+- Fresh browser captures:
+  presentation/assets/screenshots/customer-menu-1440x900.png
+  presentation/assets/screenshots/home-1440x900.png
+  presentation/assets/screenshots/queue-1440x900.png
+  presentation/assets/screenshots/reservations-1440x900.png
+- Existing verified role captures:
+  presentation/assets/flowdine-kitchen.png
+  presentation/assets/flowdine-waiter.png
+  presentation/assets/flowdine-manager.png
+  presentation/assets/flowdine-manager-intelligence.png
+- Verified live deployment:
+  https://flowdine-ai.abhinavchaudhary484.chatgpt.site
+

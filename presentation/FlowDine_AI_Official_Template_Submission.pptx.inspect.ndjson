@@ -1,0 +1,80 @@
+{"kind":"deck","id":"pr/pu9hax","name":"Deck"}
+{"kind":"layout","layoutId":"/ppt/slideMasters/slideMaster1.xml","name":"","type":"master","placeholders":[{"name":"title","type":"title"},{"name":"body","type":"body"},{"name":"footer","type":"footer"},{"name":"dateTime","type":"dateTime"},{"name":"slideNumber","type":"slideNumber"}]}
+{"kind":"layout","layoutId":"/ppt/slideLayouts/slideLayout1.xml","name":"Title Slide","type":"obj","placeholders":[{"name":"title","type":"title"},{"name":"subtitle","type":"subtitle"},{"name":"footer","type":"footer"},{"name":"dateTime","type":"dateTime"},{"name":"slideNumber","type":"slideNumber"}]}
+{"kind":"layout","layoutId":"/ppt/slideLayouts/slideLayout2.xml","name":"Title and Content","type":"obj","placeholders":[{"name":"title","type":"title"},{"name":"body","type":"body"},{"name":"footer","type":"footer"},{"name":"dateTime","type":"dateTime"},{"name":"slideNumber","type":"slideNumber"}]}
+{"kind":"layout","layoutId":"/ppt/slideLayouts/slideLayout3.xml","name":"Two Content","type":"obj","placeholders":[{"name":"title","type":"title"},{"name":"holder 3"},{"name":"holder 4"},{"name":"footer","type":"footer"},{"name":"dateTime","type":"dateTime"},{"name":"slideNumber","type":"slideNumber"}]}
+{"kind":"layout","layoutId":"/ppt/slideLayouts/slideLayout4.xml","name":"Title Only","type":"obj","placeholders":[{"name":"title","type":"title"},{"name":"footer","type":"footer"},{"name":"dateTime","type":"dateTime"},{"name":"slideNumber","type":"slideNumber"}]}
+{"kind":"layout","layoutId":"/ppt/slideLayouts/slideLayout5.xml","name":"Blank","type":"obj","placeholders":[{"name":"footer","type":"footer"},{"name":"dateTime","type":"dateTime"},{"name":"slideNumber","type":"slideNumber"}]}
+{"kind":"slide","id":"sl/y90nupkv","slide":1,"title":"Vibeathon 6.0 (Vibecoding Hackathon) – July 2026","textShapes":2}
+{"kind":"textbox","id":"sh/65g3298r","slide":1,"name":"object 5","placeholder":"title","text":"Vibeathon 6.0 (Vibecoding Hackathon) – July 2026","textPreview":"Vibeathon 6.0 (Vibecoding Hackathon) – July 2026","textChars":48,"textLines":1,"bbox":[0,0,0,0]}
+{"kind":"textbox","id":"sh/ts7md4r2","slide":1,"name":"object 6","text":"FLOWDINE AI — LIVE RESTAURANT DIGITAL TWIN\n\nTeam: FlowDine AI\nLeader: [Add Your Name]\nCollege: [Add College Name]\nYear & Department: [Add Year & Department]\nProject: Smart Restaurant Management System","textPreview":"FLOWDINE AI — LIVE RESTAURANT DIGITAL TWIN |  | Team: FlowDine AI | Leader: [Add Your Name] | College: [Add College Name] | Year & Depart...","textChars":200,"textLines":7,"bbox":[34,170,700,430]}
+{"kind":"image","id":"im/dkb2xcfy","slide":1,"name":"object 2","bbox":[1083,0,197,171]}
+{"kind":"image","id":"im/6lgjadw3","slide":1,"name":"object 3","bbox":[8,56,212.97,101.71]}
+{"kind":"image","id":"im/7mp0jixo","slide":1,"name":"object 4","alt":"FlowDine AI live restaurant digital twin interface","bbox":[785,190,410,430]}
+{"kind":"notes","id":"nt/y90nupkv","slide":1,"text":"FlowDine AI is a live restaurant digital twin built for Vibeathon 6.0. Instead of creating another food delivery interface, we built an operating layer for the restaurant itself. It connects what guests see, what the kitchen accepts, what waiters must do next, and what managers need to know now. The core promise is simple: faster service, fewer broken promises, and one truthful operational view.\n\n[Sources]\n- Visual: FlowDine AI repository asset public/og.png\n- Product scope: local FlowDine AI implementation and Vibeathon 6.0 problem statement"}
+{"kind":"slide","id":"sl/hwbqtkby","slide":2,"title":"CURRENT PROBLEM","textShapes":3}
+{"kind":"textbox","id":"sh/b29kza94","slide":2,"name":"object 4","placeholder":"title","text":"CURRENT PROBLEM","textPreview":"CURRENT PROBLEM","textChars":15,"textLines":1,"bbox":[0,0,0,0]}
+{"kind":"textbox","id":"sh/ove9o7yd","slide":2,"name":"object 10","placeholder":"body","text":"Stockouts after choice\nHidden table waits\nDelayed kitchen updates\nManual order & stock\nNo live manager view","textPreview":"Stockouts after choice | Hidden table waits | Delayed kitchen updates | Manual order & stock | No live manager view","textChars":107,"textLines":5,"bbox":[150,300,535,340]}
+{"kind":"textbox","id":"sh/9wnqhczy","slide":2,"name":"object 11","text":"FlowDine\nAI","textPreview":"FlowDine | AI","textChars":11,"textLines":2,"bbox":[25.51,19.31,99.93,53]}
+{"kind":"image","id":"im/507e5kja","slide":2,"name":"object 2","bbox":[4.33,0.33,156,111]}
+{"kind":"image","id":"im/kzexcfip","slide":2,"name":"object 3","bbox":[1184,0,96,103.87]}
+{"kind":"image","id":"im/vu5wza18","slide":2,"name":"object 5","bbox":[120.9,328.25,11,11]}
+{"kind":"image","id":"im/atwv650n","slide":2,"name":"object 6","bbox":[120.9,394.25,11,11]}
+{"kind":"image","id":"im/xwne10je","slide":2,"name":"object 7","bbox":[120.9,460.25,11,11]}
+{"kind":"image","id":"im/wved8fit","slide":2,"name":"object 8","bbox":[120.9,526.25,11,11]}
+{"kind":"image","id":"im/nqlwvq1w","slide":2,"name":"object 9","bbox":[120.9,592.25,11,11]}
+{"kind":"image","id":"im/mpcv2l0b","slide":2,"name":"object 12","bbox":[785,190,410,430]}
+{"kind":"notes","id":"nt/hwbqtkby","slide":2,"text":"Restaurants lose trust and time when operations are disconnected. Guests can select a dish that has already run out. Kitchen status reaches the floor late. Orders, tables, bills, and ingredients are tracked in separate places or manually. The manager sees reports after the shift instead of bottlenecks during it. These are not delivery problems; they are live coordination problems inside the restaurant.\n\n[Sources]\n- Visual: local FlowDine AI product hero screenshot\n- Problem framing: Vibeathon 6.0 Smart Restaurant Management System brief"}
+{"kind":"slide","id":"sl/ofy9wn61","slide":3,"title":"FlowDine","textShapes":3}
+{"kind":"textbox","id":"sh/3ah8rqlg","slide":3,"name":"object 5","text":"FlowDine\nAI","textPreview":"FlowDine | AI","textChars":11,"textLines":2,"bbox":[43.27,31.67,83.33,44.67]}
+{"kind":"textbox","id":"sh/obq90bml","slide":3,"name":"object 6","placeholder":"title","text":"Proposed Solution","textPreview":"Proposed Solution","textChars":17,"textLines":1,"bbox":[0,0,0,0]}
+{"kind":"textbox","id":"sh/943mhgre","slide":3,"name":"object 12","text":"One live digital twin\nRecipe-aware availability\nConnected role workflows\nQueue, table & billing\nForecasts + AI copilot","textPreview":"One live digital twin | Recipe-aware availability | Connected role workflows | Queue, table & billing | Forecasts + AI copilot","textChars":118,"textLines":5,"bbox":[150,368,535,262]}
+{"kind":"image","id":"im/3q5onqdc","slide":3,"name":"object 2","bbox":[1184,0,96,103.87]}
+{"kind":"image","id":"im/gne5cvel","slide":3,"name":"object 3","bbox":[4.33,0.33,156,111]}
+{"kind":"image","id":"im/hon6lgv6","slide":3,"name":"object 4","bbox":[1105,273.99,144.28,121.5]}
+{"kind":"image","id":"im/ulcnalwf","slide":3,"name":"object 7","bbox":[118.91,388.4,11,11]}
+{"kind":"image","id":"im/vmlojqd0","slide":3,"name":"object 8","bbox":[118.91,432.4,11,11]}
+{"kind":"image","id":"im/8ju58bep","slide":3,"name":"object 9","bbox":[118.91,476.4,11,11]}
+{"kind":"image","id":"im/tk36hgva","slide":3,"name":"object 10","bbox":[118.91,520.4,11,11]}
+{"kind":"image","id":"im/p4bu58jm","slide":3,"name":"object 11","bbox":[118.91,564.4,11,11]}
+{"kind":"image","id":"im/o32dw321","slide":3,"name":"object 13","bbox":[785,190,410,430]}
+{"kind":"notes","id":"nt/ofy9wn61","slide":3,"text":"FlowDine AI makes the restaurant behave like one connected system. Customers get a truthful digital menu, reservations, queue visibility, ordering, tracking, and billing. Kitchen and waiters receive role-specific workflows. Managers get live tables, inventory, revenue, delays, forecasts, and an AI copilot. The signature feature is recipe-aware availability: the menu changes from real ingredient stock, not from a manual toggle.\n\n[Sources]\n- Visual: local FlowDine AI product hero screenshot\n- Feature scope: local FlowDine AI implementation"}
+{"kind":"slide","id":"sl/jyx0ra1s","slide":4,"title":"TECHNICAL APPROACH","textShapes":3}
+{"kind":"textbox","id":"sh/0ba143al","slide":4,"name":"object 3","placeholder":"title","text":"TECHNICAL APPROACH","textPreview":"TECHNICAL APPROACH","textChars":18,"textLines":1,"bbox":[0,0,0,0]}
+{"kind":"textbox","id":"sh/ql8jytsj","slide":4,"name":"object 5","text":"FlowDine\nAI","textPreview":"FlowDine | AI","textChars":11,"textLines":2,"bbox":[43.27,31.67,83.33,44.67]}
+{"kind":"textbox","id":"sh/5cva1cfq","slide":4,"name":"object 11","text":"Next.js + React + TS\nServer role permissions\nRecipe-order engine\nD1 state + audit log\nGemini + local fallback","textPreview":"Next.js + React + TS | Server role permissions | Recipe-order engine | D1 state + audit log | Gemini + local fallback","textChars":109,"textLines":5,"bbox":[195,280,500,300]}
+{"kind":"image","id":"im/1gfm90ze","slide":4,"name":"object 2","bbox":[1184,0,96,103.87]}
+{"kind":"image","id":"im/gfm5gvit","slide":4,"name":"object 4","bbox":[4.33,0.33,156,111]}
+{"kind":"image","id":"im/7ad43q1c","slide":4,"name":"object 6","bbox":[163.24,293.73,11,11]}
+{"kind":"image","id":"im/694nal0r","slide":4,"name":"object 7","bbox":[163.24,337.73,11,11]}
+{"kind":"image","id":"im/tcvm5gji","slide":4,"name":"object 8","bbox":[163.24,381.73,11,11]}
+{"kind":"image","id":"im/sbm5cbix","slide":4,"name":"object 9","bbox":[163.24,425.73,11,11]}
+{"kind":"image","id":"im/b6xofahg","slide":4,"name":"object 10","bbox":[163.24,469.73,11,11]}
+{"kind":"image","id":"im/q5onm50v","slide":4,"name":"object 12","bbox":[785,190,410,430]}
+{"kind":"notes","id":"nt/jyx0ra1s","slide":4,"text":"The production-shaped build uses Next.js, React, and TypeScript. Server-side permission checks protect manager, kitchen, waiter, and customer actions. A deterministic recipe and order engine calculates portions and inventory changes. Shared D1 state uses optimistic concurrency and an audit log so simultaneous updates are safer and traceable. Gemini can enrich operational insights, while a deterministic local fallback keeps the demo working without an external model.\n\n[Sources]\n- Visual: local FlowDine AI product hero screenshot\n- Architecture details: local FlowDine AI source code"}
+{"kind":"slide","id":"sl/i107q5of","slide":5,"title":"Use Cases & Impact","textShapes":3}
+{"kind":"textbox","id":"sh/cf2tcr61","slide":5,"name":"object 3","placeholder":"title","text":"Use Cases & Impact","textPreview":"Use Cases & Impact","textChars":18,"textLines":1,"bbox":[188.66,6.06,924.47,65.53]}
+{"kind":"textbox","id":"sh/m5kbi1oj","slide":5,"name":"object 9","text":"Guests: truthful menu\nKitchen: safer tickets\nWaiters: next action\nManagers: live control\nFewer broken promises","textPreview":"Guests: truthful menu | Kitchen: safer tickets | Waiters: next action | Managers: live control | Fewer broken promises","textChars":110,"textLines":5,"bbox":[225,280,470,300]}
+{"kind":"textbox","id":"sh/x4vedgvm","slide":5,"name":"object 11","text":"FlowDine\nAI","textPreview":"FlowDine | AI","textChars":11,"textLines":2,"bbox":[46.99,25.67,83.33,44.67]}
+{"kind":"image","id":"im/tcve903i","slide":5,"name":"object 2","bbox":[1184,0,96,103.87]}
+{"kind":"image","id":"im/srmx0vmd","slide":5,"name":"object 4","bbox":[200.8,295.65,11,11]}
+{"kind":"image","id":"im/jmdw3qlg","slide":5,"name":"object 5","bbox":[200.8,339.65,11,11]}
+{"kind":"image","id":"im/ilkvul4v","slide":5,"name":"object 6","bbox":[200.8,383.65,11,11]}
+{"kind":"image","id":"im/5ove5g3m","slide":5,"name":"object 7","bbox":[200.8,427.65,11,11]}
+{"kind":"image","id":"im/4nmdwbm1","slide":5,"name":"object 8","bbox":[200.8,471.65,11,11]}
+{"kind":"image","id":"im/vitwz65k","slide":5,"name":"object 10","bbox":[10.47,0,156,111]}
+{"kind":"image","id":"im/uhkvq14z","slide":5,"name":"object 12","bbox":[785,190,410,430]}
+{"kind":"notes","id":"nt/i107q5of","slide":5,"text":"Every role receives one clear next action. Guests avoid unavailable-order frustration and can split bills with paise-safe totals. Kitchen tickets retain item notes and allergen context. Waiters see service tasks and table state instead of chasing verbal updates. Managers see occupancy, kitchen load, delayed orders, low stock, and top dishes in one command center. The result is less waiting, better coordination, and fewer promises the restaurant cannot keep.\n\n[Sources]\n- Visual: local FlowDine AI product hero screenshot\n- Role workflows and billing behavior: local FlowDine AI implementation"}
+{"kind":"slide","id":"sl/x8f69ofe","slide":6,"title":"FlowDine","textShapes":3}
+{"kind":"textbox","id":"sh/87ipkzal","slide":6,"name":"object 4","text":"FlowDine\nAI","textPreview":"FlowDine | AI","textChars":11,"textLines":2,"bbox":[44.45,31.67,80.93,44.67]}
+{"kind":"textbox","id":"sh/98rqt4r6","slide":6,"name":"object 5","placeholder":"title","text":"Future Scope & Conclusion","textPreview":"Future Scope & Conclusion","textChars":25,"textLines":1,"bbox":[188.66,6.06,924.47,65.53]}
+{"kind":"textbox","id":"sh/w32twb6l","slide":6,"name":"object 11","text":"Email / Google auth\nMulti-tenant onboarding\nRealtime + payments\nMulti-location analytics\nLive demo today","textPreview":"Email / Google auth | Multi-tenant onboarding | Realtime + payments | Multi-location analytics | Live demo today","textChars":104,"textLines":5,"bbox":[220,240,475,300]}
+{"kind":"image","id":"im/8zutsju5","slide":6,"name":"object 2","bbox":[1184,0,96,103.87]}
+{"kind":"image","id":"im/t03ulobq","slide":6,"name":"object 3","bbox":[4.33,0.33,156,111]}
+{"kind":"image","id":"im/y9sbm9c3","slide":6,"name":"object 6","bbox":[194.67,255.53,11,11]}
+{"kind":"image","id":"im/ju1cfeto","slide":6,"name":"object 7","bbox":[194.67,299.53,11,11]}
+{"kind":"image","id":"im/kvatojut","slide":6,"name":"object 8","bbox":[194.67,343.53,11,11]}
+{"kind":"image","id":"im/lw3uh4be","slide":6,"name":"object 9","bbox":[194.67,387.53,11,11]}
+{"kind":"image","id":"im/a5sbipcr","slide":6,"name":"object 10","bbox":[194.67,431.53,11,11]}
+{"kind":"image","id":"im/b61sbutc","slide":6,"name":"object 12","bbox":[785,190,410,430]}
+{"kind":"notes","id":"nt/x8f69ofe","slide":6,"text":"The current demo proves the end-to-end restaurant workflow with a role switcher. The next production step is real email or Google authentication, restaurant onboarding, and tenant isolation. From there we can add push-based realtime updates, payment integrations, and multi-location benchmarking. Even today, FlowDine AI demonstrates the central innovation: one living operational model that keeps menu, kitchen, staff, inventory, tables, and management aligned.\n\n[Sources]\n- Visual: local FlowDine AI product hero screenshot\n- Current-versus-future boundary: local FlowDine AI implementation review"}

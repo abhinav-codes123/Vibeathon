@@ -1,0 +1,219 @@
+{
+  "sourcePptx": "/Users/mac/Desktop/Codex_Projects/Vibeathon/presentation/FlowDine_AI_Vibeathon_Official_Submission.pptx",
+  "workspace": "/Users/mac/Desktop/Codex_Projects/Vibeathon/presentation/submission_build",
+  "outDir": "/Users/mac/Desktop/Codex_Projects/Vibeathon/presentation/submission_build/final-inspect",
+  "generatedAt": "2026-07-27T06:15:33.059Z",
+  "slideCount": 6,
+  "slideArtifacts": [
+    {
+      "slide": 1,
+      "previewPath": "/Users/mac/Desktop/Codex_Projects/Vibeathon/presentation/submission_build/final-inspect/source-slides/source-slide-01.png",
+      "previewRelativePath": "final-inspect/source-slides/source-slide-01.png",
+      "layoutPath": "/Users/mac/Desktop/Codex_Projects/Vibeathon/presentation/submission_build/final-inspect/layouts/source-slide-01.layout.json",
+      "layoutRelativePath": "final-inspect/layouts/source-slide-01.layout.json"
+    },
+    {
+      "slide": 2,
+      "previewPath": "/Users/mac/Desktop/Codex_Projects/Vibeathon/presentation/submission_build/final-inspect/source-slides/source-slide-02.png",
+      "previewRelativePath": "final-inspect/source-slides/source-slide-02.png",
+      "layoutPath": "/Users/mac/Desktop/Codex_Projects/Vibeathon/presentation/submission_build/final-inspect/layouts/source-slide-02.layout.json",
+      "layoutRelativePath": "final-inspect/layouts/source-slide-02.layout.json"
+    },
+    {
+      "slide": 3,
+      "previewPath": "/Users/mac/Desktop/Codex_Projects/Vibeathon/presentation/submission_build/final-inspect/source-slides/source-slide-03.png",
+      "previewRelativePath": "final-inspect/source-slides/source-slide-03.png",
+      "layoutPath": "/Users/mac/Desktop/Codex_Projects/Vibeathon/presentation/submission_build/final-inspect/layouts/source-slide-03.layout.json",
+      "layoutRelativePath": "final-inspect/layouts/source-slide-03.layout.json"
+    },
+    {
+      "slide": 4,
+      "previewPath": "/Users/mac/Desktop/Codex_Projects/Vibeathon/presentation/submission_build/final-inspect/source-slides/source-slide-04.png",
+      "previewRelativePath": "final-inspect/source-slides/source-slide-04.png",
+      "layoutPath": "/Users/mac/Desktop/Codex_Projects/Vibeathon/presentation/submission_build/final-inspect/layouts/source-slide-04.layout.json",
+      "layoutRelativePath": "final-inspect/layouts/source-slide-04.layout.json"
+    },
+    {
+      "slide": 5,
+      "previewPath": "/Users/mac/Desktop/Codex_Projects/Vibeathon/presentation/submission_build/final-inspect/source-slides/source-slide-05.png",
+      "previewRelativePath": "final-inspect/source-slides/source-slide-05.png",
+      "layoutPath": "/Users/mac/Desktop/Codex_Projects/Vibeathon/presentation/submission_build/final-inspect/layouts/source-slide-05.layout.json",
+      "layoutRelativePath": "final-inspect/layouts/source-slide-05.layout.json"
+    },
+    {
+      "slide": 6,
+      "previewPath": "/Users/mac/Desktop/Codex_Projects/Vibeathon/presentation/submission_build/final-inspect/source-slides/source-slide-06.png",
+      "previewRelativePath": "final-inspect/source-slides/source-slide-06.png",
+      "layoutPath": "/Users/mac/Desktop/Codex_Projects/Vibeathon/presentation/submission_build/final-inspect/layouts/source-slide-06.layout.json",
+      "layoutRelativePath": "final-inspect/layouts/source-slide-06.layout.json"
+    }
+  ],
+  "inspectPath": "/Users/mac/Desktop/Codex_Projects/Vibeathon/presentation/submission_build/final-inspect/template-inspect.ndjson",
+  "inspectRelativePath": "final-inspect/template-inspect.ndjson",
+  "inspectTruncated": true,
+  "inspectMetadata": {
+    "revision": "l4h707",
+    "target": {
+      "id": "pr/9wdk2n"
+    },
+    "kind": {
+      "requested": "slide,textbox,shape,image,table,chart",
+      "tokens": [
+        "slide",
+        "textbox",
+        "shape",
+        "image",
+        "table",
+        "chart"
+      ]
+    },
+    "include": {
+      "tokens": []
+    },
+    "exclude": {
+      "tokens": []
+    },
+    "notices": []
+  },
+  "extractedMedia": [
+    {
+      "entry": "ppt/media/image.png",
+      "path": "/Users/mac/Desktop/Codex_Projects/Vibeathon/presentation/submission_build/final-inspect/assets/ppt/media/image.png",
+      "relativePath": "final-inspect/assets/ppt/media/image.png",
+      "bytes": 67492
+    },
+    {
+      "entry": "ppt/media/image2.png",
+      "path": "/Users/mac/Desktop/Codex_Projects/Vibeathon/presentation/submission_build/final-inspect/assets/ppt/media/image2.png",
+      "relativePath": "final-inspect/assets/ppt/media/image2.png",
+      "bytes": 25892
+    },
+    {
+      "entry": "ppt/media/image3.png",
+      "path": "/Users/mac/Desktop/Codex_Projects/Vibeathon/presentation/submission_build/final-inspect/assets/ppt/media/image3.png",
+      "relativePath": "final-inspect/assets/ppt/media/image3.png",
+      "bytes": 44379
+    },
+    {
+      "entry": "ppt/media/image.jpeg",
+      "path": "/Users/mac/Desktop/Codex_Projects/Vibeathon/presentation/submission_build/final-inspect/assets/ppt/media/image.jpeg",
+      "relativePath": "final-inspect/assets/ppt/media/image.jpeg",
+      "bytes": 85073
+    },
+    {
+      "entry": "ppt/media/image4.png",
+      "path": "/Users/mac/Desktop/Codex_Projects/Vibeathon/presentation/submission_build/final-inspect/assets/ppt/media/image4.png",
+      "relativePath": "final-inspect/assets/ppt/media/image4.png",
+      "bytes": 15725
+    },
+    {
+      "entry": "ppt/media/image5.png",
+      "path": "/Users/mac/Desktop/Codex_Projects/Vibeathon/presentation/submission_build/final-inspect/assets/ppt/media/image5.png",
+      "relativePath": "final-inspect/assets/ppt/media/image5.png",
+      "bytes": 33583
+    },
+    {
+      "entry": "ppt/media/image6.png",
+      "path": "/Users/mac/Desktop/Codex_Projects/Vibeathon/presentation/submission_build/final-inspect/assets/ppt/media/image6.png",
+      "relativePath": "final-inspect/assets/ppt/media/image6.png",
+      "bytes": 334
+    },
+    {
+      "entry": "ppt/media/image7.png",
+      "path": "/Users/mac/Desktop/Codex_Projects/Vibeathon/presentation/submission_build/final-inspect/assets/ppt/media/image7.png",
+      "relativePath": "final-inspect/assets/ppt/media/image7.png",
+      "bytes": 342
+    },
+    {
+      "entry": "ppt/media/image2.jpeg",
+      "path": "/Users/mac/Desktop/Codex_Projects/Vibeathon/presentation/submission_build/final-inspect/assets/ppt/media/image2.jpeg",
+      "relativePath": "final-inspect/assets/ppt/media/image2.jpeg",
+      "bytes": 58669
+    },
+    {
+      "entry": "ppt/media/image8.png",
+      "path": "/Users/mac/Desktop/Codex_Projects/Vibeathon/presentation/submission_build/final-inspect/assets/ppt/media/image8.png",
+      "relativePath": "final-inspect/assets/ppt/media/image8.png",
+      "bytes": 5183
+    },
+    {
+      "entry": "ppt/media/image3.jpeg",
+      "path": "/Users/mac/Desktop/Codex_Projects/Vibeathon/presentation/submission_build/final-inspect/assets/ppt/media/image3.jpeg",
+      "relativePath": "final-inspect/assets/ppt/media/image3.jpeg",
+      "bytes": 126689
+    },
+    {
+      "entry": "ppt/media/image4.jpeg",
+      "path": "/Users/mac/Desktop/Codex_Projects/Vibeathon/presentation/submission_build/final-inspect/assets/ppt/media/image4.jpeg",
+      "relativePath": "final-inspect/assets/ppt/media/image4.jpeg",
+      "bytes": 126689
+    },
+    {
+      "entry": "ppt/media/image5.jpeg",
+      "path": "/Users/mac/Desktop/Codex_Projects/Vibeathon/presentation/submission_build/final-inspect/assets/ppt/media/image5.jpeg",
+      "relativePath": "final-inspect/assets/ppt/media/image5.jpeg",
+      "bytes": 58669
+    },
+    {
+      "entry": "ppt/media/image6.jpeg",
+      "path": "/Users/mac/Desktop/Codex_Projects/Vibeathon/presentation/submission_build/final-inspect/assets/ppt/media/image6.jpeg",
+      "relativePath": "final-inspect/assets/ppt/media/image6.jpeg",
+      "bytes": 69276
+    },
+    {
+      "entry": "ppt/media/image7.jpeg",
+      "path": "/Users/mac/Desktop/Codex_Projects/Vibeathon/presentation/submission_build/final-inspect/assets/ppt/media/image7.jpeg",
+      "relativePath": "final-inspect/assets/ppt/media/image7.jpeg",
+      "bytes": 68229
+    },
+    {
+      "entry": "ppt/media/image8.jpeg",
+      "path": "/Users/mac/Desktop/Codex_Projects/Vibeathon/presentation/submission_build/final-inspect/assets/ppt/media/image8.jpeg",
+      "relativePath": "final-inspect/assets/ppt/media/image8.jpeg",
+      "bytes": 74316
+    }
+  ],
+  "fonts": [
+    "+mj-lt",
+    "+mn-lt",
+    "Angsana New",
+    "Arial",
+    "Calibri",
+    "Cordia New",
+    "DaunPenh",
+    "DokChampa",
+    "Estrangelo Edessa",
+    "Euphemia",
+    "Gautami",
+    "Iskoola Pota",
+    "Kalinga",
+    "Kartika",
+    "Latha",
+    "MV Boli",
+    "Mangal",
+    "Microsoft Himalaya",
+    "Microsoft Uighur",
+    "Microsoft Yi Baiti",
+    "Mongolian Baiti",
+    "MoolBoran",
+    "Nyala",
+    "Plantagenet Cherokee",
+    "Raavi",
+    "Shruti",
+    "Times New Roman",
+    "Trebuchet MS",
+    "Tunga",
+    "Verdana",
+    "Vrinda",
+    "宋体",
+    "新細明體",
+    "맑은 고딕",
+    "ＭＳ Ｐゴシック"
+  ],
+  "packageParts": {
+    "mediaCount": 16,
+    "slideXmlCount": 6,
+    "chartCount": 0,
+    "tableSlideCount": 0
+  }
+}

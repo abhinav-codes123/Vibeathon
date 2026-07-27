@@ -1,0 +1,853 @@
+{
+  "schema": "openai.presentation.layout/v4",
+  "unit": "px",
+  "slide": {
+    "aid": "sl/y90nupkv",
+    "id": "y90nupkv",
+    "slide": 1,
+    "layoutId": "/ppt/slideLayouts/slideLayout2.xml",
+    "layoutName": "Title and Content",
+    "layoutType": "obj",
+    "masterLayoutId": "/ppt/slideMasters/slideMaster1.xml",
+    "frame": {
+      "left": 0,
+      "top": 0,
+      "width": 1280,
+      "height": 720
+    }
+  },
+  "theme": {
+    "colorSchemeName": "Office",
+    "colors": {
+      "accent1": "#4F81BD",
+      "accent2": "#C0504D",
+      "accent3": "#9BBB59",
+      "accent4": "#8064A2",
+      "accent5": "#4BACC6",
+      "accent6": "#F79646",
+      "dk1": "#000000",
+      "lt1": "#FFFFFF",
+      "dk2": "#1F497D",
+      "lt2": "#EEECE1",
+      "hlink": "#0000FF",
+      "folHlink": "#800080"
+    },
+    "fontScheme": {
+      "name": "Office",
+      "majorFont": {
+        "latinTypeface": "Calibri"
+      },
+      "minorFont": {
+        "latinTypeface": "Calibri"
+      }
+    },
+    "typefaces": [
+      "Calibri",
+      "Trebuchet MS"
+    ]
+  },
+  "inheritedLayers": [
+    {
+      "scope": "layout",
+      "id": "/ppt/slideLayouts/slideLayout2.xml",
+      "name": "Title and Content",
+      "type": "obj",
+      "parentLayoutId": "/ppt/slideMasters/slideMaster1.xml",
+      "elements": [
+        {
+          "order": 1,
+          "kind": "shape",
+          "scope": "layout",
+          "aid": "template/layout//ppt/slideLayouts/slideLayout2.xml/2",
+          "id": "2",
+          "name": "Holder 2",
+          "bbox": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "resolvedTextStyle": {
+            "insets": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          }
+        },
+        {
+          "order": 2,
+          "kind": "shape",
+          "scope": "layout",
+          "aid": "template/layout//ppt/slideLayouts/slideLayout2.xml/3",
+          "id": "3",
+          "name": "Holder 3",
+          "bbox": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "resolvedTextStyle": {
+            "insets": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          }
+        },
+        {
+          "order": 3,
+          "kind": "shape",
+          "scope": "layout",
+          "aid": "template/layout//ppt/slideLayouts/slideLayout2.xml/4",
+          "id": "4",
+          "name": "Holder 4",
+          "bbox": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "resolvedTextStyle": {
+            "insets": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          }
+        },
+        {
+          "order": 4,
+          "kind": "shape",
+          "scope": "layout",
+          "aid": "template/layout//ppt/slideLayouts/slideLayout2.xml/5",
+          "id": "5",
+          "name": "Holder 5",
+          "bbox": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "resolvedTextStyle": {
+            "insets": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          }
+        },
+        {
+          "order": 5,
+          "kind": "shape",
+          "scope": "layout",
+          "aid": "template/layout//ppt/slideLayouts/slideLayout2.xml/6",
+          "id": "6",
+          "name": "Holder 6",
+          "bbox": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "resolvedTextStyle": {
+            "insets": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "scope": "master",
+      "id": "/ppt/slideMasters/slideMaster1.xml",
+      "type": "master",
+      "backgroundColor": "bg1",
+      "elements": [
+        {
+          "order": 1,
+          "kind": "shape",
+          "scope": "master",
+          "aid": "template/master//ppt/slideMasters/slideMaster1.xml/16",
+          "id": "16",
+          "name": "bg object 16",
+          "bbox": [
+            0,
+            0,
+            1280,
+            720
+          ],
+          "geometry": "custom",
+          "resolvedTextStyle": {
+            "wrap": "square",
+            "insets": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          },
+          "fillColor": "#000000"
+        },
+        {
+          "order": 2,
+          "kind": "shape",
+          "scope": "master",
+          "aid": "template/master//ppt/slideMasters/slideMaster1.xml/2",
+          "id": "2",
+          "name": "Holder 2",
+          "bbox": [
+            188.66,
+            6.06,
+            924.47,
+            78.25
+          ],
+          "geometry": "rect",
+          "resolvedTextStyle": {
+            "wrap": "square",
+            "autoFit": "resizeShapeToFitText",
+            "insets": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          }
+        },
+        {
+          "order": 3,
+          "kind": "shape",
+          "scope": "master",
+          "aid": "template/master//ppt/slideMasters/slideMaster1.xml/3",
+          "id": "3",
+          "name": "Holder 3",
+          "bbox": [
+            148.57,
+            284.33,
+            515.2,
+            332.67
+          ],
+          "geometry": "rect",
+          "resolvedTextStyle": {
+            "wrap": "square",
+            "autoFit": "resizeShapeToFitText",
+            "insets": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          }
+        },
+        {
+          "order": 4,
+          "kind": "shape",
+          "scope": "master",
+          "aid": "template/master//ppt/slideMasters/slideMaster1.xml/4",
+          "id": "4",
+          "name": "Holder 4",
+          "bbox": [
+            435.2,
+            669.6,
+            409.6,
+            36
+          ],
+          "geometry": "rect",
+          "resolvedTextStyle": {
+            "wrap": "square",
+            "autoFit": "resizeShapeToFitText",
+            "insets": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          }
+        },
+        {
+          "order": 5,
+          "kind": "shape",
+          "scope": "master",
+          "aid": "template/master//ppt/slideMasters/slideMaster1.xml/5",
+          "id": "5",
+          "name": "Holder 5",
+          "bbox": [
+            64,
+            669.6,
+            294.4,
+            36
+          ],
+          "geometry": "rect",
+          "resolvedTextStyle": {
+            "wrap": "square",
+            "autoFit": "resizeShapeToFitText",
+            "insets": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          }
+        },
+        {
+          "order": 6,
+          "kind": "shape",
+          "scope": "master",
+          "aid": "template/master//ppt/slideMasters/slideMaster1.xml/6",
+          "id": "6",
+          "name": "Holder 6",
+          "bbox": [
+            921.6,
+            669.6,
+            294.4,
+            36
+          ],
+          "geometry": "rect",
+          "resolvedTextStyle": {
+            "wrap": "square",
+            "autoFit": "resizeShapeToFitText",
+            "insets": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "order": 1,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/ipofexcz",
+      "id": "11",
+      "name": "object 2",
+      "bbox": [
+        1083,
+        0,
+        197,
+        171
+      ],
+      "contentType": "image/png",
+      "asset": {
+        "assetId": "/ppt/media/image.png",
+        "contentType": "image/png",
+        "byteLength": 67492
+      },
+      "fillImage": {
+        "assetId": "/ppt/media/image.png",
+        "contentType": "image/png",
+        "byteLength": 67492
+      }
+    },
+    {
+      "order": 2,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/5cze9svq",
+      "id": "12",
+      "name": "object 3",
+      "bbox": [
+        8,
+        56,
+        212.97,
+        101.71
+      ],
+      "contentType": "image/png",
+      "asset": {
+        "assetId": "/ppt/media/image2.png",
+        "contentType": "image/png",
+        "byteLength": 25892
+      },
+      "fillImage": {
+        "assetId": "/ppt/media/image2.png",
+        "contentType": "image/png",
+        "byteLength": 25892
+      }
+    },
+    {
+      "order": 3,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/kr6xgnu5",
+      "id": "13",
+      "name": "object 4",
+      "bbox": [
+        1278,
+        718,
+        1,
+        1
+      ],
+      "contentType": "image/png",
+      "asset": {
+        "assetId": "/ppt/media/image3.png",
+        "contentType": "image/png",
+        "byteLength": 44379
+      },
+      "fillImage": {
+        "assetId": "/ppt/media/image3.png",
+        "contentType": "image/png",
+        "byteLength": 44379
+      }
+    },
+    {
+      "order": 4,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/65g3298r",
+      "id": "5",
+      "name": "object 5",
+      "bbox": [
+        188.66,
+        6.06,
+        924.47,
+        78.25
+      ],
+      "geometry": "rect",
+      "text": "Vibeathon 6.0 (Vibecoding Hackathon) – July 2026",
+      "textPreview": "Vibeathon 6.0 (Vibecoding Hackathon) – July 2026",
+      "resolvedFontSize": 52.67,
+      "resolvedTextStyle": {
+        "vertical": 1,
+        "fontSize": 52.67,
+        "typeface": "Trebuchet MS",
+        "color": "bg1",
+        "bold": true,
+        "wrap": "square",
+        "autoFit": "resizeShapeToFitText",
+        "insets": {
+          "top": 27.25,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 2,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Vibeathon 6.0 (Vibecoding Hackathon) – July"
+          },
+          {
+            "index": 2,
+            "text": "2026"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Vibeathon 6.0 (Vibecoding Hackathon) – July 2026",
+          "lineSpacingPercent": 100000,
+          "runs": [
+            {
+              "index": 1,
+              "text": "Vibeathon",
+              "fontSize": 41.33
+            },
+            {
+              "index": 2,
+              "text": " ",
+              "fontSize": 41.33
+            },
+            {
+              "index": 3,
+              "text": "6.0",
+              "fontSize": 41.33
+            },
+            {
+              "index": 4,
+              "text": " ",
+              "fontSize": 41.33
+            },
+            {
+              "index": 5,
+              "text": "(Vibecoding",
+              "fontSize": 41.33
+            },
+            {
+              "index": 6,
+              "text": " ",
+              "fontSize": 41.33
+            },
+            {
+              "index": 7,
+              "text": "Hackathon)",
+              "fontSize": 41.33
+            },
+            {
+              "index": 8,
+              "text": " ",
+              "fontSize": 41.33
+            },
+            {
+              "index": 9,
+              "text": "–",
+              "fontSize": 41.33
+            },
+            {
+              "index": 10,
+              "text": " ",
+              "fontSize": 41.33
+            },
+            {
+              "index": 11,
+              "text": "July",
+              "fontSize": 41.33
+            },
+            {
+              "index": 12,
+              "text": " ",
+              "fontSize": 41.33
+            },
+            {
+              "index": 13,
+              "text": "2026",
+              "fontSize": 41.33
+            }
+          ],
+          "bulletCharacter": ""
+        }
+      ]
+    },
+    {
+      "order": 5,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/ts7md4r2",
+      "id": "6",
+      "name": "object 6",
+      "bbox": [
+        34,
+        155,
+        680,
+        455
+      ],
+      "geometry": "rect",
+      "text": "FLOWDINE AI\n\nTeam: [TEAM NAME]\nLeader: [TEAM LEADER]\nCollege: [COLLEGE]\nYear & Department: [YEAR — DEPARTMENT]\nProject: Smart Restaurant Management System",
+      "textPreview": "FLOWDINE AI |  | Team: [TEAM NAME] | Leader: [TEAM LEADER] | College: [COLLEGE] | Year & Department: [YEAR — DEPARTMENT] | Project: Smart...",
+      "resolvedFontSize": 18.67,
+      "resolvedTextStyle": {
+        "vertical": 1,
+        "fontSize": 18.67,
+        "typeface": "Calibri",
+        "wrap": "square",
+        "autoFit": "resizeShapeToFitText",
+        "insets": {
+          "top": 1.4,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 9,
+        "lines": [
+          {
+            "index": 1,
+            "text": "FLOWDINE AI"
+          },
+          {
+            "index": 2,
+            "text": ""
+          },
+          {
+            "index": 3,
+            "text": ""
+          },
+          {
+            "index": 4,
+            "text": "Team: [TEAM NAME]"
+          },
+          {
+            "index": 5,
+            "text": "Leader: [TEAM LEADER]"
+          },
+          {
+            "index": 6,
+            "text": ""
+          },
+          {
+            "index": 7,
+            "text": "College: [COLLEGE]"
+          },
+          {
+            "index": 8,
+            "text": "Year & Department: [YEAR — DEPARTMENT]"
+          },
+          {
+            "index": 9,
+            "text": "Project: Smart Restaurant Management System"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "FLOWDINE AI",
+          "lineSpacingPercent": 100000,
+          "resolvedTextStyle": {
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "FLOWDINE AI",
+              "fontSize": 25,
+              "typeface": "Trebuchet MS",
+              "color": "#FFFFFF"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 3,
+          "text": "Team: [TEAM NAME]",
+          "lineSpacingPercent": 100000,
+          "resolvedTextStyle": {
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Team: [TEAM NAME]",
+              "fontSize": 25,
+              "typeface": "Trebuchet MS",
+              "color": "#FFFFFF",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 4,
+          "text": "Leader: [TEAM LEADER]",
+          "lineSpacingPercent": 148000,
+          "resolvedTextStyle": {
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Leader: [TEAM LEADER]",
+              "fontSize": 25,
+              "typeface": "Trebuchet MS",
+              "color": "#FFFFFF",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 5,
+          "text": "College: [COLLEGE]",
+          "lineSpacingPercent": 100000,
+          "resolvedTextStyle": {
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "College: [COLLEGE]",
+              "fontSize": 25,
+              "typeface": "Trebuchet MS",
+              "color": "#FFFFFF",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 6,
+          "text": "Year & Department: [YEAR — DEPARTMENT]",
+          "lineSpacingPercent": 148000,
+          "resolvedTextStyle": {
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Year & Department: [YEAR — DEPARTMENT]",
+              "fontSize": 25,
+              "typeface": "Trebuchet MS",
+              "color": "#FFFFFF",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 7,
+          "text": "Project: Smart Restaurant Management System",
+          "lineSpacingPercent": 148000,
+          "resolvedTextStyle": {
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Project: Smart Restaurant Management System",
+              "fontSize": 25,
+              "typeface": "Trebuchet MS",
+              "color": "#FFFFFF",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 6,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/wn6dc7eh",
+      "id": "10",
+      "bbox": [
+        410,
+        188,
+        300,
+        76
+      ],
+      "geometry": "rect",
+      "text": "Live Restaurant Digital Twin\nfor Faster, Smarter Dining",
+      "textPreview": "Live Restaurant Digital Twin | for Faster, Smarter Dining",
+      "resolvedFontSize": 18.67,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 18.67,
+        "typeface": "Calibri",
+        "verticalAlignment": "middle",
+        "autoFit": "shrinkText",
+        "autoFitScale": 1,
+        "insets": {
+          "top": 3,
+          "right": 4,
+          "bottom": 3,
+          "left": 4
+        }
+      },
+      "textLayout": {
+        "lineCount": 2,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Live Restaurant Digital Twin"
+          },
+          {
+            "index": 2,
+            "text": "for Faster, Smarter Dining"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Live Restaurant Digital Twin",
+          "resolvedTextStyle": {
+            "fontSize": 21,
+            "typeface": "Trebuchet MS",
+            "color": "#E8A248",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Live Restaurant Digital Twin",
+              "fontSize": 21,
+              "typeface": "Trebuchet MS",
+              "color": "#E8A248",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 2,
+          "text": "for Faster, Smarter Dining",
+          "resolvedTextStyle": {
+            "fontSize": 21,
+            "typeface": "Trebuchet MS",
+            "color": "#E8A248",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "for Faster, Smarter Dining",
+              "fontSize": 21,
+              "typeface": "Trebuchet MS",
+              "color": "#E8A248",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 7,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/bmxw3ido",
+      "id": "14",
+      "bbox": [
+        735,
+        205,
+        490,
+        306
+      ],
+      "geometry": "roundRect",
+      "contentType": "image/jpeg",
+      "imageCrop": {
+        "left": 0,
+        "top": 0.00041,
+        "right": 0,
+        "bottom": 0.00041
+      },
+      "imageMask": {
+        "geometry": "roundRect",
+        "adjustmentList": [
+          {
+            "name": "adj",
+            "formula": "val 3922"
+          }
+        ]
+      },
+      "asset": {
+        "assetId": "/ppt/media/image.jpeg",
+        "contentType": "image/jpeg",
+        "byteLength": 85073
+      },
+      "fillImage": {
+        "assetId": "/ppt/media/image.jpeg",
+        "contentType": "image/jpeg",
+        "byteLength": 85073
+      }
+    }
+  ],
+  "composeRuns": []
+}

@@ -1,0 +1,13 @@
+{
+  "status": "pass",
+  "checkedAt": "2026-07-27T05:32:10.075Z",
+  "workspace": "/Users/mac/Desktop/Codex_Projects/Vibeathon/presentation/template_build",
+  "finalPptx": "/Users/mac/Desktop/Codex_Projects/Vibeathon/presentation/FlowDine_AI_Official_Template_Submission.pptx",
+  "starterPptx": "/Users/mac/Desktop/Codex_Projects/Vibeathon/presentation/template_build/template-starter.pptx",
+  "mapPath": "/Users/mac/Desktop/Codex_Projects/Vibeathon/presentation/template_build/template-frame-map.json",
+  "starterLayoutDir": "/Users/mac/Desktop/Codex_Projects/Vibeathon/presentation/template_build/template-starter-layout",
+  "finalLayoutDir": "/Users/mac/Desktop/Codex_Projects/Vibeathon/presentation/template_build/final-inspect/layouts",
+  "editDir": "/Users/mac/Desktop/Codex_Projects/Vibeathon/presentation/template_build",
+  "issueCount": 0,
+  "issues": []
+}

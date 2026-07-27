@@ -1,0 +1,76 @@
+{
+  "outputSlides": [
+    {
+      "outputSlide": 1,
+      "sourceSlide": 1,
+      "narrativeRole": "official title page",
+      "reuseMode": "duplicate-slide",
+      "editTargets": [
+        {"shapeId": "sh/65g3298r", "action": "rewrite", "description": "Resolve the official hackathon title with the same approved wording"},
+        {"shapeId": "sh/ts7md4r2", "action": "rewrite", "description": "Project, tagline, problem statement, and missing team fields"},
+        {"sourceElementId": "im/7mp0jixo", "action": "replace", "description": "FlowDine product home screenshot"}
+      ]
+    },
+    {
+      "outputSlide": 2,
+      "sourceSlide": 2,
+      "narrativeRole": "current restaurant problem",
+      "reuseMode": "duplicate-slide",
+      "editTargets": [
+        {"shapeId": "sh/b29kza94", "action": "rewrite", "description": "Resolve the Current Problem title with the same approved wording"},
+        {"shapeId": "sh/ove9o7yd", "action": "rewrite", "description": "Five concise disconnected-operations problems"},
+        {"shapeId": "sh/9wnqhczy", "action": "rewrite", "description": "FlowDine AI badge"},
+        {"sourceElementId": "im/mpcv2l0b", "action": "replace", "description": "Real KDS screenshot showing a delayed ticket"}
+      ]
+    },
+    {
+      "outputSlide": 3,
+      "sourceSlide": 3,
+      "narrativeRole": "solution and differentiator",
+      "reuseMode": "duplicate-slide",
+      "editTargets": [
+        {"shapeId": "sh/obq90bml", "action": "rewrite", "description": "Resolve the Proposed Solution title with the same approved wording"},
+        {"shapeId": "sh/943mhgre", "action": "rewrite", "description": "Shared state, role flow, and availability engine"},
+        {"shapeId": "sh/3ah8rqlg", "action": "rewrite", "description": "FlowDine AI badge"},
+        {"sourceElementId": "im/o32dw321", "action": "replace", "description": "Fresh 1440 by 900 inventory-aware menu screenshot"}
+      ]
+    },
+    {
+      "outputSlide": 4,
+      "sourceSlide": 4,
+      "narrativeRole": "technical approach",
+      "reuseMode": "duplicate-slide",
+      "editTargets": [
+        {"shapeId": "sh/0ba143al", "action": "rewrite", "description": "Resolve the Technical Approach title with the same approved wording"},
+        {"shapeId": "sh/5cva1cfq", "action": "rewrite", "description": "Verified technology stack and engineering qualities"},
+        {"shapeId": "sh/ql8jytsj", "action": "rewrite", "description": "FlowDine AI badge"},
+        {"sourceElementId": "im/q5onm50v", "action": "replace", "description": "Editable three-layer architecture diagram"}
+      ]
+    },
+    {
+      "outputSlide": 5,
+      "sourceSlide": 5,
+      "narrativeRole": "role use cases and measurable impact",
+      "reuseMode": "duplicate-slide",
+      "editTargets": [
+        {"shapeId": "sh/cf2tcr61", "action": "rewrite", "description": "Resolve the Use Cases and Impact title with the same approved wording"},
+        {"shapeId": "sh/m5kbi1oj", "action": "rewrite", "description": "Four roles plus measurable outcomes"},
+        {"shapeId": "sh/x4vedgvm", "action": "rewrite", "description": "FlowDine AI badge"},
+        {"sourceElementId": "im/uhkvq14z", "action": "replace", "description": "Four-panel real product view"}
+      ]
+    },
+    {
+      "outputSlide": 6,
+      "sourceSlide": 6,
+      "narrativeRole": "future scope and conclusion",
+      "reuseMode": "duplicate-slide",
+      "editTargets": [
+        {"shapeId": "sh/98rqt4r6", "action": "rewrite", "description": "Resolve the Future Scope and Conclusion title with the same approved wording"},
+        {"shapeId": "sh/w32twb6l", "action": "rewrite", "description": "Honest production roadmap and closing promise"},
+        {"shapeId": "sh/87ipkzal", "action": "rewrite", "description": "FlowDine AI badge"},
+        {"sourceElementId": "im/b61sbutc", "action": "replace", "description": "Real manager intelligence screenshot and verified demo URL"}
+      ]
+    }
+  ],
+  "omittedSourceSlides": []
+}

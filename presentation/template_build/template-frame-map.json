@@ -1,0 +1,168 @@
+{
+  "outputSlides": [
+    {
+      "outputSlide": 1,
+      "sourceSlide": 1,
+      "narrativeRole": "official title page",
+      "reuseMode": "duplicate-slide",
+      "editTargets": [
+        {
+          "shapeId": "sh/65g3298r",
+          "action": "rewrite",
+          "description": "Preserve the official hackathon title while explicitly resolving the inherited title placeholder."
+        },
+        {
+          "shapeId": "sh/ts7md4r2",
+          "action": "rewrite",
+          "description": "Replace title-page instructions with FlowDine project and team fields."
+        },
+        {
+          "sourceElementId": "im/7mp0jixo",
+          "action": "replace",
+          "description": "Replace the central template mark with the FlowDine AI project social visual."
+        }
+      ]
+    },
+    {
+      "outputSlide": 2,
+      "sourceSlide": 2,
+      "narrativeRole": "current restaurant problem",
+      "reuseMode": "duplicate-slide",
+      "editTargets": [
+        {
+          "shapeId": "sh/b29kza94",
+          "action": "rewrite",
+          "description": "Preserve the Current Problem title while explicitly resolving the inherited title placeholder."
+        },
+        {
+          "shapeId": "sh/ove9o7yd",
+          "action": "rewrite",
+          "description": "Replace template prompts with five restaurant operating pain points."
+        },
+        {
+          "shapeId": "sh/9wnqhczy",
+          "action": "rewrite",
+          "description": "Replace team badge placeholder with FlowDine AI."
+        },
+        {
+          "sourceElementId": "im/mpcv2l0b",
+          "action": "replace",
+          "description": "Replace the central template mark with the live FlowDine kitchen screen."
+        }
+      ]
+    },
+    {
+      "outputSlide": 3,
+      "sourceSlide": 3,
+      "narrativeRole": "proposed solution and feature set",
+      "reuseMode": "duplicate-slide",
+      "editTargets": [
+        {
+          "shapeId": "sh/obq90bml",
+          "action": "rewrite",
+          "description": "Preserve the Proposed Solution title while explicitly resolving the inherited title placeholder."
+        },
+        {
+          "shapeId": "sh/943mhgre",
+          "action": "rewrite",
+          "description": "Replace template prompts with the FlowDine solution and implemented workflows."
+        },
+        {
+          "shapeId": "sh/3ah8rqlg",
+          "action": "rewrite",
+          "description": "Replace team badge placeholder with FlowDine AI."
+        },
+        {
+          "sourceElementId": "im/o32dw321",
+          "action": "replace",
+          "description": "Replace the central template mark with the live inventory-aware menu."
+        }
+      ]
+    },
+    {
+      "outputSlide": 4,
+      "sourceSlide": 4,
+      "narrativeRole": "technical approach and architecture",
+      "reuseMode": "duplicate-slide",
+      "editTargets": [
+        {
+          "shapeId": "sh/0ba143al",
+          "action": "rewrite",
+          "description": "Preserve the Technical Approach title while explicitly resolving the inherited title placeholder."
+        },
+        {
+          "shapeId": "sh/5cva1cfq",
+          "action": "rewrite",
+          "description": "Replace template prompts with the deployed technical architecture."
+        },
+        {
+          "shapeId": "sh/ql8jytsj",
+          "action": "rewrite",
+          "description": "Replace team badge placeholder with FlowDine AI."
+        },
+        {
+          "sourceElementId": "im/q5onm50v",
+          "action": "replace",
+          "description": "Replace the central template mark with the live intelligence dashboard."
+        }
+      ]
+    },
+    {
+      "outputSlide": 5,
+      "sourceSlide": 5,
+      "narrativeRole": "use cases and operational impact",
+      "reuseMode": "duplicate-slide",
+      "editTargets": [
+        {
+          "shapeId": "sh/cf2tcr61",
+          "action": "rewrite",
+          "description": "Preserve the Use Cases and Impact title while explicitly resolving the inherited title placeholder."
+        },
+        {
+          "shapeId": "sh/m5kbi1oj",
+          "action": "rewrite",
+          "description": "Replace template prompts with role-based use cases and impact."
+        },
+        {
+          "shapeId": "sh/x4vedgvm",
+          "action": "rewrite",
+          "description": "Replace team badge placeholder with FlowDine AI."
+        },
+        {
+          "sourceElementId": "im/uhkvq14z",
+          "action": "replace",
+          "description": "Replace the central template mark with the live manager command center."
+        }
+      ]
+    },
+    {
+      "outputSlide": 6,
+      "sourceSlide": 6,
+      "narrativeRole": "future scope and conclusion",
+      "reuseMode": "duplicate-slide",
+      "editTargets": [
+        {
+          "shapeId": "sh/98rqt4r6",
+          "action": "rewrite",
+          "description": "Preserve the Future Scope and Conclusion title while explicitly resolving the inherited title placeholder."
+        },
+        {
+          "shapeId": "sh/w32twb6l",
+          "action": "rewrite",
+          "description": "Replace template prompts with production hardening and closing points."
+        },
+        {
+          "shapeId": "sh/87ipkzal",
+          "action": "rewrite",
+          "description": "Replace team badge placeholder with FlowDine AI."
+        },
+        {
+          "sourceElementId": "im/b61sbutc",
+          "action": "replace",
+          "description": "Replace the central template mark with the live FlowDine restaurant home screen."
+        }
+      ]
+    }
+  ],
+  "omittedSourceSlides": []
+}

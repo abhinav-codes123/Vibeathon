@@ -1,0 +1,854 @@
+{
+  "schema": "openai.presentation.layout/v4",
+  "unit": "px",
+  "slide": {
+    "aid": "sl/p1i43o",
+    "id": "p1i43o",
+    "slide": 3,
+    "layoutId": "a117bbef-29ed-4561-bb13-eec92b3d7b8c",
+    "layoutName": "Title Slide",
+    "layoutType": "title",
+    "masterLayoutId": "2e320c7d-4d33-4ce9-a4ff-241826c6be14",
+    "masterLayoutName": "Master",
+    "backgroundColor": "#F6F0E4",
+    "frame": {
+      "left": 0,
+      "top": 0,
+      "width": 1280,
+      "height": 720
+    }
+  },
+  "theme": {
+    "colorSchemeName": "ChatGPT",
+    "colors": {
+      "accent1": "#156082",
+      "accent2": "#E97132",
+      "accent3": "#196B24",
+      "accent4": "#0F9ED5",
+      "accent5": "#A02B93",
+      "accent6": "#4EA72E",
+      "bg1": "#FFFFFF",
+      "bg2": "#000000",
+      "tx1": "#1F1F1F",
+      "tx2": "#FFFFFF",
+      "dk1": "#000000",
+      "lt1": "#FFFFFF",
+      "dk2": "#0E2841",
+      "lt2": "#E8E8E8",
+      "hlink": "#467886",
+      "folHlink": "#96607D"
+    },
+    "typefaces": [
+      "Aptos",
+      "Georgia"
+    ]
+  },
+  "inheritedLayers": [
+    {
+      "scope": "layout",
+      "id": "a117bbef-29ed-4561-bb13-eec92b3d7b8c",
+      "name": "Title Slide",
+      "type": "title",
+      "parentLayoutId": "2e320c7d-4d33-4ce9-a4ff-241826c6be14",
+      "elements": []
+    },
+    {
+      "scope": "master",
+      "id": "2e320c7d-4d33-4ce9-a4ff-241826c6be14",
+      "name": "Master",
+      "type": "master",
+      "elements": []
+    }
+  ],
+  "elements": [
+    {
+      "order": 1,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/apgzi94n",
+      "id": "1",
+      "name": "eyebrow-The product insight",
+      "bbox": [
+        70,
+        42,
+        560,
+        24
+      ],
+      "geometry": "rect",
+      "text": "THE PRODUCT INSIGHT",
+      "textPreview": "THE PRODUCT INSIGHT",
+      "resolvedFontSize": 13,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 13,
+        "typeface": "Aptos",
+        "color": "#D1832E",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "wrap": "square",
+        "autoFit": "shrinkText",
+        "autoFitScale": 1,
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "THE PRODUCT INSIGHT"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "THE PRODUCT INSIGHT",
+          "resolvedTextStyle": {
+            "fontSize": 13,
+            "typeface": "Aptos",
+            "color": "#D1832E",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "THE PRODUCT INSIGHT",
+              "fontSize": 13,
+              "typeface": "Aptos",
+              "color": "#D1832E",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 2,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/xs7yd4ne",
+      "id": "2",
+      "name": "slide-title",
+      "bbox": [
+        70,
+        78,
+        530,
+        98
+      ],
+      "geometry": "rect",
+      "text": "The missing product is not another ordering app.",
+      "textPreview": "The missing product is not another ordering app.",
+      "resolvedFontSize": 40.83,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 42,
+        "typeface": "Georgia",
+        "color": "#20241F",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "wrap": "square",
+        "autoFit": "shrinkText",
+        "autoFitScale": 0.97,
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 2,
+        "lines": [
+          {
+            "index": 1,
+            "text": "The missing product is not"
+          },
+          {
+            "index": 2,
+            "text": "another ordering app."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "The missing product is not another ordering app.",
+          "resolvedTextStyle": {
+            "fontSize": 42,
+            "typeface": "Georgia",
+            "color": "#20241F",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "The missing product is not another ordering app.",
+              "fontSize": 42,
+              "typeface": "Georgia",
+              "color": "#20241F",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 3,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/wryhkjmt",
+      "id": "3",
+      "bbox": [
+        70,
+        196,
+        500,
+        96
+      ],
+      "geometry": "rect",
+      "text": "It is one live operating layer that makes every role act from the same restaurant state.",
+      "textPreview": "It is one live operating layer that makes every role act from the same restaurant state.",
+      "resolvedFontSize": 23,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 23,
+        "typeface": "Aptos",
+        "color": "#30342E",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "wrap": "square",
+        "autoFit": "shrinkText",
+        "autoFitScale": 1,
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 2,
+        "lines": [
+          {
+            "index": 1,
+            "text": "It is one live operating layer that makes every"
+          },
+          {
+            "index": 2,
+            "text": "role act from the same restaurant state."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "It is one live operating layer that makes every role act from the same restaurant state.",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 23,
+            "typeface": "Aptos",
+            "color": "#30342E",
+            "alignment": "left",
+            "lineSpacing": 1.12
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "It is one live operating layer that makes every role act from the same restaurant state.",
+              "fontSize": 23,
+              "typeface": "Aptos",
+              "color": "#30342E",
+              "alignment": "left",
+              "lineSpacing": 1.12
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 4,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/jupgfe54",
+      "id": "4",
+      "bbox": [
+        72,
+        338,
+        260,
+        28
+      ],
+      "geometry": "rect",
+      "text": "MENU  ≠  STOCK",
+      "textPreview": "MENU  ≠  STOCK",
+      "resolvedFontSize": 16,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 16,
+        "typeface": "Aptos",
+        "color": "#A44E43",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "wrap": "square",
+        "autoFit": "shrinkText",
+        "autoFitScale": 1,
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "MENU  ≠  STOCK"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "MENU  ≠  STOCK",
+          "resolvedTextStyle": {
+            "fontSize": 16,
+            "typeface": "Aptos",
+            "color": "#A44E43",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "MENU  ≠  STOCK",
+              "fontSize": 16,
+              "typeface": "Aptos",
+              "color": "#A44E43",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 5,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/ytgzm94z",
+      "id": "5",
+      "bbox": [
+        72,
+        390,
+        300,
+        28
+      ],
+      "geometry": "rect",
+      "text": "KITCHEN  ≠  FLOOR",
+      "textPreview": "KITCHEN  ≠  FLOOR",
+      "resolvedFontSize": 16,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 16,
+        "typeface": "Aptos",
+        "color": "#A44E43",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "wrap": "square",
+        "autoFit": "shrinkText",
+        "autoFitScale": 1,
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "KITCHEN  ≠  FLOOR"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "KITCHEN  ≠  FLOOR",
+          "resolvedTextStyle": {
+            "fontSize": 16,
+            "typeface": "Aptos",
+            "color": "#A44E43",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "KITCHEN  ≠  FLOOR",
+              "fontSize": 16,
+              "typeface": "Aptos",
+              "color": "#A44E43",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 6,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/5grihona",
+      "id": "6",
+      "bbox": [
+        72,
+        442,
+        330,
+        28
+      ],
+      "geometry": "rect",
+      "text": "MANAGER  ≠  LIVE STATE",
+      "textPreview": "MANAGER  ≠  LIVE STATE",
+      "resolvedFontSize": 16,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 16,
+        "typeface": "Aptos",
+        "color": "#A44E43",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "wrap": "square",
+        "autoFit": "shrinkText",
+        "autoFitScale": 1,
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "MANAGER  ≠  LIVE STATE"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "MANAGER  ≠  LIVE STATE",
+          "resolvedTextStyle": {
+            "fontSize": 16,
+            "typeface": "Aptos",
+            "color": "#A44E43",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "MANAGER  ≠  LIVE STATE",
+              "fontSize": 16,
+              "typeface": "Aptos",
+              "color": "#A44E43",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 7,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/kvyhojmp",
+      "id": "7",
+      "bbox": [
+        72,
+        496,
+        420,
+        0
+      ],
+      "geometry": "line",
+      "lineColor": "#D1832E",
+      "lineWidth": 3
+    },
+    {
+      "order": 8,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/7i90jy5g",
+      "id": "8",
+      "bbox": [
+        72,
+        518,
+        450,
+        72
+      ],
+      "geometry": "rect",
+      "text": "FlowDine replaces those gaps with one continuously synchronized truth.",
+      "textPreview": "FlowDine replaces those gaps with one continuously synchronized truth.",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 24,
+        "typeface": "Georgia",
+        "color": "#18372D",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "wrap": "square",
+        "autoFit": "shrinkText",
+        "autoFitScale": 1,
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 2,
+        "lines": [
+          {
+            "index": 1,
+            "text": "FlowDine replaces those gaps with one"
+          },
+          {
+            "index": 2,
+            "text": "continuously synchronized truth."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "FlowDine replaces those gaps with one continuously synchronized truth.",
+          "resolvedTextStyle": {
+            "fontSize": 24,
+            "typeface": "Georgia",
+            "color": "#18372D",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "FlowDine replaces those gaps with one continuously synchronized truth.",
+              "fontSize": 24,
+              "typeface": "Georgia",
+              "color": "#18372D",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 9,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/6h0zqt4v",
+      "id": "9",
+      "bbox": [
+        611,
+        184,
+        593,
+        337
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#FFFDF8",
+      "lineColor": "#D8D0C2",
+      "lineWidth": 1
+    },
+    {
+      "order": 10,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/fepszih0",
+      "id": "10",
+      "bbox": [
+        615,
+        188,
+        585,
+        329
+      ],
+      "geometry": "roundRect",
+      "alt": "FlowDine live service home screen",
+      "contentType": "image/jpeg",
+      "imageFit": "cover",
+      "imageMask": {
+        "geometry": "roundRect",
+        "adjustmentList": [
+          {
+            "name": "adj",
+            "formula": "val 4863"
+          }
+        ]
+      },
+      "asset": {
+        "assetId": "d1c1df25-af43-48c9-89e7-545f532a9075",
+        "contentType": "image/jpeg",
+        "byteLength": 73810
+      }
+    },
+    {
+      "order": 11,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/pk7q5cbu",
+      "id": "11",
+      "bbox": [
+        784,
+        540,
+        416,
+        20
+      ],
+      "geometry": "rect",
+      "text": "REAL PRODUCT  /  LIVE DEPLOYMENT",
+      "textPreview": "REAL PRODUCT  /  LIVE DEPLOYMENT",
+      "resolvedFontSize": 11,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 11,
+        "typeface": "Aptos",
+        "color": "#18372D",
+        "bold": true,
+        "alignment": "right",
+        "verticalAlignment": "top",
+        "wrap": "square",
+        "autoFit": "shrinkText",
+        "autoFitScale": 1,
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "REAL PRODUCT  /  LIVE DEPLOYMENT"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "REAL PRODUCT  /  LIVE DEPLOYMENT",
+          "resolvedTextStyle": {
+            "fontSize": 11,
+            "typeface": "Aptos",
+            "color": "#18372D",
+            "bold": true,
+            "alignment": "right"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "REAL PRODUCT  /  LIVE DEPLOYMENT",
+              "fontSize": 11,
+              "typeface": "Aptos",
+              "color": "#18372D",
+              "bold": true,
+              "alignment": "right"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 12,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/2hg7uxc3",
+      "id": "12",
+      "bbox": [
+        70,
+        682,
+        1140,
+        0
+      ],
+      "geometry": "line",
+      "lineColor": "#D8D0C2",
+      "lineWidth": 1
+    },
+    {
+      "order": 13,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/3ip832to",
+      "id": "13",
+      "bbox": [
+        70,
+        690,
+        360,
+        16
+      ],
+      "geometry": "rect",
+      "text": "FLOWDINE AI  /  VIBEATHON 6.0",
+      "textPreview": "FLOWDINE AI  /  VIBEATHON 6.0",
+      "resolvedFontSize": 10,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 10,
+        "typeface": "Aptos",
+        "color": "#8C8B82",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "wrap": "square",
+        "autoFit": "shrinkText",
+        "autoFitScale": 1,
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "FLOWDINE AI  /  VIBEATHON 6.0"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "FLOWDINE AI  /  VIBEATHON 6.0",
+          "resolvedTextStyle": {
+            "fontSize": 10,
+            "typeface": "Aptos",
+            "color": "#8C8B82",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "FLOWDINE AI  /  VIBEATHON 6.0",
+              "fontSize": 10,
+              "typeface": "Aptos",
+              "color": "#8C8B82",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 14,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/cnip07ul",
+      "id": "14",
+      "bbox": [
+        1160,
+        690,
+        50,
+        16
+      ],
+      "geometry": "rect",
+      "text": "03",
+      "textPreview": "03",
+      "resolvedFontSize": 10,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 10,
+        "typeface": "Aptos",
+        "color": "#8C8B82",
+        "bold": true,
+        "alignment": "right",
+        "verticalAlignment": "top",
+        "wrap": "square",
+        "autoFit": "shrinkText",
+        "autoFitScale": 1,
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "03"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "03",
+          "resolvedTextStyle": {
+            "fontSize": 10,
+            "typeface": "Aptos",
+            "color": "#8C8B82",
+            "bold": true,
+            "alignment": "right"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "03",
+              "fontSize": 10,
+              "typeface": "Aptos",
+              "color": "#8C8B82",
+              "bold": true,
+              "alignment": "right"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    }
+  ],
+  "composeRuns": []
+}

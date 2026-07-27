@@ -1,0 +1,101 @@
+{"kind":"deck","id":"pr/qkapp1","name":"Deck"}
+{"kind":"layout","layoutId":"/ppt/slideMasters/slideMaster1.xml","name":"","type":"master","placeholders":[{"name":"title","type":"title"},{"name":"body","type":"body"},{"name":"footer","type":"footer"},{"name":"dateTime","type":"dateTime"},{"name":"slideNumber","type":"slideNumber"}]}
+{"kind":"layout","layoutId":"/ppt/slideLayouts/slideLayout1.xml","name":"Title Slide","type":"obj","placeholders":[{"name":"title","type":"title"},{"name":"subtitle","type":"subtitle"},{"name":"footer","type":"footer"},{"name":"dateTime","type":"dateTime"},{"name":"slideNumber","type":"slideNumber"}]}
+{"kind":"layout","layoutId":"/ppt/slideLayouts/slideLayout2.xml","name":"Title and Content","type":"obj","placeholders":[{"name":"title","type":"title"},{"name":"body","type":"body"},{"name":"footer","type":"footer"},{"name":"dateTime","type":"dateTime"},{"name":"slideNumber","type":"slideNumber"}]}
+{"kind":"layout","layoutId":"/ppt/slideLayouts/slideLayout3.xml","name":"Two Content","type":"obj","placeholders":[{"name":"title","type":"title"},{"name":"holder 3"},{"name":"holder 4"},{"name":"footer","type":"footer"},{"name":"dateTime","type":"dateTime"},{"name":"slideNumber","type":"slideNumber"}]}
+{"kind":"layout","layoutId":"/ppt/slideLayouts/slideLayout4.xml","name":"Title Only","type":"obj","placeholders":[{"name":"title","type":"title"},{"name":"footer","type":"footer"},{"name":"dateTime","type":"dateTime"},{"name":"slideNumber","type":"slideNumber"}]}
+{"kind":"layout","layoutId":"/ppt/slideLayouts/slideLayout5.xml","name":"Blank","type":"obj","placeholders":[{"name":"footer","type":"footer"},{"name":"dateTime","type":"dateTime"},{"name":"slideNumber","type":"slideNumber"}]}
+{"kind":"slide","id":"sl/y90nupkv","slide":1,"title":"Vibeathon 6.0 (Vibecoding Hackathon) – July 2026","textShapes":3}
+{"kind":"textbox","id":"sh/65g3298r","slide":1,"name":"object 5","placeholder":"title","text":"Vibeathon 6.0 (Vibecoding Hackathon) – July 2026","textPreview":"Vibeathon 6.0 (Vibecoding Hackathon) – July 2026","textChars":48,"textLines":1,"bbox":[0,0,0,0]}
+{"kind":"textbox","id":"sh/ts7md4r2","slide":1,"name":"object 6","text":"FLOWDINE AI\n\nTeam: [TEAM NAME]\nLeader: [TEAM LEADER]\nCollege: [COLLEGE]\nYear & Department: [YEAR — DEPARTMENT]\nProject: Smart Restaurant Management System","textPreview":"FLOWDINE AI |  | Team: [TEAM NAME] | Leader: [TEAM LEADER] | College: [COLLEGE] | Year & Department: [YEAR — DEPARTMENT] | Project: Smart...","textChars":154,"textLines":7,"bbox":[34,155,680,455]}
+{"kind":"textbox","id":"sh/wn6dc7eh","slide":1,"text":"Live Restaurant Digital Twin\nfor Faster, Smarter Dining","textPreview":"Live Restaurant Digital Twin | for Faster, Smarter Dining","textChars":55,"textLines":2,"bbox":[410,188,300,76]}
+{"kind":"image","id":"im/dkb2xcfy","slide":1,"name":"object 2","bbox":[1083,0,197,171]}
+{"kind":"image","id":"im/6lgjadw3","slide":1,"name":"object 3","bbox":[8,56,212.97,101.71]}
+{"kind":"image","id":"im/7mp0jixo","slide":1,"name":"object 4","bbox":[1278,718,1,1]}
+{"kind":"image","id":"im/ipofexcz","slide":1,"name":"","geometry":"roundRect","alt":"FlowDine AI connected restaurant operating system home","bbox":[735,205,490,306]}
+{"kind":"notes","id":"nt/y90nupkv","slide":1,"text":"FlowDine AI is a Live Restaurant Digital Twin. It is not another food-delivery clone; it is the operating layer inside the restaurant. It connects the guest, kitchen, waiter, manager, tables, orders, recipes, and ingredients so every role acts from one current restaurant state.\n\n[Sources]\n- Product scope: local FlowDine AI repository and Vibeathon 6.0 problem statement\n- Visual: fresh local browser capture, presentation/assets/screenshots/home-1440x900.png"}
+{"kind":"slide","id":"sl/hwbqtkby","slide":2,"title":"CURRENT PROBLEM","textShapes":3}
+{"kind":"textbox","id":"sh/b29kza94","slide":2,"name":"object 4","placeholder":"title","text":"CURRENT PROBLEM","textPreview":"CURRENT PROBLEM","textChars":15,"textLines":1,"bbox":[0,0,0,0]}
+{"kind":"textbox","id":"sh/ove9o7yd","slide":2,"name":"object 10","placeholder":"body","text":"Dishes change after guests choose\nKitchen updates reach staff late\nTables, queues & bills are fragmented\nStock and menu availability drift\nManagers spot bottlenecks too late","textPreview":"Dishes change after guests choose | Kitchen updates reach staff late | Tables, queues & bills are fragmented | Stock and menu availabilit...","textChars":173,"textLines":5,"bbox":[150,275,530,370]}
+{"kind":"textbox","id":"sh/9wnqhczy","slide":2,"name":"object 11","text":"FlowDine\nAI","textPreview":"FlowDine | AI","textChars":11,"textLines":2,"bbox":[25.51,19.31,99.93,53]}
+{"kind":"image","id":"im/507e5kja","slide":2,"name":"object 2","bbox":[4.33,0.33,156,111]}
+{"kind":"image","id":"im/kzexcfip","slide":2,"name":"object 3","bbox":[1184,0,96,103.87]}
+{"kind":"image","id":"im/vu5wza18","slide":2,"name":"object 5","bbox":[120.9,300,11,11]}
+{"kind":"image","id":"im/atwv650n","slide":2,"name":"object 6","bbox":[120.9,346,11,11]}
+{"kind":"image","id":"im/xwne10je","slide":2,"name":"object 7","bbox":[120.9,392,11,11]}
+{"kind":"image","id":"im/wved8fit","slide":2,"name":"object 8","bbox":[120.9,438,11,11]}
+{"kind":"image","id":"im/nqlwvq1w","slide":2,"name":"object 9","bbox":[120.9,484,11,11]}
+{"kind":"image","id":"im/mpcv2l0b","slide":2,"name":"object 12","bbox":[1278,718,1,1]}
+{"kind":"image","id":"im/q1cfel4j","slide":2,"name":"","geometry":"roundRect","alt":"FlowDine kitchen display showing a delayed ticket and allergen context","bbox":[720,205,500,313]}
+{"kind":"notes","id":"nt/hwbqtkby","slide":2,"text":"The root problem is not a lack of software. It is that restaurant information arrives late and lives in separate places. A guest can choose a dish after its key ingredient is already low. The kitchen may know a ticket is delayed while the waiter and customer do not. Tables, queues, bills, and stock are updated through separate tools or verbal communication. The result is modified orders, waiting, staff confusion, and managers reacting after the bottleneck has already affected service.\n\n[Sources]\n- Problem framing: Vibeathon 6.0 Smart Restaurant Management System brief\n- Visual: verified local KDS capture, presentation/assets/flowdine-kitchen.png"}
+{"kind":"slide","id":"sl/ofy9wn61","slide":3,"title":"FlowDine","textShapes":3}
+{"kind":"textbox","id":"sh/3ah8rqlg","slide":3,"name":"object 5","text":"FlowDine\nAI","textPreview":"FlowDine | AI","textChars":11,"textLines":2,"bbox":[43.27,31.67,83.33,44.67]}
+{"kind":"textbox","id":"sh/obq90bml","slide":3,"name":"object 6","placeholder":"title","text":"Proposed Solution","textPreview":"Proposed Solution","textChars":17,"textLines":1,"bbox":[0,0,0,0]}
+{"kind":"textbox","id":"sh/943mhgre","slide":3,"name":"object 12","text":"One shared restaurant state\nRecipe-aware live availability\nGuest → kitchen → waiter flow\nTables, queue, billing & inventory\nForecasts + operations copilot","textPreview":"One shared restaurant state | Recipe-aware live availability | Guest → kitchen → waiter flow | Tables, queue, billing & inventory | Forec...","textChars":154,"textLines":5,"bbox":[150,340,530,310]}
+{"kind":"image","id":"im/3q5onqdc","slide":3,"name":"object 2","bbox":[1184,0,96,103.87]}
+{"kind":"image","id":"im/gne5cvel","slide":3,"name":"object 3","bbox":[4.33,0.33,156,111]}
+{"kind":"image","id":"im/hon6lgv6","slide":3,"name":"object 4","bbox":[1105,273.99,144.28,121.5]}
+{"kind":"image","id":"im/ulcnalwf","slide":3,"name":"object 7","bbox":[118.91,349,11,11]}
+{"kind":"image","id":"im/vmlojqd0","slide":3,"name":"object 8","bbox":[118.91,381,11,11]}
+{"kind":"image","id":"im/8ju58bep","slide":3,"name":"object 9","bbox":[118.91,413,11,11]}
+{"kind":"image","id":"im/tk36hgva","slide":3,"name":"object 10","bbox":[118.91,445,11,11]}
+{"kind":"image","id":"im/p4bu58jm","slide":3,"name":"object 11","bbox":[118.91,477,11,11]}
+{"kind":"image","id":"im/o32dw321","slide":3,"name":"object 13","bbox":[1278,718,1,1]}
+{"kind":"image","id":"im/n2tc3y1g","slide":3,"name":"","geometry":"roundRect","alt":"FlowDine menu showing inventory-derived limited portions","bbox":[720,205,500,313]}
+{"kind":"notes","id":"nt/ofy9wn61","slide":3,"text":"FlowDine AI creates one shared operating state for the entire restaurant. A guest sees live dish availability, places an order, and tracks progress. The kitchen receives a ticket with notes and allergens. When the order is accepted, the recipe engine reduces ingredient stock and recalculates available portions. The waiter receives the next service action, billing is generated, and the manager sees the same event in the command center. That is our differentiator: the menu is not manually toggled. If stock supports four servings, guests see “Only 4 left,” and every accepted order updates that number automatically.\n\n[Sources]\n- Feature behavior: local domain engine, routes, and FEATURE_CHECKLIST.md\n- Visual: fresh 1440 by 900 menu capture showing limited-stock messaging"}
+{"kind":"slide","id":"sl/jyx0ra1s","slide":4,"title":"TECHNICAL APPROACH","textShapes":9}
+{"kind":"textbox","id":"sh/0ba143al","slide":4,"name":"object 3","placeholder":"title","text":"TECHNICAL APPROACH","textPreview":"TECHNICAL APPROACH","textChars":18,"textLines":1,"bbox":[0,0,0,0]}
+{"kind":"textbox","id":"sh/ql8jytsj","slide":4,"name":"object 5","text":"FlowDine\nAI","textPreview":"FlowDine | AI","textChars":11,"textLines":2,"bbox":[43.27,31.67,83.33,44.67]}
+{"kind":"textbox","id":"sh/5cva1cfq","slide":4,"name":"object 11","text":"Next.js 16 + React 19 + TypeScript\nSupabase Auth + membership roles\nD1 versioned state + audit trail\nRecipe, order, queue & billing engine\nGemini adapter + local fallback","textPreview":"Next.js 16 + React 19 + TypeScript | Supabase Auth + membership roles | D1 versioned state + audit trail | Recipe, order, queue & billing...","textChars":170,"textLines":5,"bbox":[195,255,500,365]}
+{"kind":"textbox","id":"sh/p0batw72","slide":4,"text":"ROLE INTERFACES\nGuest  •  Kitchen  •  Waiter  •  Manager","textPreview":"ROLE INTERFACES | Guest  •  Kitchen  •  Waiter  •  Manager","textChars":56,"textLines":2,"bbox":[730,205,490,78]}
+{"kind":"textbox","id":"sh/oz29krqh","slide":4,"text":"NEXT.JS APPLICATION + DOMAIN ENGINE\nAuthZ  •  Orders  •  Recipes  •  Queue  •  Billing","textPreview":"NEXT.JS APPLICATION + DOMAIN ENGINE | AuthZ  •  Orders  •  Recipes  •  Queue  •  Billing","textChars":86,"textLines":2,"bbox":[730,310,490,78]}
+{"kind":"textbox","id":"sh/3ytsrmpw","slide":4,"text":"D1 STATE + SUPABASE AUTH\nVersion checks  •  Audit trail  •  Membership roles","textPreview":"D1 STATE + SUPABASE AUTH | Version checks  •  Audit trail  •  Membership roles","textChars":76,"textLines":2,"bbox":[730,415,490,78]}
+{"kind":"textbox","id":"sh/2xkrih8b","slide":4,"text":"↓","textPreview":"↓","textChars":1,"textLines":1,"bbox":[945,278,54,32]}
+{"kind":"textbox","id":"sh/1wbapc7q","slide":4,"text":"↓","textPreview":"↓","textChars":1,"textLines":1,"bbox":[945,383,54,32]}
+{"kind":"textbox","id":"sh/gv29g7q5","slide":4,"text":"Deterministic operations remain authoritative","textPreview":"Deterministic operations remain authoritative","textChars":45,"textLines":1,"bbox":[730,505,490,30]}
+{"kind":"image","id":"im/1gfm90ze","slide":4,"name":"object 2","bbox":[1184,0,96,103.87]}
+{"kind":"image","id":"im/gfm5gvit","slide":4,"name":"object 4","bbox":[4.33,0.33,156,111]}
+{"kind":"image","id":"im/7ad43q1c","slide":4,"name":"object 6","bbox":[163.24,264,11,11]}
+{"kind":"image","id":"im/694nal0r","slide":4,"name":"object 7","bbox":[163.24,295,11,11]}
+{"kind":"image","id":"im/tcvm5gji","slide":4,"name":"object 8","bbox":[163.24,326,11,11]}
+{"kind":"image","id":"im/sbm5cbix","slide":4,"name":"object 9","bbox":[163.24,357,11,11]}
+{"kind":"image","id":"im/b6xofahg","slide":4,"name":"object 10","bbox":[163.24,388,11,11]}
+{"kind":"image","id":"im/q5onm50v","slide":4,"name":"object 12","bbox":[1278,718,1,1]}
+{"kind":"notes","id":"nt/jyx0ra1s","slide":4,"text":"The interface and API layer use Next.js 16, React 19, and TypeScript. Staff access is protected through Supabase authentication code and membership-based role checks. The deterministic domain engine owns ordering, recipe consumption, queues, reservations, billing, and availability. Shared operational state is stored in Cloudflare D1 with optimistic version checks and an audit trail. Gemini can enrich management insights, but a local fallback keeps the demo functional and keeps deterministic operational signals authoritative.\n\n[Sources]\n- package.json, db/schema.ts, lib/auth.ts, lib/authz.ts\n- docs/ARCHITECTURE.md and deployment configuration"}
+{"kind":"slide","id":"sl/i107q5of","slide":5,"title":"Use Cases & Impact","textShapes":7}
+{"kind":"textbox","id":"sh/cf2tcr61","slide":5,"name":"object 3","placeholder":"title","text":"Use Cases & Impact","textPreview":"Use Cases & Impact","textChars":18,"textLines":1,"bbox":[188.66,6.06,924.47,65.53]}
+{"kind":"textbox","id":"sh/m5kbi1oj","slide":5,"name":"object 9","text":"Guest: know what is available\nKitchen: safer, timed tickets\nWaiter: prioritized service\nManager: live control\nMeasures waits, delays & stockouts","textPreview":"Guest: know what is available | Kitchen: safer, timed tickets | Waiter: prioritized service | Manager: live control | Measures waits, del...","textChars":144,"textLines":5,"bbox":[225,255,470,365]}
+{"kind":"textbox","id":"sh/x4vedgvm","slide":5,"name":"object 11","text":"FlowDine\nAI","textPreview":"FlowDine | AI","textChars":11,"textLines":2,"bbox":[46.99,25.67,83.33,44.67]}
+{"kind":"textbox","id":"sh/gfi5grih","slide":5,"text":"CUSTOMER","textPreview":"CUSTOMER","textChars":8,"textLines":1,"bbox":[728,198,92,26]}
+{"kind":"textbox","id":"sh/ud0ne10b","slide":5,"text":"KITCHEN","textPreview":"KITCHEN","textChars":7,"textLines":1,"bbox":[983,198,92,26]}
+{"kind":"textbox","id":"sh/4ji5kbid","slide":5,"text":"WAITER","textPreview":"WAITER","textChars":6,"textLines":1,"bbox":[728,373,92,26]}
+{"kind":"textbox","id":"sh/2h0ni107","slide":5,"text":"MANAGER","textPreview":"MANAGER","textChars":7,"textLines":1,"bbox":[983,373,92,26]}
+{"kind":"image","id":"im/tcve903i","slide":5,"name":"object 2","bbox":[1184,0,96,103.87]}
+{"kind":"image","id":"im/srmx0vmd","slide":5,"name":"object 4","bbox":[200.8,264,11,11]}
+{"kind":"image","id":"im/jmdw3qlg","slide":5,"name":"object 5","bbox":[200.8,296,11,11]}
+{"kind":"image","id":"im/ilkvul4v","slide":5,"name":"object 6","bbox":[200.8,328,11,11]}
+{"kind":"image","id":"im/5ove5g3m","slide":5,"name":"object 7","bbox":[200.8,360,11,11]}
+{"kind":"image","id":"im/4nmdwbm1","slide":5,"name":"object 8","bbox":[200.8,392,11,11]}
+{"kind":"image","id":"im/vitwz65k","slide":5,"name":"object 10","bbox":[10.47,0,156,111]}
+{"kind":"image","id":"im/uhkvq14z","slide":5,"name":"object 12","bbox":[1278,718,1,1]}
+{"kind":"image","id":"im/yt0f21or","slide":5,"name":"","geometry":"roundRect","alt":"customer FlowDine interface","bbox":[720,190,240,150]}
+{"kind":"image","id":"im/kf2x4b6x","slide":5,"name":"","geometry":"roundRect","alt":"kitchen FlowDine interface","bbox":[975,190,240,150]}
+{"kind":"image","id":"im/mhkf61o3","slide":5,"name":"","geometry":"roundRect","alt":"waiter FlowDine interface","bbox":[720,365,240,150]}
+{"kind":"image","id":"im/8j2x8b6t","slide":5,"name":"","geometry":"roundRect","alt":"manager FlowDine interface","bbox":[975,365,240,150]}
+{"kind":"notes","id":"nt/i107q5of","slide":5,"text":"Each role gets one useful next action. Guests know what can actually be ordered. Kitchen teams see ticket age, special instructions, and allergens. Waiters see ready dishes and prioritized service requests. Managers see orders, tables, inventory risk, forecasts, and operational attention points together. We are not claiming invented percentage improvements. The system is designed to reduce unavailable-item surprises and coordination delay, and it can measure preparation time, delayed orders, table turnover, stockouts, order value, and queue waiting time.\n\n[Sources]\n- Role workflows: local application routes and FEATURE_CHECKLIST.md\n- Visuals: verified customer, kitchen, waiter, and manager captures"}
+{"kind":"slide","id":"sl/x8f69ofe","slide":6,"title":"FlowDine","textShapes":5}
+{"kind":"textbox","id":"sh/87ipkzal","slide":6,"name":"object 4","text":"FlowDine\nAI","textPreview":"FlowDine | AI","textChars":11,"textLines":2,"bbox":[44.45,31.67,80.93,44.67]}
+{"kind":"textbox","id":"sh/98rqt4r6","slide":6,"name":"object 5","placeholder":"title","text":"Future Scope & Conclusion","textPreview":"Future Scope & Conclusion","textChars":25,"textLines":1,"bbox":[188.66,6.06,924.47,65.53]}
+{"kind":"textbox","id":"sh/w32twb6l","slide":6,"name":"object 11","text":"Verify production auth\nTenant-isolated onboarding\nPayments, suppliers, notifications\nPredictive multi-location operations\nOne intelligent restaurant OS","textPreview":"Verify production auth | Tenant-isolated onboarding | Payments, suppliers, notifications | Predictive multi-location operations | One int...","textChars":151,"textLines":5,"bbox":[220,215,480,365]}
+{"kind":"textbox","id":"sh/dcnm98zm","slide":6,"text":"flowdine-ai.abhinavchaudhary484.chatgpt.site","textPreview":"flowdine-ai.abhinavchaudhary484.chatgpt.site","textChars":44,"textLines":1,"bbox":[720,518,500,34]}
+{"kind":"textbox","id":"sh/qpwnet0b","slide":6,"text":"THANK YOU","textPreview":"THANK YOU","textChars":9,"textLines":1,"bbox":[720,555,500,34]}
+{"kind":"image","id":"im/8zutsju5","slide":6,"name":"object 2","bbox":[1184,0,96,103.87]}
+{"kind":"image","id":"im/t03ulobq","slide":6,"name":"object 3","bbox":[4.33,0.33,156,111]}
+{"kind":"image","id":"im/y9sbm9c3","slide":6,"name":"object 6","bbox":[194.67,224,11,11]}
+{"kind":"image","id":"im/ju1cfeto","slide":6,"name":"object 7","bbox":[194.67,256,11,11]}
+{"kind":"image","id":"im/kvatojut","slide":6,"name":"object 8","bbox":[194.67,288,11,11]}
+{"kind":"image","id":"im/lw3uh4be","slide":6,"name":"object 9","bbox":[194.67,320,11,11]}
+{"kind":"image","id":"im/a5sbipcr","slide":6,"name":"object 10","bbox":[194.67,352,11,11]}
+{"kind":"image","id":"im/b61sbutc","slide":6,"name":"object 12","bbox":[1278,718,1,1]}
+{"kind":"image","id":"im/zax8jq94","slide":6,"name":"","geometry":"roundRect","alt":"FlowDine manager intelligence with operations copilot and stockout watch","bbox":[720,188,500,313]}
+{"kind":"notes","id":"nt/x8f69ofe","slide":6,"text":"The current live demo proves the connected single-restaurant workflow. The next production steps are verifying external authentication providers, isolating operational data per restaurant, and adding payments, supplier workflows, and notifications. From there, the same model can support multiple branches and predictive operations. FlowDine AI gives customers certainty, staff coordination, and managers real-time control through one intelligent restaurant operating system. Thank you — we are ready to show the live demo.\n\n[Sources]\n- Current-versus-future boundary: AUTHENTICATION.md and RELEASE_READINESS.md\n- Live demo: https://flowdine-ai.abhinavchaudhary484.chatgpt.site"}

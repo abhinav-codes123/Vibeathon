@@ -1,0 +1,25 @@
+Template deviation log
+
+1. Central template mark
+- The inherited central image is retained but moved to a one-pixel frame at the lower-right edge.
+- Reason: all six template instances reference shared media; replacing one source changes every slide.
+- A verified product screenshot, editable architecture diagram, or four-panel screenshot group is placed in the same semantic visual region.
+- Official logos, titles, bullet markers, master, layout, background, and slide order are unchanged.
+
+2. Body text frame
+- Main body frames are widened slightly and moved left to make room for the visual slot.
+- Body font remains Trebuchet MS and stays at 32-34 pt, above the requested readability threshold.
+- Each content slide contains exactly five concise lines aligned to the inherited markers.
+
+3. Slide 4 visual
+- The screenshot slot is resolved with an editable architecture diagram instead of a raster screenshot.
+- Reason: the brief explicitly requires a projected, readable diagram of the actual implementation.
+
+4. Slide 5 visual
+- The visual slot is resolved with four real product screenshots in a two-by-two grid.
+- Reason: the brief prefers a customer, kitchen, waiter, and manager comparison.
+
+5. Slide 6 URL
+- A small editable full live-demo URL is added beneath the manager screenshot.
+- Reason: the brief requires the working deployment link when one exists.
+

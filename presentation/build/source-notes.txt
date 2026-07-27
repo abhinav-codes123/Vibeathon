@@ -1,0 +1,21 @@
+FlowDine AI pitch deck source ledger
+
+Primary product sources
+- /Users/mac/Desktop/Codex_Projects/Vibeathon/README.md
+- /Users/mac/Desktop/Codex_Projects/Vibeathon/docs/ARCHITECTURE.md
+- /Users/mac/Desktop/Codex_Projects/Vibeathon/docs/FEATURE_CHECKLIST.md
+- /Users/mac/Desktop/Codex_Projects/Vibeathon/lib/domain.ts
+- /Users/mac/Desktop/Codex_Projects/Vibeathon/lib/seed.ts
+- /Users/mac/Desktop/Codex_Projects/Vibeathon/supabase/migrations/202607260001_flowdine.sql
+
+Hackathon source
+- /Users/mac/Desktop/Codex_Projects/Vibeathon/Vibeathon_6.0_PS.pdf
+
+Live product source
+- https://flowdine-ai.abhinavchaudhary484.chatgpt.site
+
+Visual assets
+- public/og.png: project social card generated for FlowDine AI
+- presentation/assets/flowdine-*.png: screenshots captured from the live public deployment on 2026-07-27
+
+No external statistics or market-size claims were used. All displayed metrics are either visible in the live seeded demo or explicitly labeled as an illustrative availability example.

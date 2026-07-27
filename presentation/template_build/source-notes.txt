@@ -1,0 +1,26 @@
+FlowDine AI official-template source ledger
+
+Official template
+- /Users/mac/Downloads/Vibeathon_6.0_Vibecoding_Hackathon_July_2026_Idea_Submission_Template.pptx
+
+Project sources
+- /Users/mac/Desktop/Codex_Projects/Vibeathon/README.md
+- /Users/mac/Desktop/Codex_Projects/Vibeathon/docs/ARCHITECTURE.md
+- /Users/mac/Desktop/Codex_Projects/Vibeathon/docs/FEATURE_CHECKLIST.md
+- /Users/mac/Desktop/Codex_Projects/Vibeathon/lib/domain.ts
+- /Users/mac/Desktop/Codex_Projects/Vibeathon/lib/seed.ts
+- /Users/mac/Desktop/Codex_Projects/Vibeathon/supabase/migrations/202607260001_flowdine.sql
+- /Users/mac/Desktop/Codex_Projects/Vibeathon/Vibeathon_6.0_PS.pdf
+
+Visual sources
+- /Users/mac/Desktop/Codex_Projects/Vibeathon/public/og.png
+- /Users/mac/Desktop/Codex_Projects/Vibeathon/presentation/assets/flowdine-kitchen.png
+- /Users/mac/Desktop/Codex_Projects/Vibeathon/presentation/assets/flowdine-menu.png
+- /Users/mac/Desktop/Codex_Projects/Vibeathon/presentation/assets/flowdine-manager-intelligence.png
+- /Users/mac/Desktop/Codex_Projects/Vibeathon/presentation/assets/flowdine-manager.png
+- /Users/mac/Desktop/Codex_Projects/Vibeathon/presentation/assets/flowdine-home.png
+
+Live product
+- https://flowdine-ai.abhinavchaudhary484.chatgpt.site
+
+No external statistics were introduced. Authentication and multi-tenant onboarding remain future scope.

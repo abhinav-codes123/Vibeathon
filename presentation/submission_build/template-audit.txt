@@ -1,0 +1,33 @@
+Official VibeAthon 6.0 template audit
+
+Source
+- /Users/mac/Downloads/Vibeathon_6.0_Vibecoding_Hackathon_July_2026_Idea_Submission_Template.pptx
+- Exactly 6 visible slides, 16:9, 1280 x 720
+
+Inherited structure
+- Slide 1: official hackathon title page.
+- Slides 2-6: official title, five bullet markers, team/logo badge, and branded logos.
+- Black background, white typography, orange/blue brand accents.
+- Official Vibe Coding and NXTGENSEC branding remains visible.
+- The large central template mark is the semantic visual slot.
+
+Typography and layout
+- Template titles use Trebuchet MS Bold at approximately 52.7 pt.
+- Main prompts use Trebuchet MS at approximately 36.7 pt.
+- Team badge uses the inherited Verdana/Calibri styling.
+- Slide dimensions, master, slide order, titles, logos, and decorative elements are preserved.
+
+Insertion contract
+- Use every source slide exactly once and in the original order.
+- Rewrite only the instructional title-page body, five-item content bodies, and team/logo badges.
+- Resolve the central visual slot with verified FlowDine screenshots or an editable architecture diagram.
+- Keep visible body copy to five concise lines.
+- Put detailed explanation and evidence in speaker notes.
+
+Verified implementation boundary
+- Operational runtime: Next.js 16, React 19, TypeScript, Tailwind CSS, Cloudflare D1, Drizzle migration, Supabase authentication code, and optional Gemini REST adapter with deterministic fallback.
+- Synchronization is shared-state polling every four seconds, not WebSockets.
+- D1 operational state is currently single-restaurant; tenant onboarding and branch isolation remain future work.
+- Supabase email/password and Google OAuth are implemented in code, but production provider verification is not claimed.
+- Payments, receipt delivery, supplier automation, and external notifications are future integrations.
+

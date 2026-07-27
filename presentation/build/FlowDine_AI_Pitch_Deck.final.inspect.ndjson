@@ -1,0 +1,335 @@
+{"kind":"deck","id":"pr/il2f0y","name":"Deck"}
+{"kind":"layout","layoutId":"f06a6cc8-140e-4633-9306-34177c6cb80f","name":"Master","type":"master"}
+{"kind":"layout","layoutId":"f9e45226-6754-4e5f-b588-dd815ec4cc21","name":"Title Slide","type":"title"}
+{"kind":"slide","id":"sl/f4z2m9","slide":1,"title":"Live Restaurant Digital Twin","textShapes":4}
+{"kind":"shape","id":"sh/9cjet8fm","slide":1,"bbox":[66,548,510,92]}
+{"kind":"textbox","id":"sh/8baxkne1","slide":1,"text":"Live Restaurant Digital Twin","textPreview":"Live Restaurant Digital Twin","textChars":28,"textLines":1,"bbox":[88,566,460,28]}
+{"kind":"textbox","id":"sh/velwfixc","slide":1,"text":"for faster, smarter dining","textPreview":"for faster, smarter dining","textChars":26,"textLines":1,"bbox":[88,600,460,24]}
+{"kind":"textbox","id":"sh/adcfmdw7","slide":1,"text":"VIBEATHON 6.0  /  SMART RESTAURANT MANAGEMENT","textPreview":"VIBEATHON 6.0  /  SMART RESTAURANT MANAGEMENT","textChars":45,"textLines":1,"bbox":[68,670,535,18]}
+{"kind":"textbox","id":"sh/xg3ehsfi","slide":1,"text":"TEAM NAME: ____________________","textPreview":"TEAM NAME: ____________________","textChars":31,"textLines":1,"bbox":[930,670,280,18]}
+{"kind":"image","id":"im/bydszmh0","slide":1,"name":"","alt":"FlowDine AI live restaurant digital twin illustration","bbox":[0,0,1280,720]}
+{"kind":"notes","id":"nt/f4z2m9","slide":1,"text":"FlowDine AI is not another food delivery app. It is a live operating layer for the restaurant itself. Our core idea is simple: every table, ticket, ingredient, and staff action should run from the same shared truth. In the next few minutes, we will show how that digital twin removes unavailable-order frustration, helps teams act sooner, and gives managers a real-time view of the dining room.\n\n[Sources]\n- FlowDine AI live project and generated social card: public/og.png\n- VibeAthon 6.0 problem statement: Vibeathon_6.0_PS.pdf, pages 1-4"}
+{"kind":"slide","id":"sl/bf0cdx","slide":2,"title":"THE OPERATING PROBLEM","textShapes":21}
+{"kind":"textbox","id":"sh/x032hcry","slide":2,"name":"eyebrow-The operating problem","text":"THE OPERATING PROBLEM","textPreview":"THE OPERATING PROBLEM","textChars":21,"textLines":1,"bbox":[70,44,560,24]}
+{"kind":"textbox","id":"sh/axc36h8n","slide":2,"name":"slide-title","text":"Restaurants are serving guests with fragmented truth.","textPreview":"Restaurants are serving guests with fragmented truth.","textChars":53,"textLines":1,"bbox":[70,82,660,110]}
+{"kind":"textbox","id":"sh/vylkfm98","slide":2,"text":"One service. Five blind spots.","textPreview":"One service. Five blind spots.","textChars":30,"textLines":1,"bbox":[70,222,520,38]}
+{"kind":"textbox","id":"sh/knulcrqp","slide":2,"text":"01","textPreview":"01","textChars":2,"textLines":1,"bbox":[760,112,58,32]}
+{"kind":"textbox","id":"sh/5onmlwra","slide":2,"text":"Dish availability","textPreview":"Dish availability","textChars":17,"textLines":1,"bbox":[840,112,360,30]}
+{"kind":"textbox","id":"sh/ilc3ah8j","slide":2,"text":"Guests discover stockouts after choosing.","textPreview":"Guests discover stockouts after choosing.","textChars":41,"textLines":1,"bbox":[840,150,360,42]}
+{"kind":"shape","id":"sh/jml4jm94","slide":2,"bbox":[760,200,440,0]}
+{"kind":"textbox","id":"sh/0ral07ql","slide":2,"text":"02","textPreview":"02","textChars":2,"textLines":1,"bbox":[760,216,58,32]}
+{"kind":"textbox","id":"sh/lsj29srq","slide":2,"text":"Waiting time","textPreview":"Waiting time","textChars":12,"textLines":1,"bbox":[840,216,360,30]}
+{"kind":"textbox","id":"sh/pknqtwj2","slide":2,"text":"Tables and orders move without a shared promise.","textPreview":"Tables and orders move without a shared promise.","textChars":48,"textLines":1,"bbox":[840,254,360,42]}
+{"kind":"shape","id":"sh/4jupkr2x","slide":2,"bbox":[760,304,440,0]}
+{"kind":"textbox","id":"sh/3il8rm1c","slide":2,"text":"03","textPreview":"03","textChars":2,"textLines":1,"bbox":[760,320,58,32]}
+{"kind":"textbox","id":"sh/2hc7ihkr","slide":2,"text":"Communication","textPreview":"Communication","textChars":13,"textLines":1,"bbox":[840,320,360,30]}
+{"kind":"textbox","id":"sh/donqxwje","slide":2,"text":"Kitchen, floor, and guest updates arrive late.","textPreview":"Kitchen, floor, and guest updates arrive late.","textChars":46,"textLines":1,"bbox":[840,358,360,42]}
+{"kind":"shape","id":"sh/cnepob2t","slide":2,"bbox":[760,408,440,0]}
+{"kind":"textbox","id":"sh/rm58v618","slide":2,"text":"04","textPreview":"04","textChars":2,"textLines":1,"bbox":[760,424,58,32]}
+{"kind":"textbox","id":"sh/qlw7m1kn","slide":2,"text":"Manual operations","textPreview":"Manual operations","textChars":17,"textLines":1,"bbox":[840,424,360,30]}
+{"kind":"textbox","id":"sh/1c7q1gja","slide":2,"text":"Orders, billing, and stock are reconciled by hand.","textPreview":"Orders, billing, and stock are reconciled by hand.","textChars":50,"textLines":1,"bbox":[840,462,360,42]}
+{"kind":"shape","id":"sh/0re9sb2p","slide":2,"bbox":[760,512,440,0]}
+{"kind":"textbox","id":"sh/k761kjed","slide":2,"text":"05","textPreview":"05","textChars":2,"textLines":1,"bbox":[760,528,58,32]}
+{"kind":"textbox","id":"sh/l8fidovy","slide":2,"text":"Manager visibility","textPreview":"Manager visibility","textChars":18,"textLines":1,"bbox":[840,528,360,30]}
+{"kind":"textbox","id":"sh/y5oji9w7","slide":2,"text":"Bottlenecks appear only after service suffers.","textPreview":"Bottlenecks appear only after service suffers.","textChars":46,"textLines":1,"bbox":[840,566,360,42]}
+{"kind":"textbox","id":"sh/j6x0beds","slide":2,"text":"The cost is not only time. It is broken trust at the table.","textPreview":"The cost is not only time. It is broken trust at the table.","textChars":59,"textLines":1,"bbox":[70,560,560,72]}
+{"kind":"shape","id":"sh/8vq1oju9","slide":2,"bbox":[70,682,1140,0]}
+{"kind":"textbox","id":"sh/twz2hovu","slide":2,"text":"FLOWDINE AI  /  VIBEATHON 6.0","textPreview":"FLOWDINE AI  /  VIBEATHON 6.0","textChars":29,"textLines":1,"bbox":[70,690,360,16]}
+{"kind":"textbox","id":"sh/698jmtwj","slide":2,"text":"02","textPreview":"02","textChars":2,"textLines":1,"bbox":[1160,690,50,16]}
+{"kind":"notes","id":"nt/bf0cdx","slide":2,"text":"The brief identifies the same pattern restaurants face every day: guests do not know what is available, queues and orders feel unpredictable, staff communication is delayed, and managers cannot see the operation as it changes. These are not separate inconveniences. They all come from fragmented systems and manual handoffs. When the menu, kitchen, floor, and inventory disagree, the guest experiences the failure first.\n\n[Sources]\n- VibeAthon 6.0 problem statement: Vibeathon_6.0_PS.pdf, page 1"}
+{"kind":"slide","id":"sl/pqflmh","slide":3,"title":"THE PRODUCT INSIGHT","textShapes":10}
+{"kind":"textbox","id":"sh/ut4ru1sb","slide":3,"name":"eyebrow-The product insight","text":"THE PRODUCT INSIGHT","textPreview":"THE PRODUCT INSIGHT","textChars":19,"textLines":1,"bbox":[70,42,560,24]}
+{"kind":"textbox","id":"sh/hgvq5wbm","slide":3,"name":"slide-title","text":"The missing product is not another ordering app.","textPreview":"The missing product is not another ordering app.","textChars":48,"textLines":1,"bbox":[70,78,530,98]}
+{"kind":"textbox","id":"sh/gvm9wba1","slide":3,"text":"It is one live operating layer that makes every role act from the same restaurant state.","textPreview":"It is one live operating layer that makes every role act from the same restaurant state.","textChars":88,"textLines":1,"bbox":[70,196,500,96]}
+{"kind":"textbox","id":"sh/7qd8zmtk","slide":3,"text":"MENU  ≠  STOCK","textPreview":"MENU  ≠  STOCK","textChars":14,"textLines":1,"bbox":[72,338,260,28]}
+{"kind":"textbox","id":"sh/6pkrqhsz","slide":3,"text":"KITCHEN  ≠  FLOOR","textPreview":"KITCHEN  ≠  FLOOR","textChars":17,"textLines":1,"bbox":[72,390,300,28]}
+{"kind":"textbox","id":"sh/tsvq1wbq","slide":3,"text":"MANAGER  ≠  LIVE STATE","textPreview":"MANAGER  ≠  LIVE STATE","textChars":22,"textLines":1,"bbox":[72,442,330,28]}
+{"kind":"shape","id":"sh/srm9sra5","slide":3,"bbox":[72,496,420,0]}
+{"kind":"textbox","id":"sh/rmxsbqto","slide":3,"text":"FlowDine replaces those gaps with one continuously synchronized truth.","textPreview":"FlowDine replaces those gaps with one continuously synchronized truth.","textChars":70,"textLines":1,"bbox":[72,518,450,72]}
+{"kind":"shape","id":"sh/qlor2lsj","slide":3,"bbox":[611,184,593,337]}
+{"kind":"textbox","id":"sh/lg7u5sza","slide":3,"text":"REAL PRODUCT  /  LIVE DEPLOYMENT","textPreview":"REAL PRODUCT  /  LIVE DEPLOYMENT","textChars":32,"textLines":1,"bbox":[784,540,416,20]}
+{"kind":"shape","id":"sh/ydgvad0j","slide":3,"bbox":[70,682,1140,0]}
+{"kind":"textbox","id":"sh/zepc3ih4","slide":3,"text":"FLOWDINE AI  /  VIBEATHON 6.0","textPreview":"FLOWDINE AI  /  VIBEATHON 6.0","textChars":29,"textLines":1,"bbox":[70,690,360,16]}
+{"kind":"textbox","id":"sh/cbyd83id","slide":3,"text":"03","textPreview":"03","textChars":2,"textLines":1,"bbox":[1160,690,50,16]}
+{"kind":"image","id":"im/ri1onit0","slide":3,"name":"","geometry":"roundRect","alt":"FlowDine live service home screen","bbox":[615,188,585,329]}
+{"kind":"notes","id":"nt/pqflmh","slide":3,"text":"Most restaurant products optimize one isolated touchpoint: ordering, billing, or inventory. Our insight was that local optimization still leaves the dining room disconnected. FlowDine models the restaurant as one living system. The guest sees availability from stock, the kitchen sees the accepted ticket, the waiter sees service priorities, and the manager sees the resulting risk and revenue signals. The value comes from the connection, not from any single screen.\n\n[Sources]\n- FlowDine AI live deployment: https://flowdine-ai.abhinavchaudhary484.chatgpt.site\n- Product positioning and architecture: README.md"}
+{"kind":"slide","id":"sl/qjfajh","slide":4,"title":"THE SOLUTION","textShapes":18}
+{"kind":"textbox","id":"sh/q9ofylgn","slide":4,"name":"eyebrow-The solution","text":"THE SOLUTION","textPreview":"THE SOLUTION","textChars":12,"textLines":1,"bbox":[70,42,560,24]}
+{"kind":"textbox","id":"sh/dcze90ze","slide":4,"name":"slide-title","text":"One digital twin. Four focused experiences. One inventory truth.","textPreview":"One digital twin. Four focused experiences. One inventory truth.","textChars":64,"textLines":1,"bbox":[70,74,1140,62]}
+{"kind":"textbox","id":"sh/cbqx0vyt","slide":4,"text":"Every action updates the shared operating state used by the next role.","textPreview":"Every action updates the shared operating state used by the next role.","textChars":70,"textLines":1,"bbox":[70,132,760,30]}
+{"kind":"shape","id":"sh/zyhgbahk","slide":4,"name":"digital-twin-core","bbox":[456,238,368,184]}
+{"kind":"textbox","id":"sh/yx8f25gz","slide":4,"text":"LIVE RESTAURANT","textPreview":"LIVE RESTAURANT","textChars":15,"textLines":1,"bbox":[498,275,284,22]}
+{"kind":"textbox","id":"sh/l0zydkza","slide":4,"text":"Digital Twin","textPreview":"Digital Twin","textChars":12,"textLines":1,"bbox":[482,307,316,54]}
+{"kind":"textbox","id":"sh/0zqx4fyp","slide":4,"text":"orders • tables • stock • demand","textPreview":"orders • tables • stock • demand","textChars":32,"textLines":1,"bbox":[490,374,300,22]}
+{"kind":"shape","id":"sh/n2hgfahg","slide":4,"bbox":[86,218,258,104]}
+{"kind":"textbox","id":"sh/m18f65gv","slide":4,"text":"Customer","textPreview":"Customer","textChars":8,"textLines":1,"bbox":[108,240,214,30]}
+{"kind":"textbox","id":"sh/gfyl8jml","slide":4,"text":"Discover • order • track","textPreview":"Discover • order • track","textChars":24,"textLines":1,"bbox":[100,278,230,20]}
+{"kind":"shape","id":"sh/hg72ho36","slide":4,"bbox":[86,440,258,104]}
+{"kind":"textbox","id":"sh/udg3694v","slide":4,"text":"Kitchen","textPreview":"Kitchen","textChars":7,"textLines":1,"bbox":[108,462,214,30]}
+{"kind":"textbox","id":"sh/vepkfelg","slide":4,"text":"Prioritize • prepare • pass","textPreview":"Prioritize • prepare • pass","textChars":27,"textLines":1,"bbox":[100,500,230,20]}
+{"kind":"shape","id":"sh/4jilc32x","slide":4,"bbox":[936,218,258,104]}
+{"kind":"textbox","id":"sh/5krml83i","slide":4,"text":"Waiter","textPreview":"Waiter","textChars":6,"textLines":1,"bbox":[958,240,214,30]}
+{"kind":"textbox","id":"sh/ihg3atkr","slide":4,"text":"Serve • resolve • turn tables","textPreview":"Serve • resolve • turn tables","textChars":29,"textLines":1,"bbox":[950,278,230,20]}
+{"kind":"shape","id":"sh/3i94jylc","slide":4,"bbox":[936,440,258,104]}
+{"kind":"textbox","id":"sh/snilg32t","slide":4,"text":"Manager","textPreview":"Manager","textChars":7,"textLines":1,"bbox":[958,462,214,30]}
+{"kind":"textbox","id":"sh/d8rmp83e","slide":4,"text":"Monitor • decide • improve","textPreview":"Monitor • decide • improve","textChars":26,"textLines":1,"bbox":[950,500,230,20]}
+{"kind":"shape","id":"sh/14n298vi","slide":4,"bbox":[488,500,258,104]}
+{"kind":"textbox","id":"sh/03el03ux","slide":4,"text":"Inventory","textPreview":"Inventory","textChars":9,"textLines":1,"bbox":[510,522,214,30]}
+{"kind":"textbox","id":"sh/z25k7yds","slide":4,"text":"Recipe-linked availability","textPreview":"Recipe-linked availability","textChars":26,"textLines":1,"bbox":[502,560,230,20]}
+{"kind":"shape","id":"sh/e1w3ytc7","slide":4,"bbox":[344,270,112,60]}
+{"kind":"shape","id":"sh/987md8vu","slide":4,"bbox":[344,330,112,162]}
+{"kind":"shape","id":"sh/o7yl4nu9","slide":4,"bbox":[824,270,112,60]}
+{"kind":"shape","id":"sh/n6pkbido","slide":4,"bbox":[824,330,112,162]}
+{"kind":"shape","id":"sh/m5g32dc3","slide":4,"bbox":[617,422,23,78]}
+{"kind":"shape","id":"sh/pc321ova","slide":4,"bbox":[70,682,1140,0]}
+{"kind":"textbox","id":"sh/4bulsju5","slide":4,"text":"FLOWDINE AI  /  VIBEATHON 6.0","textPreview":"FLOWDINE AI  /  VIBEATHON 6.0","textChars":29,"textLines":1,"bbox":[70,690,360,16]}
+{"kind":"textbox","id":"sh/u58rmlob","slide":4,"text":"04","textPreview":"04","textChars":2,"textLines":1,"bbox":[1160,690,50,16]}
+{"kind":"notes","id":"nt/qjfajh","slide":4,"text":"FlowDine gives each role a focused workspace while keeping the underlying truth shared. Customers get confidence before ordering. Kitchen staff get prioritized tickets with notes and allergens. Waiters get the next service action and a live table map. Managers get revenue, demand, stock, and bottleneck signals. Inventory is not a separate afterthought; it participates in every accepted order and continuously reshapes what the menu can promise.\n\n[Sources]\n- FlowDine AI product surfaces and shared-state architecture: README.md and docs/ARCHITECTURE.md"}
+{"kind":"slide","id":"sl/740voj","slide":5,"title":"THE END-TO-END PROOF","textShapes":28}
+{"kind":"textbox","id":"sh/utwrm5wf","slide":5,"name":"eyebrow-The end-to-end proof","text":"THE END-TO-END PROOF","textPreview":"THE END-TO-END PROOF","textChars":20,"textLines":1,"bbox":[70,42,560,24]}
+{"kind":"textbox","id":"sh/hgnqxkvq","slide":5,"name":"slide-title","text":"One order moves the entire restaurant forward.","textPreview":"One order moves the entire restaurant forward.","textChars":46,"textLines":1,"bbox":[70,78,1000,58]}
+{"kind":"textbox","id":"sh/gve9ofe5","slide":5,"text":"No re-entry. No manual stock toggle. No invisible handoff.","textPreview":"No re-entry. No manual stock toggle. No invisible handoff.","textChars":58,"textLines":1,"bbox":[70,142,760,28]}
+{"kind":"shape","id":"sh/7ql8rqxo","slide":5,"bbox":[110,256,72,72]}
+{"kind":"textbox","id":"sh/6pcrilw3","slide":5,"text":"01","textPreview":"01","textChars":2,"textLines":1,"bbox":[110,278,72,24]}
+{"kind":"textbox","id":"sh/ts3qt0vu","slide":5,"text":"Scan / browse","textPreview":"Scan / browse","textChars":13,"textLines":1,"bbox":[68,358,156,32]}
+{"kind":"textbox","id":"sh/8ru9kve9","slide":5,"text":"Live menu","textPreview":"Live menu","textChars":9,"textLines":1,"bbox":[68,402,156,26]}
+{"kind":"shape","id":"sh/rmps3uds","slide":5,"bbox":[281,256,72,72]}
+{"kind":"textbox","id":"sh/qlgrupwn","slide":5,"text":"02","textPreview":"02","textChars":2,"textLines":1,"bbox":[281,278,72,24]}
+{"kind":"textbox","id":"sh/k3ilwjqx","slide":5,"text":"Place order","textPreview":"Place order","textChars":11,"textLines":1,"bbox":[239,358,156,32]}
+{"kind":"textbox","id":"sh/l4rm5o7i","slide":5,"text":"Notes + table","textPreview":"Notes + table","textChars":13,"textLines":1,"bbox":[239,402,156,26]}
+{"kind":"shape","id":"sh/y1g3ut8r","slide":5,"bbox":[452,256,72,72]}
+{"kind":"textbox","id":"sh/j2943ypc","slide":5,"text":"03","textPreview":"03","textChars":2,"textLines":1,"bbox":[452,278,72,24]}
+{"kind":"textbox","id":"sh/wzylsjq1","slide":5,"text":"Kitchen accepts","textPreview":"Kitchen accepts","textChars":15,"textLines":1,"bbox":[410,358,156,32]}
+{"kind":"textbox","id":"sh/x07m1o7m","slide":5,"text":"Ticket created","textPreview":"Ticket created","textChars":14,"textLines":1,"bbox":[410,402,156,26]}
+{"kind":"shape","id":"sh/axg3q98v","slide":5,"bbox":[623,256,72,72]}
+{"kind":"textbox","id":"sh/bypkzepg","slide":5,"text":"04","textPreview":"04","textChars":2,"textLines":1,"bbox":[623,278,72,24]}
+{"kind":"textbox","id":"sh/obylozqp","slide":5,"text":"Stock reserved","textPreview":"Stock reserved","textChars":14,"textLines":1,"bbox":[581,358,156,32]}
+{"kind":"textbox","id":"sh/9c72x47a","slide":5,"text":"Portions recalc","textPreview":"Portions recalc","textChars":15,"textLines":1,"bbox":[581,402,156,26]}
+{"kind":"shape","id":"sh/psz210zy","slide":5,"bbox":[794,256,72,72]}
+{"kind":"textbox","id":"sh/4rq1svit","slide":5,"text":"05","textPreview":"05","textChars":2,"textLines":1,"bbox":[794,278,72,24]}
+{"kind":"textbox","id":"sh/3qx0zq18","slide":5,"text":"Waiter serves","textPreview":"Waiter serves","textChars":13,"textLines":1,"bbox":[752,358,156,32]}
+{"kind":"textbox","id":"sh/25ojql0n","slide":5,"text":"Table advances","textPreview":"Table advances","textChars":14,"textLines":1,"bbox":[752,402,156,26]}
+{"kind":"shape","id":"sh/h4fixgj2","slide":5,"bbox":[965,256,72,72]}
+{"kind":"textbox","id":"sh/g361ovih","slide":5,"text":"06","textPreview":"06","textChars":2,"textLines":1,"bbox":[965,278,72,24]}
+{"kind":"textbox","id":"sh/f2x0vq1w","slide":5,"text":"Bill closes","textPreview":"Bill closes","textChars":11,"textLines":1,"bbox":[923,358,156,32]}
+{"kind":"textbox","id":"sh/u1ojml0b","slide":5,"text":"Totals verified","textPreview":"Totals verified","textChars":15,"textLines":1,"bbox":[923,402,156,26]}
+{"kind":"shape","id":"sh/10j29kz6","slide":5,"bbox":[1136,256,72,72]}
+{"kind":"textbox","id":"sh/0za10fil","slide":5,"text":"07","textPreview":"07","textChars":2,"textLines":1,"bbox":[1136,278,72,24]}
+{"kind":"textbox","id":"sh/yt07edc7","slide":5,"text":"Manager sees","textPreview":"Manager sees","textChars":12,"textLines":1,"bbox":[1094,358,156,32]}
+{"kind":"textbox","id":"sh/jut87itc","slide":5,"text":"Metrics update","textPreview":"Metrics update","textChars":14,"textLines":1,"bbox":[1094,402,156,26]}
+{"kind":"shape","id":"sh/kv2pgnux","slide":5,"bbox":[182,292,99,0]}
+{"kind":"shape","id":"sh/lwbq9sbi","slide":5,"bbox":[353,292,99,0]}
+{"kind":"shape","id":"sh/ap07adcv","slide":5,"bbox":[524,292,99,0]}
+{"kind":"shape","id":"sh/bq9o3idg","slide":5,"bbox":[695,292,99,0]}
+{"kind":"shape","id":"sh/wripcnu1","slide":5,"bbox":[866,292,99,0]}
+{"kind":"shape","id":"sh/xsr65svm","slide":5,"bbox":[1037,292,99,0]}
+{"kind":"shape","id":"sh/ulk7mxcf","slide":5,"bbox":[132,508,1016,96]}
+{"kind":"textbox","id":"sh/vmd8f2tk","slide":5,"text":"1 accepted order","textPreview":"1 accepted order","textChars":16,"textLines":1,"bbox":[168,535,220,36]}
+{"kind":"textbox","id":"sh/fe94bex0","slide":5,"text":"updates 4 role views + the inventory ledger + the audit trail","textPreview":"updates 4 role views + the inventory ledger + the audit trail","textChars":61,"textLines":1,"bbox":[412,538,690,34]}
+{"kind":"shape","id":"sh/ed03i9gf","slide":5,"bbox":[70,682,1140,0]}
+{"kind":"textbox","id":"sh/1gbmd4f6","slide":5,"text":"FLOWDINE AI  /  VIBEATHON 6.0","textPreview":"FLOWDINE AI  /  VIBEATHON 6.0","textChars":29,"textLines":1,"bbox":[70,690,360,16]}
+{"kind":"textbox","id":"sh/gfilkjyl","slide":5,"text":"05","textPreview":"05","textChars":2,"textLines":1,"bbox":[1160,690,50,16]}
+{"kind":"notes","id":"nt/740voj","slide":5,"text":"This is the workflow judges can experience in the live product. A guest places a table order with notes. The server checks permissions and inventory, reserves the recipe ingredients, and creates the kitchen ticket. Kitchen and waiter roles advance the same order state. Billing uses paise-safe totals, and the manager view reacts to the same event. The important proof is that each step changes what the next role sees.\n\n[Sources]\n- FlowDine AI order lifecycle: README.md\n- Server-authoritative domain transitions: lib/domain.ts"}
+{"kind":"slide","id":"sl/7vvclt","slide":6,"title":"SIGNATURE INNOVATION","textShapes":17}
+{"kind":"textbox","id":"sh/wzqpczy9","slide":6,"name":"eyebrow-Signature innovation","text":"SIGNATURE INNOVATION","textPreview":"SIGNATURE INNOVATION","textChars":20,"textLines":1,"bbox":[70,42,560,24]}
+{"kind":"textbox","id":"sh/vyho3uxo","slide":6,"name":"slide-title","text":"Availability is calculated - never manually guessed.","textPreview":"Availability is calculated - never manually guessed.","textChars":52,"textLines":1,"bbox":[70,74,1140,62]}
+{"kind":"textbox","id":"sh/ud87apgj","slide":6,"text":"The limiting recipe ingredient becomes the truthful menu promise.","textPreview":"The limiting recipe ingredient becomes the truthful menu promise.","textChars":65,"textLines":1,"bbox":[70,132,780,28]}
+{"kind":"shape","id":"sh/9cz61kfy","slide":6,"bbox":[66,188,628,406]}
+{"kind":"textbox","id":"sh/7axozaxs","slide":6,"text":"LIVE MENU","textPreview":"LIVE MENU","textChars":9,"textLines":1,"bbox":[92,210,140,24]}
+{"kind":"textbox","id":"sh/m9o765g7","slide":6,"text":"Illustrative low-stock case","textPreview":"Illustrative low-stock case","textChars":27,"textLines":1,"bbox":[752,202,410,26]}
+{"kind":"textbox","id":"sh/d8jqdof2","slide":6,"text":"Ember Paneer Tikka","textPreview":"Ember Paneer Tikka","textChars":18,"textLines":1,"bbox":[752,240,410,42]}
+{"kind":"textbox","id":"sh/s7apkjeh","slide":6,"text":"Paneer","textPreview":"Paneer","textChars":6,"textLines":1,"bbox":[752,308,170,24]}
+{"kind":"textbox","id":"sh/y9wny9gn","slide":6,"text":"720g ÷ 180g","textPreview":"720g ÷ 180g","textChars":11,"textLines":1,"bbox":[932,310,150,20]}
+{"kind":"textbox","id":"sh/zu547ex8","slide":6,"text":"4 portions","textPreview":"4 portions","textChars":10,"textLines":1,"bbox":[1080,310,110,20]}
+{"kind":"shape","id":"sh/0ve50jyt","slide":6,"bbox":[752,346,438,10]}
+{"kind":"shape","id":"sh/lwnm9ofe","slide":6,"bbox":[752,346,166.44,10]}
+{"kind":"textbox","id":"sh/q5cnupgr","slide":6,"text":"Greek yogurt","textPreview":"Greek yogurt","textChars":12,"textLines":1,"bbox":[752,400,170,24]}
+{"kind":"textbox","id":"sh/b6l43uxc","slide":6,"text":"245ml ÷ 35ml","textPreview":"245ml ÷ 35ml","textChars":12,"textLines":1,"bbox":[932,402,150,20]}
+{"kind":"textbox","id":"sh/c7u5wzyx","slide":6,"text":"7 portions","textPreview":"7 portions","textChars":10,"textLines":1,"bbox":[1080,402,110,20]}
+{"kind":"shape","id":"sh/d8nm54fi","slide":6,"bbox":[752,438,438,10]}
+{"kind":"shape","id":"sh/u1gn6twv","slide":6,"bbox":[752,438,271.56,10]}
+{"kind":"shape","id":"sh/v2pofyxg","slide":6,"bbox":[752,498,438,0]}
+{"kind":"textbox","id":"sh/r6hk7qds","slide":6,"text":"MIN(4, 7)","textPreview":"MIN(4, 7)","textChars":9,"textLines":1,"bbox":[752,522,170,34]}
+{"kind":"shape","id":"sh/658jylwn","slide":6,"bbox":[932,510,258,58]}
+{"kind":"textbox","id":"sh/t8j290vy","slide":6,"text":"ONLY 4 LEFT","textPreview":"ONLY 4 LEFT","textChars":11,"textLines":1,"bbox":[932,528,258,22]}
+{"kind":"textbox","id":"sh/s7q10ved","slide":6,"text":"At zero, ordering is blocked automatically.","textPreview":"At zero, ordering is blocked automatically.","textChars":43,"textLines":1,"bbox":[752,592,438,26]}
+{"kind":"shape","id":"sh/fa1kbqd4","slide":6,"bbox":[70,682,1140,0]}
+{"kind":"textbox","id":"sh/e9sj2lwj","slide":6,"text":"FLOWDINE AI  /  VIBEATHON 6.0","textPreview":"FLOWDINE AI  /  VIBEATHON 6.0","textChars":29,"textLines":1,"bbox":[70,690,360,16]}
+{"kind":"textbox","id":"sh/1cj2d0va","slide":6,"text":"06","textPreview":"06","textChars":2,"textLines":1,"bbox":[1160,690,50,16]}
+{"kind":"image","id":"im/lw3md8nm","slide":6,"name":"","geometry":"roundRect","alt":"Inventory-aware FlowDine guest menu","bbox":[70,192,620,398]}
+{"kind":"notes","id":"nt/7vvclt","slide":6,"text":"This is our signature innovation. A dish is not marked available because someone remembered to toggle it. FlowDine divides usable ingredient stock by each recipe requirement and takes the minimum. In this low-stock example, paneer supports four portions while yogurt supports seven, so the menu can truthfully promise only four. When an order is accepted, inventory is reserved immediately. When the limiting ingredient reaches zero, the dish becomes unavailable automatically.\n\n[Sources]\n- Recipe-linked availability implementation: lib/domain.ts and lib/seed.ts\n- Real guest-menu screenshot captured from https://flowdine-ai.abhinavchaudhary484.chatgpt.site/menu"}
+{"kind":"slide","id":"sl/3d3gml","slide":7,"title":"ROLE-BASED EXPERIENCE","textShapes":12}
+{"kind":"textbox","id":"sh/m587mdcb","slide":7,"name":"eyebrow-Role-based experience","text":"ROLE-BASED EXPERIENCE","textPreview":"ROLE-BASED EXPERIENCE","textChars":21,"textLines":1,"bbox":[70,34,560,24]}
+{"kind":"textbox","id":"sh/9sjqhsb2","slide":7,"name":"slide-title","text":"The same truth, designed for the next decision.","textPreview":"The same truth, designed for the next decision.","textChars":47,"textLines":1,"bbox":[70,66,1020,56]}
+{"kind":"shape","id":"sh/o7aponuh","slide":7,"bbox":[66,142,564,232]}
+{"kind":"shape","id":"sh/ats7qxcn","slide":7,"bbox":[86,162,184,52]}
+{"kind":"textbox","id":"sh/xwjqlsby","slide":7,"text":"CUSTOMER","textPreview":"CUSTOMER","textChars":8,"textLines":1,"bbox":[100,171,154,18]}
+{"kind":"textbox","id":"sh/wva9snud","slide":7,"text":"Live menu + ordering","textPreview":"Live menu + ordering","textChars":20,"textLines":1,"bbox":[100,190,154,15]}
+{"kind":"shape","id":"sh/jyl8n2t4","slide":7,"bbox":[650,142,564,232]}
+{"kind":"shape","id":"sh/o7qhgfqd","slide":7,"bbox":[670,162,184,52]}
+{"kind":"textbox","id":"sh/98zi9kry","slide":7,"text":"KITCHEN","textPreview":"KITCHEN","textChars":7,"textLines":1,"bbox":[684,171,154,18]}
+{"kind":"textbox","id":"sh/m58ze587","slide":7,"text":"Prioritized ticket flow","textPreview":"Prioritized ticket flow","textChars":23,"textLines":1,"bbox":[684,190,154,15]}
+{"kind":"shape","id":"sh/n6h07a9s","slide":7,"bbox":[66,410,564,232]}
+{"kind":"shape","id":"sh/xcjidkru","slide":7,"bbox":[86,430,184,52]}
+{"kind":"textbox","id":"sh/a9sjip8j","slide":7,"text":"WAITER","textPreview":"WAITER","textChars":6,"textLines":1,"bbox":[100,439,154,18]}
+{"kind":"textbox","id":"sh/ba10ba94","slide":7,"text":"Tasks + table service","textPreview":"Tasks + table service","textChars":21,"textLines":1,"bbox":[100,458,154,15]}
+{"kind":"shape","id":"sh/kfa1ozql","slide":7,"bbox":[650,410,564,232]}
+{"kind":"shape","id":"sh/twzi14ja","slide":7,"bbox":[670,430,184,52]}
+{"kind":"textbox","id":"sh/sv6h8zip","slide":7,"text":"MANAGER","textPreview":"MANAGER","textChars":7,"textLines":1,"bbox":[684,439,154,18]}
+{"kind":"textbox","id":"sh/7ux0zu14","slide":7,"text":"Command center","textPreview":"Command center","textChars":14,"textLines":1,"bbox":[684,458,154,15]}
+{"kind":"shape","id":"sh/6toz6p0j","slide":7,"bbox":[70,682,1140,0]}
+{"kind":"textbox","id":"sh/h0zi54z6","slide":7,"text":"FLOWDINE AI  /  VIBEATHON 6.0","textPreview":"FLOWDINE AI  /  VIBEATHON 6.0","textChars":29,"textLines":1,"bbox":[70,690,360,16]}
+{"kind":"textbox","id":"sh/gzq1czil","slide":7,"text":"07","textPreview":"07","textChars":2,"textLines":1,"bbox":[1160,690,50,16]}
+{"kind":"image","id":"im/ap076p4f","slide":7,"name":"","geometry":"roundRect","alt":"CUSTOMER FlowDine interface","bbox":[70,146,556,224]}
+{"kind":"image","id":"im/nm9ovalo","slide":7,"name":"","geometry":"roundRect","alt":"KITCHEN FlowDine interface","bbox":[654,146,556,224]}
+{"kind":"image","id":"im/7mhk3uxs","slide":7,"name":"","geometry":"roundRect","alt":"WAITER FlowDine interface","bbox":[70,414,556,224]}
+{"kind":"image","id":"im/mp4jilg3","slide":7,"name":"","geometry":"roundRect","alt":"MANAGER FlowDine interface","bbox":[654,414,556,224]}
+{"kind":"notes","id":"nt/3d3gml","slide":7,"text":"The interface changes with the role, but the operating state does not. Guests browse live availability and order with confidence. Kitchen staff see ticket age, promise risk, notes, and allergens. Waiters see ready dishes, guest requests, and table turns. Managers see revenue, demand, inventory, and bottlenecks. This focus keeps each screen calm and actionable while preserving one end-to-end workflow behind the scenes.\n\n[Sources]\n- Real role screenshots captured from https://flowdine-ai.abhinavchaudhary484.chatgpt.site/menu, /kitchen, /staff, and /dashboard\n- FlowDine role permission matrix: lib/domain.ts and docs/ARCHITECTURE.md"}
+{"kind":"slide","id":"sl/cstb6u","slide":8,"title":"INTELLIGENT OPERATIONS","textShapes":18}
+{"kind":"textbox","id":"sh/xcbudo72","slide":8,"name":"eyebrow-Intelligent operations","text":"INTELLIGENT OPERATIONS","textPreview":"INTELLIGENT OPERATIONS","textChars":22,"textLines":1,"bbox":[70,42,560,24]}
+{"kind":"textbox","id":"sh/apkv2t8r","slide":8,"name":"slide-title","text":"AI advises. Deterministic signals stay in control.","textPreview":"AI advises. Deterministic signals stay in control.","textChars":50,"textLines":1,"bbox":[70,74,1140,62]}
+{"kind":"textbox","id":"sh/vatcbepc","slide":8,"text":"The manager gets prioritized action, not another dashboard to interpret.","textPreview":"The manager gets prioritized action, not another dashboard to interpret.","textChars":72,"textLines":1,"bbox":[70,132,790,28]}
+{"kind":"textbox","id":"sh/8n2d0jql","slide":8,"text":"PREDICT","textPreview":"PREDICT","textChars":7,"textLines":1,"bbox":[70,202,125,22]}
+{"kind":"textbox","id":"sh/9obu9o76","slide":8,"text":"Demand forecast","textPreview":"Demand forecast","textChars":15,"textLines":1,"bbox":[70,230,328,27]}
+{"kind":"textbox","id":"sh/mlkvy98f","slide":8,"text":"Weighted recent service history","textPreview":"Weighted recent service history","textChars":31,"textLines":1,"bbox":[70,263,340,22]}
+{"kind":"shape","id":"sh/nmtc7ep0","slide":8,"bbox":[70,290,340,0]}
+{"kind":"textbox","id":"sh/sjmdc36p","slide":8,"text":"PROTECT","textPreview":"PROTECT","textChars":7,"textLines":1,"bbox":[70,298,125,22]}
+{"kind":"textbox","id":"sh/tkfel87a","slide":8,"text":"Stockout watch","textPreview":"Stockout watch","textChars":14,"textLines":1,"bbox":[70,326,328,27]}
+{"kind":"textbox","id":"sh/poru543y","slide":8,"text":"Recipe-aware inventory risk","textPreview":"Recipe-aware inventory risk","textChars":27,"textLines":1,"bbox":[70,359,340,22]}
+{"kind":"shape","id":"sh/onytwzmd","slide":8,"bbox":[70,386,340,0]}
+{"kind":"textbox","id":"sh/3mpc3uls","slide":8,"text":"PRIORITIZE","textPreview":"PRIORITIZE","textChars":10,"textLines":1,"bbox":[70,394,125,22]}
+{"kind":"textbox","id":"sh/2lgbup47","slide":8,"text":"Bottleneck detection","textPreview":"Bottleneck detection","textChars":20,"textLines":1,"bbox":[70,422,328,27]}
+{"kind":"textbox","id":"sh/1k7u1k3m","slide":8,"text":"Late tickets and service pressure","textPreview":"Late tickets and service pressure","textChars":33,"textLines":1,"bbox":[70,455,340,22]}
+{"kind":"shape","id":"sh/gzytsfm1","slide":8,"bbox":[70,482,340,0]}
+{"kind":"textbox","id":"sh/fypczalw","slide":8,"text":"RECOMMEND","textPreview":"RECOMMEND","textChars":9,"textLines":1,"bbox":[70,490,125,22]}
+{"kind":"textbox","id":"sh/exgbqp4b","slide":8,"text":"Smart suggestions","textPreview":"Smart suggestions","textChars":17,"textLines":1,"bbox":[70,518,328,27]}
+{"kind":"textbox","id":"sh/lgbudo36","slide":8,"text":"Available, popular, load-safe dishes","textPreview":"Available, popular, load-safe dishes","textChars":36,"textLines":1,"bbox":[70,551,340,22]}
+{"kind":"shape","id":"sh/0v2d4jml","slide":8,"bbox":[446,182,768,430]}
+{"kind":"shape","id":"sh/l0je9sb2","slide":8,"bbox":[710,582,476,58]}
+{"kind":"textbox","id":"sh/yx8vydsr","slide":8,"text":"Gemini when configured • evidence-based fallback without a key","textPreview":"Gemini when configured • evidence-based fallback without a key","textChars":62,"textLines":1,"bbox":[732,599,432,24]}
+{"kind":"shape","id":"sh/jyhw7itc","slide":8,"bbox":[70,682,1140,0]}
+{"kind":"textbox","id":"sh/wvqdwnul","slide":8,"text":"FLOWDINE AI  /  VIBEATHON 6.0","textPreview":"FLOWDINE AI  /  VIBEATHON 6.0","textChars":29,"textLines":1,"bbox":[70,690,360,16]}
+{"kind":"textbox","id":"sh/xwze58b6","slide":8,"text":"08","textPreview":"08","textChars":2,"textLines":1,"bbox":[1160,690,50,16]}
+{"kind":"image","id":"im/vq1ojudw","slide":8,"name":"","geometry":"roundRect","alt":"FlowDine operations copilot, stock risks, and demand forecast","bbox":[450,186,760,422]}
+{"kind":"notes","id":"nt/cstb6u","slide":8,"text":"FlowDine turns operational data into the next best action. It forecasts demand, surfaces stock risks, detects late tickets, and recommends dishes that are actually available and manageable for the kitchen. The AI copilot can use Gemini when configured, but it is deliberately advisory. Inventory, billing, permissions, and forecast calculations remain deterministic. If the AI key is missing or the call fails, managers still receive evidence-based local guidance.\n\n[Sources]\n- Intelligence and safety design: README.md, docs/ARCHITECTURE.md, and app/api/copilot/route.ts\n- Real manager intelligence screenshot captured from https://flowdine-ai.abhinavchaudhary484.chatgpt.site/dashboard"}
+{"kind":"slide","id":"sl/48hiln","slide":9,"title":"MANAGEMENT COMMAND CENTER","textShapes":18}
+{"kind":"textbox","id":"sh/90vep8rm","slide":9,"name":"eyebrow-Management command center","text":"MANAGEMENT COMMAND CENTER","textPreview":"MANAGEMENT COMMAND CENTER","textChars":25,"textLines":1,"bbox":[70,42,560,24]}
+{"kind":"textbox","id":"sh/mxkvedsb","slide":9,"name":"slide-title","text":"A manager can read the whole service in seconds.","textPreview":"A manager can read the whole service in seconds.","textChars":48,"textLines":1,"bbox":[70,74,1140,62]}
+{"kind":"shape","id":"sh/7ydwny9w","slide":9,"bbox":[66,148,758,448]}
+{"kind":"textbox","id":"sh/hovetsry","slide":9,"text":"₹35,680","textPreview":"₹35,680","textChars":7,"textLines":1,"bbox":[865,160,155,42]}
+{"kind":"textbox","id":"sh/u14vids7","slide":9,"text":"REVENUE TODAY","textPreview":"REVENUE TODAY","textChars":13,"textLines":1,"bbox":[865,204,155,20]}
+{"kind":"textbox","id":"sh/vmdwri9s","slide":9,"text":"5","textPreview":"5","textChars":1,"textLines":1,"bbox":[1040,160,140,42]}
+{"kind":"textbox","id":"sh/cr2d8ja9","slide":9,"text":"ACTIVE ORDERS","textPreview":"ACTIVE ORDERS","textChars":13,"textLines":1,"bbox":[1040,204,140,20]}
+{"kind":"textbox","id":"sh/xsbuhore","slide":9,"text":"50%","textPreview":"50%","textChars":3,"textLines":1,"bbox":[865,242,155,42]}
+{"kind":"textbox","id":"sh/xor29cjm","slide":9,"text":"TABLE OCCUPANCY","textPreview":"TABLE OCCUPANCY","textChars":15,"textLines":1,"bbox":[865,286,155,20]}
+{"kind":"textbox","id":"sh/c3ilg7i1","slide":9,"text":"5","textPreview":"5","textChars":1,"textLines":1,"bbox":[1040,242,140,42]}
+{"kind":"textbox","id":"sh/b2pk721g","slide":9,"text":"DELAYED TICKETS","textPreview":"DELAYED TICKETS","textChars":15,"textLines":1,"bbox":[1040,286,140,20]}
+{"kind":"textbox","id":"sh/a1g3ex0v","slide":9,"text":"9","textPreview":"9","textChars":1,"textLines":1,"bbox":[865,324,155,42]}
+{"kind":"textbox","id":"sh/lsr2dcji","slide":9,"text":"LOW-STOCK INGREDIENTS","textPreview":"LOW-STOCK INGREDIENTS","textChars":21,"textLines":1,"bbox":[865,368,155,20]}
+{"kind":"textbox","id":"sh/krilkrix","slide":9,"text":"₹469","textPreview":"₹469","textChars":4,"textLines":1,"bbox":[1040,324,140,42]}
+{"kind":"textbox","id":"sh/zq9kbm1c","slide":9,"text":"AVERAGE ORDER","textPreview":"AVERAGE ORDER","textChars":13,"textLines":1,"bbox":[1040,368,140,20]}
+{"kind":"textbox","id":"sh/yp03ih07","slide":9,"text":"LIVE SERVICE MIX","textPreview":"LIVE SERVICE MIX","textChars":16,"textLines":1,"bbox":[864,417,320,20]}
+{"kind":"textbox","id":"sh/8v2lori9","slide":9,"text":"Current seeded tickets • item quantities","textPreview":"Current seeded tickets • item quantities","textChars":40,"textLines":1,"bbox":[864,610,340,18]}
+{"kind":"shape","id":"sh/sbad0zuh","slide":9,"bbox":[70,682,1140,0]}
+{"kind":"textbox","id":"sh/dc3e94b2","slide":9,"text":"FLOWDINE AI  /  VIBEATHON 6.0","textPreview":"FLOWDINE AI  /  VIBEATHON 6.0","textChars":29,"textLines":1,"bbox":[70,690,360,16]}
+{"kind":"textbox","id":"sh/69svypcb","slide":9,"text":"09","textPreview":"09","textChars":2,"textLines":1,"bbox":[1160,690,50,16]}
+{"kind":"chart","id":"ch/hc321knu","slide":9,"name":"","chartType":"bar","bbox":[856,446,350,158]}
+{"kind":"image","id":"im/l0bml4fq","slide":9,"name":"","geometry":"roundRect","alt":"FlowDine manager dashboard with revenue and digital twin metrics","bbox":[70,152,750,440]}
+{"kind":"notes","id":"nt/48hiln","slide":9,"text":"The command center is designed for a five-second scan. Revenue, active orders, occupancy, average order value, delayed tickets, and stock risk appear together because they influence one another. The revenue rhythm shows the service pattern, while the digital twin shows table, ticket, and inventory pressure. The service-mix chart uses quantities in the seeded live tickets, so the demo remains explainable rather than presenting invented historical sales.\n\n[Sources]\n- Real manager dashboard captured from https://flowdine-ai.abhinavchaudhary484.chatgpt.site/dashboard\n- Seeded service metrics and ticket items: lib/seed.ts"}
+{"kind":"slide","id":"sl/dk5myi","slide":10,"title":"TECHNOLOGY ARCHITECTURE","textShapes":24}
+{"kind":"textbox","id":"sh/d8fqhov6","slide":10,"name":"eyebrow-Technology architecture","text":"TECHNOLOGY ARCHITECTURE","textPreview":"TECHNOLOGY ARCHITECTURE","textChars":23,"textLines":1,"bbox":[70,40,560,24]}
+{"kind":"textbox","id":"sh/q5or69cf","slide":10,"name":"slide-title","text":"Production-shaped today. Production-hardened by design.","textPreview":"Production-shaped today. Production-hardened by design.","textChars":55,"textLines":1,"bbox":[70,74,1060,58]}
+{"kind":"textbox","id":"sh/r6x8fed0","slide":10,"text":"LIVE JUDGE DEPLOYMENT","textPreview":"LIVE JUDGE DEPLOYMENT","textChars":21,"textLines":1,"bbox":[70,158,270,20]}
+{"kind":"shape","id":"sh/43mp4zup","slide":10,"bbox":[70,198,256,116]}
+{"kind":"textbox","id":"sh/p4vqd4va","slide":10,"text":"Next.js 16 + React 19","textPreview":"Next.js 16 + React 19","textChars":21,"textLines":1,"bbox":[88,222,220,34]}
+{"kind":"textbox","id":"sh/21472pcj","slide":10,"text":"Guest and staff surfaces","textPreview":"Guest and staff surfaces","textChars":24,"textLines":1,"bbox":[88,270,220,24]}
+{"kind":"shape","id":"sh/32d8bud4","slide":10,"bbox":[366,198,256,116]}
+{"kind":"textbox","id":"sh/ozq9g3ut","slide":10,"text":"Route handlers","textPreview":"Route handlers","textChars":14,"textLines":1,"bbox":[384,222,220,34]}
+{"kind":"textbox","id":"sh/90zqp8ve","slide":10,"text":"Validated API actions","textPreview":"Validated API actions","textChars":21,"textLines":1,"bbox":[384,270,220,24]}
+{"kind":"shape","id":"sh/h03itgbu","slide":10,"bbox":[662,198,256,116]}
+{"kind":"textbox","id":"sh/wzu10va9","slide":10,"text":"TypeScript domain engine","textPreview":"TypeScript domain engine","textChars":24,"textLines":1,"bbox":[680,222,220,34]}
+{"kind":"textbox","id":"sh/vyl0rqto","slide":10,"text":"Inventory, billing, permissions","textPreview":"Inventory, billing, permissions","textChars":31,"textLines":1,"bbox":[680,270,220,24]}
+{"kind":"shape","id":"sh/uxcjyls3","slide":10,"bbox":[958,198,256,116]}
+{"kind":"textbox","id":"sh/9wjipgbi","slide":10,"text":"Cloudflare D1","textPreview":"Cloudflare D1","textChars":13,"textLines":1,"bbox":[976,222,220,34]}
+{"kind":"textbox","id":"sh/8vahwbax","slide":10,"text":"Shared state + audit log","textPreview":"Shared state + audit log","textChars":24,"textLines":1,"bbox":[976,270,220,24]}
+{"kind":"shape","id":"sh/7u10n6tc","slide":10,"bbox":[326,256,40,0]}
+{"kind":"shape","id":"sh/mtszu1s7","slide":10,"bbox":[622,256,40,0]}
+{"kind":"shape","id":"sh/tsni10r2","slide":10,"bbox":[918,256,40,0]}
+{"kind":"shape","id":"sh/sre18fah","slide":10,"bbox":[400,340,480,56]}
+{"kind":"textbox","id":"sh/c76tk3mp","slide":10,"text":"Optional Gemini REST • deterministic fallback","textPreview":"Optional Gemini REST • deterministic fallback","textChars":45,"textLines":1,"bbox":[420,356,440,24]}
+{"kind":"textbox","id":"sh/x8fut83a","slide":10,"text":"PRODUCTION SAAS HARDENING PATH","textPreview":"PRODUCTION SAAS HARDENING PATH","textChars":30,"textLines":1,"bbox":[70,444,360,20]}
+{"kind":"shape","id":"sh/a54bid4j","slide":10,"bbox":[70,480,1140,118]}
+{"kind":"textbox","id":"sh/b6xcryl4","slide":10,"text":"Supabase Auth","textPreview":"Supabase Auth","textChars":13,"textLines":1,"bbox":[100,505,236,28]}
+{"kind":"textbox","id":"sh/ojmtg3mt","slide":10,"text":"Email verification + Google OAuth","textPreview":"Email verification + Google OAuth","textChars":33,"textLines":1,"bbox":[100,545,236,34]}
+{"kind":"shape","id":"sh/pkvup83y","slide":10,"bbox":[352,504,0,70]}
+{"kind":"textbox","id":"sh/2h4bet4n","slide":10,"text":"PostgreSQL + RLS","textPreview":"PostgreSQL + RLS","textChars":16,"textLines":1,"bbox":[378,505,236,28]}
+{"kind":"textbox","id":"sh/nidcnyl8","slide":10,"text":"Tenant-isolated restaurant data","textPreview":"Tenant-isolated restaurant data","textChars":31,"textLines":1,"bbox":[378,545,236,34]}
+{"kind":"shape","id":"sh/gfmtcjmh","slide":10,"bbox":[630,504,0,70]}
+{"kind":"textbox","id":"sh/1gvulo32","slide":10,"text":"Realtime events","textPreview":"Realtime events","textChars":15,"textLines":1,"bbox":[656,505,236,28]}
+{"kind":"textbox","id":"sh/jatcvep4","slide":10,"text":"Push updates instead of polling","textPreview":"Push updates instead of polling","textChars":31,"textLines":1,"bbox":[656,545,236,34]}
+{"kind":"shape","id":"sh/i9kvm9oj","slide":10,"bbox":[908,504,0,70]}
+{"kind":"textbox","id":"sh/5cbuxo7u","slide":10,"text":"Provider integrations","textPreview":"Provider integrations","textChars":21,"textLines":1,"bbox":[934,505,236,28]}
+{"kind":"textbox","id":"sh/4b2doj69","slide":10,"text":"Payments + notifications","textPreview":"Payments + notifications","textChars":24,"textLines":1,"bbox":[934,545,236,34]}
+{"kind":"textbox","id":"sh/redczyp0","slide":10,"text":"LIVE: ChatGPT Sites / Cloudflare • 4-second shared-state sync • strict TypeScript • tested domain logic","textPreview":"LIVE: ChatGPT Sites / Cloudflare • 4-second shared-state sync • strict TypeScript • tested domain logic","textChars":103,"textLines":1,"bbox":[70,626,1140,24]}
+{"kind":"shape","id":"sh/6dkvqtof","slide":10,"bbox":[70,682,1140,0]}
+{"kind":"textbox","id":"sh/tgvu1876","slide":10,"text":"FLOWDINE AI  /  VIBEATHON 6.0","textPreview":"FLOWDINE AI  /  VIBEATHON 6.0","textChars":29,"textLines":1,"bbox":[70,690,360,16]}
+{"kind":"textbox","id":"sh/sfmds36l","slide":10,"text":"10","textPreview":"10","textChars":2,"textLines":1,"bbox":[1160,690,50,16]}
+{"kind":"notes","id":"nt/dk5myi","slide":10,"text":"The live judge build uses Next.js and React, server route handlers, a pure TypeScript domain engine, and Cloudflare D1 with optimistic versioned writes and an audit log. Gemini is optional and safely falls back to local evidence-based guidance. For production SaaS, the repository includes a normalized Supabase and PostgreSQL migration path. Real identity, membership-backed row security, realtime events, and provider integrations are the next hardening layer, not features we falsely claim as live.\n\n[Sources]\n- Current architecture and deployment: README.md and docs/ARCHITECTURE.md\n- Supabase production reference migration: supabase/migrations/202607260001_flowdine.sql"}
+{"kind":"slide","id":"sl/8jk7j0","slide":11,"title":"HACKATHON LEVEL MAP","textShapes":25}
+{"kind":"textbox","id":"sh/8zudsvu5","slide":11,"name":"eyebrow-Hackathon level map","text":"HACKATHON LEVEL MAP","textPreview":"HACKATHON LEVEL MAP","textChars":19,"textLines":1,"bbox":[70,42,560,24]}
+{"kind":"textbox","id":"sh/7ylczqdk","slide":11,"name":"slide-title","text":"The full operating vision is live - with one honest identity gap.","textPreview":"The full operating vision is live - with one honest identity gap.","textChars":65,"textLines":1,"bbox":[70,74,1120,62]}
+{"kind":"shape","id":"sh/mdcvqlcz","slide":11,"bbox":[76,228,1128,0]}
+{"kind":"textbox","id":"sh/lc3uxgve","slide":11,"text":"Bronze","textPreview":"Bronze","textChars":6,"textLines":1,"bbox":[78,158,145,34]}
+{"kind":"textbox","id":"sh/0budobut","slide":11,"text":"Modern role-based product experience","textPreview":"Modern role-based product experience","textChars":36,"textLines":1,"bbox":[250,160,610,30]}
+{"kind":"textbox","id":"sh/za1cv6d8","slide":11,"text":"Responsive guest, kitchen, waiter, and manager interfaces","textPreview":"Responsive guest, kitchen, waiter, and manager interfaces","textChars":57,"textLines":1,"bbox":[250,192,700,28]}
+{"kind":"shape","id":"sh/y9svm1c3","slide":11,"bbox":[1000,162,174,38]}
+{"kind":"textbox","id":"sh/d8jutgvi","slide":11,"text":"COMPLETE","textPreview":"COMPLETE","textChars":8,"textLines":1,"bbox":[1000,170,174,18]}
+{"kind":"shape","id":"sh/c7adkbux","slide":11,"bbox":[76,312,1128,0]}
+{"kind":"textbox","id":"sh/ytovih0z","slide":11,"text":"Silver","textPreview":"Silver","textChars":6,"textLines":1,"bbox":[78,242,145,34]}
+{"kind":"textbox","id":"sh/zuxwrmhk","slide":11,"text":"Digital restaurant workflows + authentication","textPreview":"Digital restaurant workflows + authentication","textChars":45,"textLines":1,"bbox":[250,244,610,30]}
+{"kind":"textbox","id":"sh/kv6dkri5","slide":11,"text":"Workflows complete; email/Google authentication is not runtime-connected","textPreview":"Workflows complete; email/Google authentication is not runtime-connected","textChars":72,"textLines":1,"bbox":[250,276,700,28]}
+{"kind":"shape","id":"sh/lwfetwzq","slide":11,"bbox":[1000,246,174,38]}
+{"kind":"textbox","id":"sh/ap4veh03","slide":11,"text":"PARTIAL","textPreview":"PARTIAL","textChars":7,"textLines":1,"bbox":[1000,254,174,18]}
+{"kind":"shape","id":"sh/bqxcn2ho","slide":11,"bbox":[76,396,1128,0]}
+{"kind":"textbox","id":"sh/cr6dg7i9","slide":11,"text":"Gold","textPreview":"Gold","textChars":4,"textLines":1,"bbox":[78,326,145,34]}
+{"kind":"textbox","id":"sh/xsfupcze","slide":11,"text":"Management dashboard and daily operations","textPreview":"Management dashboard and daily operations","textChars":41,"textLines":1,"bbox":[250,328,610,30]}
+{"kind":"textbox","id":"sh/214vax0r","slide":11,"text":"Orders, tables, inventory, revenue, service flow, and analytics","textPreview":"Orders, tables, inventory, revenue, service flow, and analytics","textChars":63,"textLines":1,"bbox":[250,360,700,28]}
+{"kind":"shape","id":"sh/nmdcj2hc","slide":11,"bbox":[1000,330,174,38]}
+{"kind":"textbox","id":"sh/r69sryx4","slide":11,"text":"COMPLETE","textPreview":"COMPLETE","textChars":8,"textLines":1,"bbox":[1000,338,174,18]}
+{"kind":"shape","id":"sh/q50ritgj","slide":11,"bbox":[76,480,1128,0]}
+{"kind":"textbox","id":"sh/d8bat8fa","slide":11,"text":"Platinum","textPreview":"Platinum","textChars":8,"textLines":1,"bbox":[78,410,145,34]}
+{"kind":"textbox","id":"sh/s72tk3yp","slide":11,"text":"Intelligent operational decision support","textPreview":"Intelligent operational decision support","textChars":40,"textLines":1,"bbox":[250,412,610,30]}
+{"kind":"textbox","id":"sh/futsvixg","slide":11,"text":"Forecasting, recommendations, stock risk, insights, and copilot","textPreview":"Forecasting, recommendations, stock risk, insights, and copilot","textChars":63,"textLines":1,"bbox":[250,444,700,28]}
+{"kind":"shape","id":"sh/etkbmdgv","slide":11,"bbox":[1000,414,174,38]}
+{"kind":"textbox","id":"sh/1wbax8f6","slide":11,"text":"COMPLETE","textPreview":"COMPLETE","textChars":8,"textLines":1,"bbox":[1000,422,174,18]}
+{"kind":"shape","id":"sh/0v2to3y1","slide":11,"bbox":[76,564,1128,0]}
+{"kind":"textbox","id":"sh/vypsjexw","slide":11,"text":"Bonus","textPreview":"Bonus","textChars":5,"textLines":1,"bbox":[78,494,145,34]}
+{"kind":"textbox","id":"sh/uxgra9gb","slide":11,"text":"Live restaurant digital twin","textPreview":"Live restaurant digital twin","textChars":28,"textLines":1,"bbox":[250,496,610,30]}
+{"kind":"textbox","id":"sh/07uh4bax","slide":11,"text":"Recipe-linked availability, shared state, audit trail, and bill splitting","textPreview":"Recipe-linked availability, shared state, audit trail, and bill splitting","textChars":73,"textLines":1,"bbox":[250,528,700,28]}
+{"kind":"shape","id":"sh/ls3yxgri","slide":11,"bbox":[1000,498,174,38]}
+{"kind":"textbox","id":"sh/y5cf2ls7","slide":11,"text":"COMPLETE","textPreview":"COMPLETE","textChars":8,"textLines":1,"bbox":[1000,506,174,18]}
+{"kind":"shape","id":"sh/z6lgvq9s","slide":11,"bbox":[76,602,1128,52]}
+{"kind":"textbox","id":"sh/c3ux0ba1","slide":11,"text":"Submission truth: demo role switching proves workflows; Supabase Auth is the remaining Silver requirement.","textPreview":"Submission truth: demo role switching proves workflows; Supabase Auth is the remaining Silver requirement.","textChars":106,"textLines":1,"bbox":[98,618,1084,22]}
+{"kind":"shape","id":"sh/d43ytgrm","slide":11,"bbox":[70,682,1140,0]}
+{"kind":"textbox","id":"sh/q1sfy1sv","slide":11,"text":"FLOWDINE AI  /  VIBEATHON 6.0","textPreview":"FLOWDINE AI  /  VIBEATHON 6.0","textChars":29,"textLines":1,"bbox":[70,690,360,16]}
+{"kind":"textbox","id":"sh/b21gr69g","slide":11,"text":"11","textPreview":"11","textChars":2,"textLines":1,"bbox":[1160,690,50,16]}
+{"kind":"notes","id":"nt/8jk7j0","slide":11,"text":"Against the official levels, FlowDine completes the modern UX, digital workflows, management dashboard, intelligent operations, and bonus innovation. The only requirement we should not overstate is identity authentication. The public demo has a visible role switcher and the API applies a permission matrix, but email verification and Google OAuth are not connected to runtime identities. We present that gap honestly while demonstrating that the broader operating system is already functional and deployed.\n\n[Sources]\n- VibeAthon 6.0 ranking and user stories: Vibeathon_6.0_PS.pdf, pages 2-4\n- Current authentication boundary and feature checklist: README.md and docs/FEATURE_CHECKLIST.md"}
+{"kind":"slide","id":"sl/oms6wk","slide":12,"title":"FLOWDINE AI","textShapes":15}
+{"kind":"textbox","id":"sh/vu9wr6ho","slide":12,"text":"FLOWDINE AI","textPreview":"FLOWDINE AI","textChars":11,"textLines":1,"bbox":[70,48,260,24]}
+{"kind":"textbox","id":"sh/wvixkbyt","slide":12,"text":"Let the restaurant\nthink as one.","textPreview":"Let the restaurant | think as one.","textChars":32,"textLines":2,"bbox":[70,120,700,170]}
+{"kind":"textbox","id":"sh/hwretgze","slide":12,"text":"FlowDine AI reduces waiting, prevents unavailable-order frustration, improves staff coordination, and gives managers real-time control.","textPreview":"FlowDine AI reduces waiting, prevents unavailable-order frustration, improves staff coordination, and gives managers real-time control.","textChars":135,"textLines":1,"bbox":[74,324,790,84]}
+{"kind":"textbox","id":"sh/ixkfmlgz","slide":12,"text":"PROMISE","textPreview":"PROMISE","textChars":7,"textLines":1,"bbox":[72,470,240,24]}
+{"kind":"textbox","id":"sh/jytwv6hk","slide":12,"text":"Only what stock can fulfill","textPreview":"Only what stock can fulfill","textChars":27,"textLines":1,"bbox":[72,506,246,54]}
+{"kind":"textbox","id":"sh/4z2xoby5","slide":12,"text":"COORDINATE","textPreview":"COORDINATE","textChars":10,"textLines":1,"bbox":[360,470,240,24]}
+{"kind":"textbox","id":"sh/50byxgzq","slide":12,"text":"One state across every role","textPreview":"One state across every role","textChars":27,"textLines":1,"bbox":[360,506,246,54]}
+{"kind":"textbox","id":"sh/61kfqlgb","slide":12,"text":"PREDICT","textPreview":"PREDICT","textChars":7,"textLines":1,"bbox":[648,470,240,24]}
+{"kind":"textbox","id":"sh/r2tgzqhg","slide":12,"text":"Demand and stock risk sooner","textPreview":"Demand and stock risk sooner","textChars":28,"textLines":1,"bbox":[648,506,246,54]}
+{"kind":"textbox","id":"sh/vmdgbud0","slide":12,"text":"CONTROL","textPreview":"CONTROL","textChars":7,"textLines":1,"bbox":[936,470,240,24]}
+{"kind":"textbox","id":"sh/u1kf2pwv","slide":12,"text":"Act before service breaks","textPreview":"Act before service breaks","textChars":25,"textLines":1,"bbox":[936,506,246,54]}
+{"kind":"shape","id":"sh/hovydkv6","slide":12,"bbox":[72,594,1136,58]}
+{"kind":"textbox","id":"sh/wnmx4zel","slide":12,"text":"OPEN THE LIVE RESTAURANT  →","textPreview":"OPEN THE LIVE RESTAURANT  →","textChars":27,"textLines":1,"bbox":[96,611,350,24]}
+{"kind":"textbox","id":"sh/7ytg7ad4","slide":12,"text":"flowdine-ai.abhinavchaudhary484.chatgpt.site","textPreview":"flowdine-ai.abhinavchaudhary484.chatgpt.site","textChars":44,"textLines":1,"bbox":[470,611,714,24]}
+{"kind":"shape","id":"sh/mxkfy5wj","slide":12,"bbox":[70,682,1140,0]}
+{"kind":"textbox","id":"sh/90by9kva","slide":12,"text":"FLOWDINE AI  /  VIBEATHON 6.0","textPreview":"FLOWDINE AI  /  VIBEATHON 6.0","textChars":29,"textLines":1,"bbox":[70,690,360,16]}
+{"kind":"textbox","id":"sh/8z2x0fep","slide":12,"text":"12","textPreview":"12","textChars":2,"textLines":1,"bbox":[1160,690,50,16]}
+{"kind":"notes","id":"nt/oms6wk","slide":12,"text":"FlowDine AI turns the restaurant from a collection of disconnected tools into one coordinated operating system. Guests receive promises the kitchen and inventory can actually keep. Staff see the next right action. Managers see risk early enough to change the outcome. Our invitation is simple: open the live demo, place an order, and watch that single event move through inventory, kitchen, service, and management. That connected proof is the product.\n\n[Sources]\n- Live public demo: https://flowdine-ai.abhinavchaudhary484.chatgpt.site\n- FlowDine AI end-to-end product summary: README.md"}

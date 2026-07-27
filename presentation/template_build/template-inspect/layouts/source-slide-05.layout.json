@@ -1,0 +1,950 @@
+{
+  "schema": "openai.presentation.layout/v4",
+  "unit": "px",
+  "slide": {
+    "aid": "sl/i107q5of",
+    "id": "i107q5of",
+    "slide": 5,
+    "layoutId": "/ppt/slideLayouts/slideLayout2.xml",
+    "layoutName": "Title and Content",
+    "layoutType": "obj",
+    "masterLayoutId": "/ppt/slideMasters/slideMaster1.xml",
+    "frame": {
+      "left": 0,
+      "top": 0,
+      "width": 1280,
+      "height": 720
+    }
+  },
+  "theme": {
+    "colorSchemeName": "Office",
+    "colors": {
+      "accent1": "#4F81BD",
+      "accent2": "#C0504D",
+      "accent3": "#9BBB59",
+      "accent4": "#8064A2",
+      "accent5": "#4BACC6",
+      "accent6": "#F79646",
+      "dk1": "#000000",
+      "lt1": "#FFFFFF",
+      "dk2": "#1F497D",
+      "lt2": "#EEECE1",
+      "hlink": "#0000FF",
+      "folHlink": "#800080"
+    },
+    "fontScheme": {
+      "name": "Office",
+      "majorFont": {
+        "latinTypeface": "Calibri"
+      },
+      "minorFont": {
+        "latinTypeface": "Calibri"
+      }
+    },
+    "typefaces": [
+      "Calibri",
+      "Trebuchet MS"
+    ]
+  },
+  "inheritedLayers": [
+    {
+      "scope": "layout",
+      "id": "/ppt/slideLayouts/slideLayout2.xml",
+      "name": "Title and Content",
+      "type": "obj",
+      "parentLayoutId": "/ppt/slideMasters/slideMaster1.xml",
+      "elements": [
+        {
+          "order": 1,
+          "kind": "shape",
+          "scope": "layout",
+          "aid": "template/layout//ppt/slideLayouts/slideLayout2.xml/2",
+          "id": "2",
+          "name": "Holder 2",
+          "bbox": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "resolvedTextStyle": {
+            "insets": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          }
+        },
+        {
+          "order": 2,
+          "kind": "shape",
+          "scope": "layout",
+          "aid": "template/layout//ppt/slideLayouts/slideLayout2.xml/3",
+          "id": "3",
+          "name": "Holder 3",
+          "bbox": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "resolvedTextStyle": {
+            "insets": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          }
+        },
+        {
+          "order": 3,
+          "kind": "shape",
+          "scope": "layout",
+          "aid": "template/layout//ppt/slideLayouts/slideLayout2.xml/4",
+          "id": "4",
+          "name": "Holder 4",
+          "bbox": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "resolvedTextStyle": {
+            "insets": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          }
+        },
+        {
+          "order": 4,
+          "kind": "shape",
+          "scope": "layout",
+          "aid": "template/layout//ppt/slideLayouts/slideLayout2.xml/5",
+          "id": "5",
+          "name": "Holder 5",
+          "bbox": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "resolvedTextStyle": {
+            "insets": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          }
+        },
+        {
+          "order": 5,
+          "kind": "shape",
+          "scope": "layout",
+          "aid": "template/layout//ppt/slideLayouts/slideLayout2.xml/6",
+          "id": "6",
+          "name": "Holder 6",
+          "bbox": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "resolvedTextStyle": {
+            "insets": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "scope": "master",
+      "id": "/ppt/slideMasters/slideMaster1.xml",
+      "type": "master",
+      "backgroundColor": "bg1",
+      "elements": [
+        {
+          "order": 1,
+          "kind": "shape",
+          "scope": "master",
+          "aid": "template/master//ppt/slideMasters/slideMaster1.xml/16",
+          "id": "16",
+          "name": "bg object 16",
+          "bbox": [
+            0,
+            0,
+            1280,
+            720
+          ],
+          "geometry": "custom",
+          "resolvedTextStyle": {
+            "wrap": "square",
+            "insets": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          },
+          "fillColor": "#000000"
+        },
+        {
+          "order": 2,
+          "kind": "shape",
+          "scope": "master",
+          "aid": "template/master//ppt/slideMasters/slideMaster1.xml/2",
+          "id": "2",
+          "name": "Holder 2",
+          "bbox": [
+            188.66,
+            6.06,
+            924.47,
+            78.25
+          ],
+          "geometry": "rect",
+          "resolvedTextStyle": {
+            "wrap": "square",
+            "autoFit": "resizeShapeToFitText",
+            "insets": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          }
+        },
+        {
+          "order": 3,
+          "kind": "shape",
+          "scope": "master",
+          "aid": "template/master//ppt/slideMasters/slideMaster1.xml/3",
+          "id": "3",
+          "name": "Holder 3",
+          "bbox": [
+            148.57,
+            284.33,
+            515.2,
+            332.67
+          ],
+          "geometry": "rect",
+          "resolvedTextStyle": {
+            "wrap": "square",
+            "autoFit": "resizeShapeToFitText",
+            "insets": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          }
+        },
+        {
+          "order": 4,
+          "kind": "shape",
+          "scope": "master",
+          "aid": "template/master//ppt/slideMasters/slideMaster1.xml/4",
+          "id": "4",
+          "name": "Holder 4",
+          "bbox": [
+            435.2,
+            669.6,
+            409.6,
+            36
+          ],
+          "geometry": "rect",
+          "resolvedTextStyle": {
+            "wrap": "square",
+            "autoFit": "resizeShapeToFitText",
+            "insets": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          }
+        },
+        {
+          "order": 5,
+          "kind": "shape",
+          "scope": "master",
+          "aid": "template/master//ppt/slideMasters/slideMaster1.xml/5",
+          "id": "5",
+          "name": "Holder 5",
+          "bbox": [
+            64,
+            669.6,
+            294.4,
+            36
+          ],
+          "geometry": "rect",
+          "resolvedTextStyle": {
+            "wrap": "square",
+            "autoFit": "resizeShapeToFitText",
+            "insets": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          }
+        },
+        {
+          "order": 6,
+          "kind": "shape",
+          "scope": "master",
+          "aid": "template/master//ppt/slideMasters/slideMaster1.xml/6",
+          "id": "6",
+          "name": "Holder 6",
+          "bbox": [
+            921.6,
+            669.6,
+            294.4,
+            36
+          ],
+          "geometry": "rect",
+          "resolvedTextStyle": {
+            "wrap": "square",
+            "autoFit": "resizeShapeToFitText",
+            "insets": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "order": 1,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/tcve903i",
+      "id": "12",
+      "name": "object 2",
+      "bbox": [
+        1184,
+        0,
+        96,
+        103.87
+      ],
+      "contentType": "image/png",
+      "asset": {
+        "assetId": "/ppt/media/image5.png",
+        "contentType": "image/png",
+        "byteLength": 33583
+      },
+      "fillImage": {
+        "assetId": "/ppt/media/image5.png",
+        "contentType": "image/png",
+        "byteLength": 33583
+      }
+    },
+    {
+      "order": 2,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/cf2tcr61",
+      "id": "3",
+      "name": "object 3",
+      "bbox": [
+        188.66,
+        6.06,
+        924.47,
+        65.53
+      ],
+      "geometry": "rect",
+      "text": "Use Cases & Impact",
+      "textPreview": "Use Cases & Impact",
+      "resolvedFontSize": 52.67,
+      "resolvedTextStyle": {
+        "vertical": 1,
+        "fontSize": 52.67,
+        "typeface": "Trebuchet MS",
+        "color": "bg1",
+        "bold": true,
+        "wrap": "square",
+        "autoFit": "resizeShapeToFitText",
+        "insets": {
+          "top": 1.73,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Use Cases & Impact"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Use Cases & Impact",
+          "lineSpacingPercent": 100000,
+          "runs": [
+            {
+              "index": 1,
+              "text": "Use"
+            },
+            {
+              "index": 2,
+              "text": " "
+            },
+            {
+              "index": 3,
+              "text": "Cases"
+            },
+            {
+              "index": 4,
+              "text": " "
+            },
+            {
+              "index": 5,
+              "text": "&"
+            },
+            {
+              "index": 6,
+              "text": " "
+            },
+            {
+              "index": 7,
+              "text": "Impact"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "order": 3,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/srmx0vmd",
+      "id": "13",
+      "name": "object 4",
+      "bbox": [
+        200.8,
+        295.65,
+        11,
+        11
+      ],
+      "contentType": "image/png",
+      "asset": {
+        "assetId": "/ppt/media/image6.png",
+        "contentType": "image/png",
+        "byteLength": 334
+      },
+      "fillImage": {
+        "assetId": "/ppt/media/image6.png",
+        "contentType": "image/png",
+        "byteLength": 334
+      }
+    },
+    {
+      "order": 4,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/jmdw3qlg",
+      "id": "14",
+      "name": "object 5",
+      "bbox": [
+        200.8,
+        339.65,
+        11,
+        11
+      ],
+      "contentType": "image/png",
+      "asset": {
+        "assetId": "/ppt/media/image6.png",
+        "contentType": "image/png",
+        "byteLength": 334
+      },
+      "fillImage": {
+        "assetId": "/ppt/media/image6.png",
+        "contentType": "image/png",
+        "byteLength": 334
+      }
+    },
+    {
+      "order": 5,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/ilkvul4v",
+      "id": "15",
+      "name": "object 6",
+      "bbox": [
+        200.8,
+        383.65,
+        11,
+        11
+      ],
+      "contentType": "image/png",
+      "asset": {
+        "assetId": "/ppt/media/image6.png",
+        "contentType": "image/png",
+        "byteLength": 334
+      },
+      "fillImage": {
+        "assetId": "/ppt/media/image6.png",
+        "contentType": "image/png",
+        "byteLength": 334
+      }
+    },
+    {
+      "order": 6,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/5ove5g3m",
+      "id": "16",
+      "name": "object 7",
+      "bbox": [
+        200.8,
+        427.65,
+        11,
+        11
+      ],
+      "contentType": "image/png",
+      "asset": {
+        "assetId": "/ppt/media/image6.png",
+        "contentType": "image/png",
+        "byteLength": 334
+      },
+      "fillImage": {
+        "assetId": "/ppt/media/image6.png",
+        "contentType": "image/png",
+        "byteLength": 334
+      }
+    },
+    {
+      "order": 7,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/4nmdwbm1",
+      "id": "17",
+      "name": "object 8",
+      "bbox": [
+        200.8,
+        471.65,
+        11,
+        11
+      ],
+      "contentType": "image/png",
+      "asset": {
+        "assetId": "/ppt/media/image6.png",
+        "contentType": "image/png",
+        "byteLength": 334
+      },
+      "fillImage": {
+        "assetId": "/ppt/media/image6.png",
+        "contentType": "image/png",
+        "byteLength": 334
+      }
+    },
+    {
+      "order": 8,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/m5kbi1oj",
+      "id": "9",
+      "name": "object 9",
+      "bbox": [
+        228.47,
+        273.25,
+        433.93,
+        223.2
+      ],
+      "geometry": "rect",
+      "text": "Key Use Cases\nTarget Users / Beneficiaries Real-World Applications Expected Impact Measurable Outcomes",
+      "textPreview": "Key Use Cases | Target Users / Beneficiaries Real-World Applications Expected Impact Measurable Outcomes",
+      "resolvedFontSize": 18.67,
+      "resolvedTextStyle": {
+        "vertical": 1,
+        "fontSize": 18.67,
+        "typeface": "Calibri",
+        "wrap": "square",
+        "autoFit": "resizeShapeToFitText",
+        "insets": {
+          "top": 1.73,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 6,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Key Use Cases"
+          },
+          {
+            "index": 2,
+            "text": "Target Users /"
+          },
+          {
+            "index": 3,
+            "text": "Beneficiaries Real-World"
+          },
+          {
+            "index": 4,
+            "text": "Applications Expected"
+          },
+          {
+            "index": 5,
+            "text": "Impact Measurable"
+          },
+          {
+            "index": 6,
+            "text": "Outcomes"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Key Use Cases",
+          "lineSpacingPercent": 100000,
+          "runs": [
+            {
+              "index": 1,
+              "text": "Key",
+              "fontSize": 36.67,
+              "typeface": "Trebuchet MS",
+              "color": "#FFFFFF"
+            },
+            {
+              "index": 2,
+              "text": " ",
+              "fontSize": 36.67,
+              "typeface": "Trebuchet MS",
+              "color": "#FFFFFF"
+            },
+            {
+              "index": 3,
+              "text": "Use",
+              "fontSize": 36.67,
+              "typeface": "Trebuchet MS",
+              "color": "#FFFFFF"
+            },
+            {
+              "index": 4,
+              "text": " ",
+              "fontSize": 36.67,
+              "typeface": "Trebuchet MS",
+              "color": "#FFFFFF"
+            },
+            {
+              "index": 5,
+              "text": "Cases",
+              "fontSize": 36.67,
+              "typeface": "Trebuchet MS",
+              "color": "#FFFFFF"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 2,
+          "text": "Target Users / Beneficiaries Real-World Applications Expected Impact Measurable Outcomes",
+          "lineSpacingPercent": 100000,
+          "runs": [
+            {
+              "index": 1,
+              "text": "Target",
+              "fontSize": 36.67,
+              "typeface": "Trebuchet MS",
+              "color": "#FFFFFF"
+            },
+            {
+              "index": 2,
+              "text": " ",
+              "fontSize": 36.67,
+              "typeface": "Trebuchet MS",
+              "color": "#FFFFFF"
+            },
+            {
+              "index": 3,
+              "text": "Users",
+              "fontSize": 36.67,
+              "typeface": "Trebuchet MS",
+              "color": "#FFFFFF"
+            },
+            {
+              "index": 4,
+              "text": " ",
+              "fontSize": 36.67,
+              "typeface": "Trebuchet MS",
+              "color": "#FFFFFF"
+            },
+            {
+              "index": 5,
+              "text": "/",
+              "fontSize": 36.67,
+              "typeface": "Trebuchet MS",
+              "color": "#FFFFFF"
+            },
+            {
+              "index": 6,
+              "text": " ",
+              "fontSize": 36.67,
+              "typeface": "Trebuchet MS",
+              "color": "#FFFFFF"
+            },
+            {
+              "index": 7,
+              "text": "Beneficiaries ",
+              "fontSize": 36.67,
+              "typeface": "Trebuchet MS",
+              "color": "#FFFFFF"
+            },
+            {
+              "index": 8,
+              "text": "Real-",
+              "fontSize": 36.67,
+              "typeface": "Trebuchet MS",
+              "color": "#FFFFFF"
+            },
+            {
+              "index": 9,
+              "text": "World",
+              "fontSize": 36.67,
+              "typeface": "Trebuchet MS",
+              "color": "#FFFFFF"
+            },
+            {
+              "index": 10,
+              "text": " ",
+              "fontSize": 36.67,
+              "typeface": "Trebuchet MS",
+              "color": "#FFFFFF"
+            },
+            {
+              "index": 11,
+              "text": "Applications ",
+              "fontSize": 36.67,
+              "typeface": "Trebuchet MS",
+              "color": "#FFFFFF"
+            },
+            {
+              "index": 12,
+              "text": "Expected",
+              "fontSize": 36.67,
+              "typeface": "Trebuchet MS",
+              "color": "#FFFFFF"
+            },
+            {
+              "index": 13,
+              "text": " ",
+              "fontSize": 36.67,
+              "typeface": "Trebuchet MS",
+              "color": "#FFFFFF"
+            },
+            {
+              "index": 14,
+              "text": "Impact ",
+              "fontSize": 36.67,
+              "typeface": "Trebuchet MS",
+              "color": "#FFFFFF"
+            },
+            {
+              "index": 15,
+              "text": "Measurable",
+              "fontSize": 36.67,
+              "typeface": "Trebuchet MS",
+              "color": "#FFFFFF"
+            },
+            {
+              "index": 16,
+              "text": " ",
+              "fontSize": 36.67,
+              "typeface": "Trebuchet MS",
+              "color": "#FFFFFF"
+            },
+            {
+              "index": 17,
+              "text": "Outcomes",
+              "fontSize": 36.67,
+              "typeface": "Trebuchet MS",
+              "color": "#FFFFFF"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 9,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/vitwz65k",
+      "id": "18",
+      "name": "object 10",
+      "bbox": [
+        10.47,
+        0,
+        156,
+        111
+      ],
+      "contentType": "image/png",
+      "asset": {
+        "assetId": "/ppt/media/image4.png",
+        "contentType": "image/png",
+        "byteLength": 15725
+      },
+      "fillImage": {
+        "assetId": "/ppt/media/image4.png",
+        "contentType": "image/png",
+        "byteLength": 15725
+      }
+    },
+    {
+      "order": 10,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/x4vedgvm",
+      "id": "11",
+      "name": "object 11",
+      "bbox": [
+        46.99,
+        25.67,
+        83.33,
+        44.67
+      ],
+      "geometry": "rect",
+      "text": "Team Name\n/ Logo",
+      "textPreview": "Team Name | / Logo",
+      "resolvedFontSize": 18.67,
+      "resolvedTextStyle": {
+        "vertical": 1,
+        "fontSize": 18.67,
+        "typeface": "Calibri",
+        "wrap": "square",
+        "autoFit": "resizeShapeToFitText",
+        "insets": {
+          "top": 4.67,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 3,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Team Name"
+          },
+          {
+            "index": 2,
+            "text": ""
+          },
+          {
+            "index": 3,
+            "text": "/ Logo"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Team Name",
+          "lineSpacingPercent": 100000,
+          "runs": [
+            {
+              "index": 1,
+              "text": "Team",
+              "fontSize": 14.67,
+              "typeface": "Trebuchet MS",
+              "color": "#FFFFFF"
+            },
+            {
+              "index": 2,
+              "text": " ",
+              "fontSize": 14.67,
+              "typeface": "Trebuchet MS",
+              "color": "#FFFFFF"
+            },
+            {
+              "index": 3,
+              "text": "Name",
+              "fontSize": 14.67,
+              "typeface": "Trebuchet MS",
+              "color": "#FFFFFF"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 2,
+          "text": "/ Logo",
+          "lineSpacingPercent": 100000,
+          "runs": [
+            {
+              "index": 1,
+              "text": "/",
+              "fontSize": 14.67,
+              "typeface": "Trebuchet MS",
+              "color": "#FFFFFF"
+            },
+            {
+              "index": 2,
+              "text": " ",
+              "fontSize": 14.67,
+              "typeface": "Trebuchet MS",
+              "color": "#FFFFFF"
+            },
+            {
+              "index": 3,
+              "text": "Logo",
+              "fontSize": 14.67,
+              "typeface": "Trebuchet MS",
+              "color": "#FFFFFF"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 11,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/uhkvq14z",
+      "id": "19",
+      "name": "object 12",
+      "bbox": [
+        392,
+        171,
+        418,
+        459
+      ],
+      "contentType": "image/png",
+      "asset": {
+        "assetId": "/ppt/media/image3.png",
+        "contentType": "image/png",
+        "byteLength": 44379
+      },
+      "fillImage": {
+        "assetId": "/ppt/media/image3.png",
+        "contentType": "image/png",
+        "byteLength": 44379
+      }
+    }
+  ],
+  "composeRuns": []
+}

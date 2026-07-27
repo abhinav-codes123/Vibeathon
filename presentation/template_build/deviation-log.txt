@@ -1,0 +1,17 @@
+Intentional template deviations
+
+Slides 1-6
+- The inherited central N watermark image is replaced with a verified FlowDine visual in the same inherited media frame.
+- Reason: the official template provides a central visual slot; real product evidence is more useful to judges than repeating the decorative mark.
+- The official top-left and top-right hackathon/organizer logos are preserved.
+
+Slides 2-6
+- The inherited five-item prompt copy is rewritten with short FlowDine-specific statements.
+- The inherited bullet markers, body frame, font family, font size, line spacing, title, master, and layout remain unchanged.
+- The small team badge text is changed from "Team Name / Logo" to "FlowDine AI".
+
+Slide 1
+- The inherited title-page body is rewritten with the project title, tagline, problem statement, live demo, and editable participant fields.
+- Unknown participant details remain visibly marked for the user to complete before submission.
+
+No new slide, overlay layout, replacement master, or external template was introduced.

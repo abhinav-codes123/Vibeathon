@@ -14,6 +14,7 @@ import {
 import { seedState } from "../lib/seed.ts";
 import { canAccessView, resolveActionRole } from "../lib/authz.ts";
 import { publicStateProjection } from "../lib/state-projection.ts";
+import { parseSupabaseAuthProviders } from "../lib/supabase/config.ts";
 
 const fresh = () => structuredClone(seedState);
 
@@ -119,4 +120,23 @@ test("public state projection removes operational and guest-sensitive fields", (
   assert.ok(projected.orders.every((order) => order.notes === ""));
   assert.ok(projected.reservations.every((reservation) => reservation.phone === ""));
   assert.ok(projected.queue.every((entry) => entry.name.startsWith("Party ")));
+});
+
+test("auth provider controls fail closed and reflect Supabase settings", () => {
+  assert.deepEqual(parseSupabaseAuthProviders(null), {
+    email: false,
+    google: false,
+  });
+  assert.deepEqual(
+    parseSupabaseAuthProviders({
+      external: { email: true, google: false, github: true },
+    }),
+    { email: true, google: false },
+  );
+  assert.deepEqual(
+    parseSupabaseAuthProviders({
+      external: { email: true, google: true },
+    }),
+    { email: true, google: true },
+  );
 });

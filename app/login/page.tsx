@@ -30,7 +30,7 @@ export default async function LoginPage({
           </p>
           <ul>
             <li>Email confirmation before access</li>
-            <li>Google OAuth with a server-verified session</li>
+            <li>Server-verified sessions on every protected request</li>
             <li>Database-backed kitchen, waiter, manager, and owner roles</li>
           </ul>
         </div>

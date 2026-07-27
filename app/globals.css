@@ -549,6 +549,7 @@ img { display: block; max-width: 100%; }
 .auth-message { margin: 0 !important; padding: 10px 11px; border-radius: 9px; font-size: 9px !important; line-height: 1.5 !important; }
 .auth-message.error { color: #842d24; background: #fbe6e2; }
 .auth-message.success { color: #1f6444; background: #e5f3ea; }
+.auth-provider-note { margin: 12px 0 0 !important; padding: 9px 10px; border: 1px solid #e6e0d5; border-radius: 9px; color: #777269 !important; background: #faf8f4; font-size: 9px !important; line-height: 1.5 !important; }
 .auth-text-button { display: block; margin: 15px auto 0; padding: 5px; border: 0; color: var(--emerald); background: transparent; cursor: pointer; font-size: 9px; font-weight: 800; }
 .auth-footnote { margin: 0; color: #aab7b0; font-size: 9px; text-align: center; }
 .compact-auth-page { display: grid; place-items: center; }

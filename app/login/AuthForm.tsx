@@ -1,7 +1,10 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
-import { getSupabaseBrowserClient } from "../../lib/supabase/client";
+import { useEffect, useState, type FormEvent } from "react";
+import {
+  getSupabaseBrowserClient,
+  getSupabaseBrowserConfig,
+} from "../../lib/supabase/client";
 
 type Mode = "signin" | "signup" | "recover";
 
@@ -19,6 +22,21 @@ export function AuthForm({
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState(initialError);
   const [tone, setTone] = useState<"error" | "success">("error");
+  const [googleEnabled, setGoogleEnabled] = useState(false);
+
+  useEffect(() => {
+    let active = true;
+    void getSupabaseBrowserConfig()
+      .then((config) => {
+        if (active) setGoogleEnabled(config.providers.google);
+      })
+      .catch(() => {
+        if (active) setGoogleEnabled(false);
+      });
+    return () => {
+      active = false;
+    };
+  }, []);
 
   const show = (value: string, nextTone: "error" | "success" = "error") => {
     setMessage(value);
@@ -121,7 +139,7 @@ export function AuthForm({
           : "Staff roles are assigned by the restaurant owner and cannot be selected here."}
       </p>
 
-      {mode !== "recover" && (
+      {mode !== "recover" && googleEnabled && (
         <button
           className="google-button"
           disabled={busy}
@@ -132,7 +150,15 @@ export function AuthForm({
         </button>
       )}
 
-      {mode !== "recover" && <div className="auth-divider"><span>or use email</span></div>}
+      {mode !== "recover" && googleEnabled && (
+        <div className="auth-divider"><span>or use email</span></div>
+      )}
+
+      {mode !== "recover" && !googleEnabled && (
+        <p className="auth-provider-note">
+          Google sign-in is not enabled yet. Use your verified email account.
+        </p>
+      )}
 
       <form onSubmit={submit}>
         {mode === "signup" && (

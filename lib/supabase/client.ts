@@ -2,16 +2,16 @@
 
 import { createBrowserClient } from "@supabase/ssr";
 import type { SupabaseClient } from "@supabase/supabase-js";
-import type { SupabasePublicConfig } from "./config";
+import type { SupabaseRuntimeConfig } from "./config";
 
 let browserClient: SupabaseClient | null = null;
-let configPromise: Promise<SupabasePublicConfig> | null = null;
+let configPromise: Promise<SupabaseRuntimeConfig> | null = null;
 
-async function loadConfig() {
+export async function getSupabaseBrowserConfig() {
   configPromise ??= fetch("/api/auth/config", { cache: "no-store" })
     .then(async (response) => {
       const payload = (await response.json()) as
-        | ({ configured: true } & SupabasePublicConfig)
+        | ({ configured: true } & SupabaseRuntimeConfig)
         | { configured: false; error: string };
       if (!response.ok || !payload.configured) {
         throw new Error(
@@ -25,7 +25,7 @@ async function loadConfig() {
 
 export async function getSupabaseBrowserClient() {
   if (browserClient) return browserClient;
-  const { url, publishableKey } = await loadConfig();
+  const { url, publishableKey } = await getSupabaseBrowserConfig();
   browserClient = createBrowserClient(url, publishableKey);
   return browserClient;
 }

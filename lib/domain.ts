@@ -1,6 +1,8 @@
 import type {
   AppState,
+  ActionResult,
   DemoAction,
+  DiningTable,
   MenuItem,
   Order,
   OrderStatus,
@@ -76,11 +78,11 @@ export function queueWaitEstimate(partySize: number, state: AppState) {
 
 export function can(role: Role, action: string) {
   const permissions: Record<Role, string[]> = {
-    customer: ["place_order", "request_service", "join_queue", "leave_queue", "reserve", "mark_paid"],
+    customer: ["place_order", "request_service", "join_queue", "leave_queue", "reserve"],
     kitchen: ["advance_order"],
     waiter: ["advance_order", "resolve_request", "set_table", "place_order"],
-    manager: ["advance_order", "resolve_request", "set_table", "toggle_pause", "restock", "cancel_order"],
-    owner: ["advance_order", "resolve_request", "set_table", "toggle_pause", "restock", "cancel_order"],
+    manager: ["advance_order", "resolve_request", "set_table", "toggle_pause", "restock", "cancel_order", "mark_paid"],
+    owner: ["advance_order", "resolve_request", "set_table", "toggle_pause", "restock", "cancel_order", "mark_paid"],
   };
   return permissions[role].includes(action);
 }
@@ -153,13 +155,36 @@ const nextStatus: Partial<Record<OrderStatus, OrderStatus>> = {
   confirmed: "preparing",
   preparing: "ready",
   ready: "served",
-  served: "completed",
 };
 
-export function applyAction(state: AppState, action: DemoAction): { state: AppState; message: string } {
+const tableTransitions: Record<DiningTable["status"], DiningTable["status"][]> = {
+  available: ["reserved", "occupied", "out_of_service"],
+  reserved: ["available", "occupied", "out_of_service"],
+  occupied: ["bill_requested", "cleaning", "out_of_service"],
+  bill_requested: ["occupied", "cleaning", "out_of_service"],
+  cleaning: ["available", "out_of_service"],
+  out_of_service: ["available"],
+};
+
+function canAdvanceStatus(role: Role, status: OrderStatus) {
+  if (role === "manager" || role === "owner") return true;
+  if (role === "kitchen") return ["received", "confirmed", "preparing"].includes(status);
+  if (role === "waiter") return status === "ready";
+  return false;
+}
+
+export function applyAction(
+  state: AppState,
+  action: DemoAction,
+  actorRole: Role = "owner",
+): ActionResult {
   const now = new Date().toISOString();
   if (action.type === "place_order") {
     if (!action.items.length) throw new Error("Add at least one item before ordering.");
+    const table = state.tables.find((entry) => entry.code === action.table);
+    if (!table || ["cleaning", "out_of_service"].includes(table.status)) {
+      throw new Error("Choose a table that is available for service.");
+    }
     const lines = action.items.map((line) => {
       const item = state.menu.find((entry) => entry.id === line.menuItemId);
       if (!item || line.quantity < 1) throw new Error("One or more order items are invalid.");
@@ -216,8 +241,7 @@ export function applyAction(state: AppState, action: DemoAction): { state: AppSt
       paid: false,
     };
     state.orders.unshift(order);
-    const table = state.tables.find((entry) => entry.code === action.table);
-    if (table) table.status = "occupied";
+    table.status = "occupied";
     state.updatedAt = now;
     return { state, message: `${order.number} confirmed. The kitchen has your ticket.` };
   }
@@ -225,6 +249,9 @@ export function applyAction(state: AppState, action: DemoAction): { state: AppSt
   if (action.type === "advance_order") {
     const order = state.orders.find((entry) => entry.id === action.orderId);
     if (!order) throw new Error("Order not found.");
+    if (!canAdvanceStatus(actorRole, order.status)) {
+      throw new Error(`${actorRole} access cannot advance an order from ${order.status}.`);
+    }
     const status = nextStatus[order.status];
     if (!status) throw new Error("This order cannot be advanced again.");
     order.status = status;
@@ -238,30 +265,49 @@ export function applyAction(state: AppState, action: DemoAction): { state: AppSt
     if (!order || ["completed", "cancelled"].includes(order.status)) {
       throw new Error("This order cannot be cancelled.");
     }
-    for (const line of order.items) {
-      const item = state.menu.find((entry) => entry.id === line.menuItemId);
-      for (const recipe of item?.recipe ?? []) {
-        const stock = state.inventory.find((entry) => entry.id === recipe.ingredientId);
-        if (stock) {
-          const delta = recipe.quantity * line.quantity;
-          stock.quantity += delta;
-          state.movements.unshift({
-            id: crypto.randomUUID(),
-            ingredientId: stock.id,
-            delta,
-            reason: `Restored from cancelled ${order.number}`,
-            createdAt: now,
-          });
+    const restoreReservedStock = ["received", "confirmed"].includes(order.status);
+    if (restoreReservedStock) {
+      for (const line of order.items) {
+        const item = state.menu.find((entry) => entry.id === line.menuItemId);
+        for (const recipe of item?.recipe ?? []) {
+          const stock = state.inventory.find((entry) => entry.id === recipe.ingredientId);
+          if (stock) {
+            const delta = recipe.quantity * line.quantity;
+            stock.quantity += delta;
+            state.movements.unshift({
+              id: crypto.randomUUID(),
+              ingredientId: stock.id,
+              delta,
+              reason: `Restored from cancelled ${order.number}`,
+              createdAt: now,
+            });
+          }
         }
       }
     }
     order.status = "cancelled";
     order.updatedAt = now;
     state.updatedAt = now;
-    return { state, message: `${order.number} cancelled and reserved ingredients restored.` };
+    return {
+      state,
+      message: restoreReservedStock
+        ? `${order.number} cancelled and reserved ingredients restored.`
+        : `${order.number} cancelled. Prepared ingredients were not returned to stock.`,
+    };
   }
 
   if (action.type === "request_service") {
+    const table = state.tables.find((entry) => entry.code === action.table);
+    if (!table || ["cleaning", "out_of_service"].includes(table.status)) {
+      throw new Error("Service can only be requested for an active table.");
+    }
+    const duplicate = state.serviceRequests.some(
+      (entry) =>
+        entry.table === action.table &&
+        entry.type === action.requestType &&
+        entry.status === "open",
+    );
+    if (duplicate) throw new Error("That service request is already open.");
     state.serviceRequests.unshift({
       id: crypto.randomUUID(),
       table: action.table,
@@ -269,8 +315,7 @@ export function applyAction(state: AppState, action: DemoAction): { state: AppSt
       status: "open",
       createdAt: now,
     });
-    const table = state.tables.find((entry) => entry.code === action.table);
-    if (table && action.requestType === "bill") table.status = "bill_requested";
+    if (action.requestType === "bill") table.status = "bill_requested";
     state.updatedAt = now;
     return { state, message: action.requestType === "bill" ? "Bill requested." : "A waiter has been notified." };
   }
@@ -278,28 +323,50 @@ export function applyAction(state: AppState, action: DemoAction): { state: AppSt
   if (action.type === "resolve_request") {
     const request = state.serviceRequests.find((entry) => entry.id === action.requestId);
     if (!request) throw new Error("Service request not found.");
+    if (request.status !== "open") throw new Error("This service request is already resolved.");
     request.status = "resolved";
     state.updatedAt = now;
     return { state, message: "Service request resolved." };
   }
 
   if (action.type === "join_queue") {
+    if (state.queue.filter((entry) => entry.status === "waiting").length >= 200) {
+      throw new Error("The live queue is temporarily full.");
+    }
+    const duplicate = state.queue.some(
+      (entry) =>
+        entry.status === "waiting" &&
+        entry.name.localeCompare(action.name, undefined, { sensitivity: "base" }) === 0 &&
+        entry.partySize === action.partySize,
+    );
+    if (duplicate) throw new Error("A matching party is already in the queue.");
     const estimateMinutes = queueWaitEstimate(action.partySize, state);
+    const queueId = crypto.randomUUID();
+    const managementToken = `${crypto.randomUUID()}${crypto.randomUUID()}`;
     state.queue.push({
-      id: crypto.randomUUID(),
+      id: queueId,
       name: action.name.trim() || "Guest",
       partySize: Math.max(1, Math.min(20, Math.floor(action.partySize))),
       status: "waiting",
       joinedAt: now,
       estimateMinutes,
+      managementToken,
     });
     state.updatedAt = now;
-    return { state, message: `You joined the queue. Estimated wait: ${estimateMinutes} minutes.` };
+    return {
+      state,
+      message: `You joined the queue. Estimated wait: ${estimateMinutes} minutes.`,
+      queueAccess: { queueId, managementToken },
+    };
   }
 
   if (action.type === "leave_queue") {
     const entry = state.queue.find((row) => row.id === action.queueId);
     if (!entry) throw new Error("Queue entry not found.");
+    if (!entry.managementToken || entry.managementToken !== action.managementToken) {
+      throw new Error("This queue entry can only be changed from the browser that created it.");
+    }
+    if (entry.status !== "waiting") throw new Error("This queue entry is no longer waiting.");
     entry.status = "left";
     state.updatedAt = now;
     return { state, message: "You left the live queue." };
@@ -346,6 +413,11 @@ export function applyAction(state: AppState, action: DemoAction): { state: AppSt
   if (action.type === "set_table") {
     const table = state.tables.find((entry) => entry.id === action.tableId);
     if (!table) throw new Error("Table not found.");
+    if (!tableTransitions[table.status].includes(action.status)) {
+      throw new Error(
+        `${table.code} cannot move directly from ${table.status} to ${action.status}.`,
+      );
+    }
     table.status = action.status;
     state.updatedAt = now;
     return { state, message: `${table.code} marked ${action.status.replaceAll("_", " ")}.` };
@@ -354,9 +426,17 @@ export function applyAction(state: AppState, action: DemoAction): { state: AppSt
   if (action.type === "mark_paid") {
     const order = state.orders.find((entry) => entry.id === action.orderId);
     if (!order) throw new Error("Order not found.");
+    if (order.paid) throw new Error("This order is already paid.");
+    if (!["served", "completed"].includes(order.status)) {
+      throw new Error("Only a served order can be marked paid.");
+    }
     order.paid = true;
+    order.status = "completed";
+    order.updatedAt = now;
+    const table = state.tables.find((entry) => entry.code === order.table);
+    if (table) table.status = "cleaning";
     state.updatedAt = now;
-    return { state, message: "Simulated payment completed and receipt preserved." };
+    return { state, message: "Payment recorded. The table is ready for cleaning." };
   }
 
   throw new Error("Unsupported action.");

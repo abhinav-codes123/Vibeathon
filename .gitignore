@@ -12,6 +12,8 @@
 
 # testing
 /coverage
+/test-results/*
+!/test-results/.gitignore
 
 # next.js
 /.next/

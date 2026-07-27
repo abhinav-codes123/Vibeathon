@@ -31,6 +31,14 @@ type StatePayload = {
 };
 
 type CartLine = { item: MenuItem; quantity: number };
+type ActionResponse = {
+  message?: string;
+  error?: string;
+  queueAccess?: {
+    queueId: string;
+    managementToken: string;
+  };
+};
 type PublicAuthContext = {
   configured: boolean;
   user: { email: string } | null;
@@ -80,6 +88,7 @@ export function FlowDineApp({ initialView }: { initialView: AppView }) {
   const [toast, setToast] = useState("");
   const [busy, setBusy] = useState(false);
   const [cart, setCart] = useState<CartLine[]>([]);
+  const [cartHydrated, setCartHydrated] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("All");
@@ -124,6 +133,41 @@ export function FlowDineApp({ initialView }: { initialView: AppView }) {
     };
   }, [load]);
 
+  useEffect(() => {
+    if (!data || cartHydrated) return;
+    const hydrate = window.setTimeout(() => {
+      try {
+        const saved = JSON.parse(window.localStorage.getItem("flowdine-cart-v1") ?? "[]") as {
+          menuItemId: string;
+          quantity: number;
+        }[];
+        setCart(
+          saved.flatMap((line) => {
+            const item = data.state.menu.find((entry) => entry.id === line.menuItemId);
+            return item && Number.isInteger(line.quantity) && line.quantity > 0 && line.quantity <= 10
+              ? [{ item, quantity: line.quantity }]
+              : [];
+          }),
+        );
+      } catch {
+        window.localStorage.removeItem("flowdine-cart-v1");
+      } finally {
+        setCartHydrated(true);
+      }
+    }, 0);
+    return () => window.clearTimeout(hydrate);
+  }, [cartHydrated, data]);
+
+  useEffect(() => {
+    if (!cartHydrated) return;
+    window.localStorage.setItem(
+      "flowdine-cart-v1",
+      JSON.stringify(
+        cart.map((line) => ({ menuItemId: line.item.id, quantity: line.quantity })),
+      ),
+    );
+  }, [cart, cartHydrated]);
+
   const navigate = (next: AppView) => {
     setView(next);
     setData(null);
@@ -142,16 +186,16 @@ export function FlowDineApp({ initialView }: { initialView: AppView }) {
         },
         body: JSON.stringify(action),
       });
-      const payload = (await response.json()) as { message?: string; error?: string };
+      const payload = (await response.json()) as ActionResponse;
       if (!response.ok) throw new Error(payload.error ?? "Action failed.");
       setToast(payload.message ?? "Saved.");
       window.setTimeout(() => setToast(""), 3_200);
       await load(true);
-      return true;
+      return payload;
     } catch (cause) {
       setToast(cause instanceof Error ? cause.message : "Action failed.");
       window.setTimeout(() => setToast(""), 4_000);
-      return false;
+      return null;
     } finally {
       setBusy(false);
     }
@@ -475,19 +519,26 @@ function Menu({
           <option>All</option><option value="vegetarian">Vegetarian</option><option value="vegan">Vegan</option>
         </select>
       </section>
-      <div className="category-tabs" role="tablist">
+      <div className="category-tabs" aria-label="Menu categories">
         {categories.map((item) => (
-          <button key={item} className={category === item ? "active" : ""} onClick={() => setCategory(item)}>{item}</button>
+          <button key={item} aria-pressed={category === item} className={category === item ? "active" : ""} onClick={() => setCategory(item)}>{item}</button>
         ))}
       </div>
       <section className="menu-grid">
-        {filtered.map((item) => {
+        {filtered.map((item, index) => {
           const portions = availability[item.id] ?? 0;
           const available = availabilityLabel(portions);
           return (
             <article className="menu-card" key={item.id}>
               <div className="dish-image">
-                <Image src={item.image} alt="" width={800} height={520} unoptimized />
+                <Image
+                  src={item.image}
+                  alt=""
+                  width={800}
+                  height={520}
+                  loading={index < 3 ? "eager" : "lazy"}
+                  unoptimized
+                />
                 <span className={`availability ${available.tone}`}><i />{available.label}</span>
               </div>
               <div className="dish-content">
@@ -547,7 +598,7 @@ function Cart({
         </div>
         <div className="order-fields">
           <label>Your name<input value={guest} onChange={(e) => setGuest(e.target.value)} /></label>
-          <label>Table<select value={table} onChange={(e) => setTable(e.target.value)}>{state.tables.map((row) => <option key={row.id}>{row.code}</option>)}</select></label>
+          <label>Table<select value={table} onChange={(e) => setTable(e.target.value)}>{state.tables.filter((row) => !["cleaning", "out_of_service"].includes(row.status)).map((row) => <option key={row.id}>{row.code}</option>)}</select></label>
           <label className="full">Dietary or preparation note<textarea value={notes} onChange={(e) => setNotes(e.target.value)} placeholder="No onion, allergy note, course timing…" /></label>
         </div>
         <div className="bill-summary">
@@ -565,7 +616,7 @@ function Cart({
   );
 }
 
-function ReservationView({ state, perform, busy }: { state: AppState; perform: (action: DemoAction) => Promise<boolean>; busy: boolean }) {
+function ReservationView({ state, perform, busy }: { state: AppState; perform: (action: DemoAction) => Promise<ActionResponse | null>; busy: boolean }) {
   const today = new Date().toISOString().slice(0, 10);
   const [form, setForm] = useState({ name: "Demo Guest", phone: "9876543210", partySize: 4, date: today, time: "20:30" });
   return (
@@ -589,15 +640,46 @@ function ReservationView({ state, perform, busy }: { state: AppState; perform: (
   );
 }
 
-function QueueView({ state, perform, busy }: { state: AppState; perform: (action: DemoAction) => Promise<boolean>; busy: boolean }) {
+function QueueView({ state, perform, busy }: { state: AppState; perform: (action: DemoAction) => Promise<ActionResponse | null>; busy: boolean }) {
   const [name, setName] = useState("Demo Guest");
   const [partySize, setPartySize] = useState(2);
+  const [queueAccess, setQueueAccess] = useState<ActionResponse["queueAccess"]>(undefined);
   const waiting = state.queue.filter((entry) => entry.status === "waiting");
+  useEffect(() => {
+    const hydrate = window.setTimeout(() => {
+      try {
+        const stored = window.localStorage.getItem("flowdine-queue-access-v1");
+        if (stored) setQueueAccess(JSON.parse(stored) as NonNullable<ActionResponse["queueAccess"]>);
+      } catch {
+        window.localStorage.removeItem("flowdine-queue-access-v1");
+      }
+    }, 0);
+    return () => window.clearTimeout(hydrate);
+  }, []);
+  const joinQueue = async () => {
+    const result = await perform({ type: "join_queue", name, partySize });
+    if (result?.queueAccess) {
+      setQueueAccess(result.queueAccess);
+      window.localStorage.setItem("flowdine-queue-access-v1", JSON.stringify(result.queueAccess));
+    }
+  };
+  const leaveQueue = async () => {
+    if (!queueAccess) return;
+    const result = await perform({
+      type: "leave_queue",
+      queueId: queueAccess.queueId,
+      managementToken: queueAccess.managementToken,
+    });
+    if (result) {
+      setQueueAccess(undefined);
+      window.localStorage.removeItem("flowdine-queue-access-v1");
+    }
+  };
   return (
     <>
       <PageHeader eyebrow="Live queue" title="Know your wait before you wait." copy="Estimates account for party size, table capacity, occupancy duration, and parties ahead." />
       <section className="queue-layout">
-        <form className="form-card compact" onSubmit={(e) => { e.preventDefault(); void perform({ type: "join_queue", name, partySize }); }}>
+        <form className="form-card compact" onSubmit={(e) => { e.preventDefault(); void joinQueue(); }}>
           <h2>Join the queue</h2>
           <label>Name<input value={name} onChange={(e) => setName(e.target.value)} /></label>
           <label>Party size<input type="number" min={1} max={20} value={partySize} onChange={(e) => setPartySize(Number(e.target.value))} /></label>
@@ -610,7 +692,9 @@ function QueueView({ state, perform, busy }: { state: AppState; perform: (action
               <span className="queue-position">{index + 1}</span>
               <div><b>{entry.name}</b><small>Party of {entry.partySize} · joined {timeAgo(entry.joinedAt)} ago</small></div>
               <strong>~{entry.estimateMinutes} min</strong>
-              <button onClick={() => void perform({ type: "leave_queue", queueId: entry.id })}>Leave</button>
+              {queueAccess?.queueId === entry.id && (
+                <button onClick={() => void leaveQueue()}>Leave</button>
+              )}
             </div>
           ))}
         </div>
@@ -619,7 +703,7 @@ function QueueView({ state, perform, busy }: { state: AppState; perform: (action
   );
 }
 
-function Kitchen({ state, perform, busy }: { state: AppState; perform: (action: DemoAction) => Promise<boolean>; busy: boolean }) {
+function Kitchen({ state, perform, busy }: { state: AppState; perform: (action: DemoAction) => Promise<ActionResponse | null>; busy: boolean }) {
   const columns: { status: Order["status"]; title: string; action: string }[] = [
     { status: "confirmed", title: "New & accepted", action: "Start preparing" },
     { status: "preparing", title: "Preparing", action: "Mark ready" },
@@ -650,7 +734,7 @@ function Kitchen({ state, perform, busy }: { state: AppState; perform: (action: 
   );
 }
 
-function Ticket({ order, referenceTime, action, busy, onAdvance }: { order: Order; referenceTime: string; action: string; busy: boolean; onAdvance: () => Promise<boolean> }) {
+function Ticket({ order, referenceTime, action, busy, onAdvance }: { order: Order; referenceTime: string; action: string; busy: boolean; onAdvance: () => Promise<ActionResponse | null> }) {
   const age = Math.max(0, Math.floor((new Date(referenceTime).getTime() - new Date(order.createdAt).getTime()) / 60_000));
   const delayed = age > order.estimateMinutes;
   return (
@@ -665,7 +749,7 @@ function Ticket({ order, referenceTime, action, busy, onAdvance }: { order: Orde
   );
 }
 
-function Waiter({ state, perform, busy }: { state: AppState; perform: (action: DemoAction) => Promise<boolean>; busy: boolean }) {
+function Waiter({ state, perform, busy }: { state: AppState; perform: (action: DemoAction) => Promise<ActionResponse | null>; busy: boolean }) {
   const openRequests = state.serviceRequests.filter((request) => request.status === "open");
   const ready = state.orders.filter((order) => order.status === "ready");
   return (
@@ -692,7 +776,7 @@ function Waiter({ state, perform, busy }: { state: AppState; perform: (action: D
   );
 }
 
-function TableCard({ table, busy, perform }: { table: DiningTable; busy: boolean; perform: (action: DemoAction) => Promise<boolean> }) {
+function TableCard({ table, busy, perform }: { table: DiningTable; busy: boolean; perform: (action: DemoAction) => Promise<ActionResponse | null> }) {
   const next: Record<DiningTable["status"], DiningTable["status"]> = {
     available: "occupied", occupied: "bill_requested", bill_requested: "cleaning",
     cleaning: "available", reserved: "occupied", out_of_service: "available",
@@ -714,7 +798,7 @@ function Manager({
   activeOrders,
 }: {
   data: StatePayload;
-  perform: (action: DemoAction) => Promise<boolean>;
+  perform: (action: DemoAction) => Promise<ActionResponse | null>;
   busy: boolean;
   activeOrders: Order[];
 }) {

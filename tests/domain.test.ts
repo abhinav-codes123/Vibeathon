@@ -15,6 +15,7 @@ import { seedState } from "../lib/seed.ts";
 import { canAccessView, resolveActionRole } from "../lib/authz.ts";
 import { publicStateProjection } from "../lib/state-projection.ts";
 import { parseSupabaseAuthProviders } from "../lib/supabase/config.ts";
+import { ActionValidationError, validateDemoAction } from "../lib/validation.ts";
 
 const fresh = () => structuredClone(seedState);
 
@@ -40,6 +41,43 @@ test("placing and cancelling an order reserves then restores stock", () => {
   assert.equal(placed.inventory.find((item) => item.id === "paneer")!.quantity, before - 360);
   const cancelled = applyAction(placed, { type: "cancel_order", orderId: order.id }).state;
   assert.equal(cancelled.inventory.find((item) => item.id === "paneer")!.quantity, before);
+});
+
+test("cancelling after preparation starts does not restore consumed stock", () => {
+  const state = fresh();
+  const before = state.inventory.find((item) => item.id === "paneer")!.quantity;
+  const placed = applyAction(state, {
+    type: "place_order",
+    guest: "QA Guest",
+    table: "T01",
+    items: [{ menuItemId: "m1", quantity: 1 }],
+  }).state;
+  const order = placed.orders[0];
+  applyAction(placed, { type: "advance_order", orderId: order.id });
+  const afterPreparation = placed.inventory.find((item) => item.id === "paneer")!.quantity;
+  applyAction(placed, { type: "cancel_order", orderId: order.id });
+  assert.equal(afterPreparation, before - 180);
+  assert.equal(placed.inventory.find((item) => item.id === "paneer")!.quantity, afterPreparation);
+});
+
+test("queue removal requires the private receipt returned at join time", () => {
+  const state = fresh();
+  const joined = applyAction(state, { type: "join_queue", name: "QA Party", partySize: 3 });
+  assert.ok(joined.queueAccess);
+  assert.throws(
+    () =>
+      applyAction(state, {
+        type: "leave_queue",
+        queueId: joined.queueAccess!.queueId,
+        managementToken: "0000000000000000",
+      }),
+    /browser that created it/,
+  );
+  applyAction(state, { type: "leave_queue", ...joined.queueAccess });
+  assert.equal(
+    state.queue.find((entry) => entry.id === joined.queueAccess!.queueId)?.status,
+    "left",
+  );
 });
 
 test("preparation estimate is explainable and increases with workload", () => {
@@ -92,6 +130,68 @@ test("role permissions enforce server-side operational boundaries", () => {
   assert.equal(can("waiter", "toggle_pause"), false);
   assert.equal(can("manager", "toggle_pause"), true);
   assert.equal(can("owner", "cancel_order"), true);
+  assert.equal(can("customer", "mark_paid"), false);
+  assert.equal(can("manager", "mark_paid"), true);
+});
+
+test("payment is lifecycle checked and moves the table to cleaning", () => {
+  const state = fresh();
+  const order = state.orders.find((entry) => entry.id === "order-102")!;
+  assert.equal(order.status, "ready");
+  assert.throws(
+    () => applyAction(state, { type: "mark_paid", orderId: order.id }),
+    /served order/,
+  );
+  applyAction(state, { type: "advance_order", orderId: order.id });
+  applyAction(state, { type: "mark_paid", orderId: order.id });
+  assert.equal(order.paid, true);
+  assert.equal(order.status, "completed");
+  assert.equal(state.tables.find((table) => table.code === order.table)?.status, "cleaning");
+  assert.throws(
+    () => applyAction(state, { type: "mark_paid", orderId: order.id }),
+    /already paid/,
+  );
+});
+
+test("order stage transitions cannot be performed by the wrong staff role", () => {
+  const state = fresh();
+  const confirmed = state.orders.find((entry) => entry.status === "confirmed")!;
+  assert.throws(
+    () => applyAction(state, { type: "advance_order", orderId: confirmed.id }, "waiter"),
+    /waiter access/,
+  );
+  applyAction(state, { type: "advance_order", orderId: confirmed.id }, "kitchen");
+  applyAction(state, { type: "advance_order", orderId: confirmed.id }, "kitchen");
+  assert.equal(confirmed.status, "ready");
+  assert.throws(
+    () => applyAction(state, { type: "advance_order", orderId: confirmed.id }, "kitchen"),
+    /kitchen access/,
+  );
+  applyAction(state, { type: "advance_order", orderId: confirmed.id }, "waiter");
+  assert.equal(confirmed.status, "served");
+  assert.throws(
+    () => applyAction(state, { type: "advance_order", orderId: confirmed.id }, "manager"),
+    /cannot be advanced/,
+  );
+});
+
+test("table lifecycle rejects impossible direct transitions", () => {
+  const state = fresh();
+  const table = state.tables.find((entry) => entry.status === "available")!;
+  assert.throws(
+    () =>
+      applyAction(state, {
+        type: "set_table",
+        tableId: table.id,
+        status: "cleaning",
+      }),
+    /cannot move directly/,
+  );
+  applyAction(state, { type: "set_table", tableId: table.id, status: "occupied" });
+  applyAction(state, { type: "set_table", tableId: table.id, status: "bill_requested" });
+  applyAction(state, { type: "set_table", tableId: table.id, status: "cleaning" });
+  applyAction(state, { type: "set_table", tableId: table.id, status: "available" });
+  assert.equal(table.status, "available");
 });
 
 test("verified membership roles gate staff workspaces", () => {
@@ -120,6 +220,49 @@ test("public state projection removes operational and guest-sensitive fields", (
   assert.ok(projected.orders.every((order) => order.notes === ""));
   assert.ok(projected.reservations.every((reservation) => reservation.phone === ""));
   assert.ok(projected.queue.every((entry) => entry.name.startsWith("Party ")));
+  assert.ok(projected.queue.every((entry) => entry.managementToken === undefined));
+});
+
+test("runtime action validation rejects malformed and abusive payloads", () => {
+  assert.throws(
+    () =>
+      validateDemoAction({
+        type: "place_order",
+        guest: "QA",
+        table: "T01",
+        items: [{ menuItemId: "m1", quantity: Number.NaN }],
+      }),
+    ActionValidationError,
+  );
+  assert.throws(
+    () =>
+      validateDemoAction({
+        type: "leave_queue",
+        queueId: "q1",
+        managementToken: "short",
+      }),
+    /receipt/,
+  );
+  assert.throws(
+    () =>
+      validateDemoAction({
+        type: "reserve",
+        name: "QA",
+        phone: "<script>",
+        partySize: 2,
+        date: "1999-01-01",
+        time: "20:30",
+      }),
+    ActionValidationError,
+  );
+  assert.deepEqual(
+    validateDemoAction({
+      type: "restock",
+      ingredientId: "paneer",
+      quantity: 250,
+    }),
+    { type: "restock", ingredientId: "paneer", quantity: 250 },
+  );
 });
 
 test("auth provider controls fail closed and reflect Supabase settings", () => {

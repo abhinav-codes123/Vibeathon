@@ -12,6 +12,9 @@ type D1DatabaseLike = {
 
 declare global {
   var __flowDineLocalState: AppState | undefined;
+  var __flowDineLocalRateLimits:
+    | Map<string, { count: number; resetAt: number }>
+    | undefined;
 }
 
 const timestampKeys = ["createdAt", "updatedAt", "joinedAt"] as const;
@@ -73,6 +76,13 @@ async function ensureStore() {
       actor_role TEXT NOT NULL,
       action TEXT NOT NULL,
       created_at TEXT NOT NULL
+    )`,
+  ).run();
+  await database.prepare(
+    `CREATE TABLE IF NOT EXISTS rate_limits (
+      bucket_key TEXT PRIMARY KEY,
+      count INTEGER NOT NULL,
+      reset_at INTEGER NOT NULL
     )`,
   ).run();
   const row = await database.prepare(
@@ -155,6 +165,7 @@ export async function resetState() {
   const fresh = freshSeedState();
   if (!database) {
     globalThis.__flowDineLocalState = structuredClone(fresh);
+    globalThis.__flowDineLocalRateLimits = new Map();
     return fresh;
   }
   await database.prepare(
@@ -163,4 +174,47 @@ export async function resetState() {
     .bind(JSON.stringify(fresh), fresh.updatedAt, seedState.restaurant.id)
     .run();
   return fresh;
+}
+
+export async function checkRateLimit(
+  bucketKey: string,
+  limit: number,
+  windowSeconds: number,
+) {
+  const database = await ensureStore();
+  const now = Date.now();
+  const nextReset = now + windowSeconds * 1_000;
+  if (!database) {
+    globalThis.__flowDineLocalRateLimits ??= new Map();
+    const existing = globalThis.__flowDineLocalRateLimits.get(bucketKey);
+    const bucket =
+      !existing || existing.resetAt <= now
+        ? { count: 1, resetAt: nextReset }
+        : { count: existing.count + 1, resetAt: existing.resetAt };
+    globalThis.__flowDineLocalRateLimits.set(bucketKey, bucket);
+    return {
+      allowed: bucket.count <= limit,
+      remaining: Math.max(0, limit - bucket.count),
+      retryAfterSeconds: Math.max(1, Math.ceil((bucket.resetAt - now) / 1_000)),
+    };
+  }
+
+  const row = await database
+    .prepare(
+      `INSERT INTO rate_limits (bucket_key, count, reset_at)
+       VALUES (?, 1, ?)
+       ON CONFLICT(bucket_key) DO UPDATE SET
+         count = CASE WHEN rate_limits.reset_at <= ? THEN 1 ELSE rate_limits.count + 1 END,
+         reset_at = CASE WHEN rate_limits.reset_at <= ? THEN ? ELSE rate_limits.reset_at END
+       RETURNING count, reset_at`,
+    )
+    .bind(bucketKey, nextReset, now, now, nextReset)
+    .first<{ count: number; reset_at: number }>();
+  const count = row?.count ?? limit + 1;
+  const resetAt = row?.reset_at ?? nextReset;
+  return {
+    allowed: count <= limit,
+    remaining: Math.max(0, limit - count),
+    retryAfterSeconds: Math.max(1, Math.ceil((resetAt - now) / 1_000)),
+  };
 }

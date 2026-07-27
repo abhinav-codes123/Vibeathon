@@ -21,10 +21,14 @@ export function publicStateProjection(input: AppState): AppState {
     name: "Guest",
     phone: "",
   }));
-  state.queue = state.queue.map((entry, index) => ({
-    ...entry,
-    name: `Party ${index + 1}`,
-  }));
+  state.queue = state.queue.map((entry, index) => {
+    const publicEntry = { ...entry };
+    delete publicEntry.managementToken;
+    return {
+      ...publicEntry,
+      name: `Party ${index + 1}`,
+    };
+  });
 
   return state;
 }

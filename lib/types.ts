@@ -81,6 +81,7 @@ export type QueueEntry = {
   status: "waiting" | "seated" | "left";
   joinedAt: string;
   estimateMinutes: number;
+  managementToken?: string;
 };
 
 export type Reservation = {
@@ -145,9 +146,18 @@ export type DemoAction =
   | { type: "request_service"; table: string; requestType: "assistance" | "bill" | "water" }
   | { type: "resolve_request"; requestId: string }
   | { type: "join_queue"; name: string; partySize: number }
-  | { type: "leave_queue"; queueId: string }
+  | { type: "leave_queue"; queueId: string; managementToken: string }
   | { type: "reserve"; name: string; phone: string; partySize: number; date: string; time: string }
   | { type: "toggle_pause"; menuItemId: string }
   | { type: "restock"; ingredientId: string; quantity: number }
   | { type: "set_table"; tableId: string; status: DiningTable["status"] }
   | { type: "mark_paid"; orderId: string };
+
+export type ActionResult = {
+  state: AppState;
+  message: string;
+  queueAccess?: {
+    queueId: string;
+    managementToken: string;
+  };
+};

@@ -1,17 +1,48 @@
 import { applyAction, can } from "../../../lib/domain";
-import { updateState } from "../../../lib/store";
-import type { DemoAction } from "../../../lib/types";
+import { checkRateLimit, updateState } from "../../../lib/store";
 import { getAuthContext } from "../../../lib/auth";
 import { resolveActionRole } from "../../../lib/authz";
 import { publicStateProjection } from "../../../lib/state-projection";
+import { ActionValidationError, validateDemoAction } from "../../../lib/validation";
 
 export const dynamic = "force-dynamic";
 
 export async function POST(request: Request) {
+  let input: unknown;
   try {
-    const action = (await request.json()) as DemoAction;
-    if (!action || typeof action.type !== "string") {
-      return Response.json({ error: "A valid action is required." }, { status: 400 });
+    input = await request.json();
+  } catch {
+    return Response.json({ error: "The request body must be valid JSON." }, { status: 400 });
+  }
+
+  try {
+    const action = validateDemoAction(input);
+    const forwarded = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim();
+    const address =
+      request.headers.get("cf-connecting-ip")?.trim() || forwarded || "local-unknown";
+    const addressHash = Array.from(
+      new Uint8Array(
+        await crypto.subtle.digest("SHA-256", new TextEncoder().encode(address)),
+      ),
+      (byte) => byte.toString(16).padStart(2, "0"),
+    ).join("");
+    const strictAction = ["place_order", "join_queue", "reserve"].includes(action.type);
+    const rate = await checkRateLimit(
+      `${addressHash}:${strictAction ? "guest-write" : "action"}`,
+      strictAction ? 10 : 60,
+      60,
+    );
+    if (!rate.allowed) {
+      return Response.json(
+        { error: "Too many requests. Please wait before trying again." },
+        {
+          status: 429,
+          headers: {
+            "retry-after": String(rate.retryAfterSeconds),
+            "x-ratelimit-remaining": String(rate.remaining),
+          },
+        },
+      );
     }
     const context = await getAuthContext();
     const role = resolveActionRole(context.role, action.type);
@@ -29,16 +60,19 @@ export async function POST(request: Request) {
     if (!can(role, action.type)) {
       return Response.json({ error: `${role} access cannot perform this operation.` }, { status: 403 });
     }
-    const result = await updateState(role, action.type, (state) => applyAction(state, action));
+    const result = await updateState(role, action.type, (state) =>
+      applyAction(state, action, role),
+    );
     return Response.json(
       role === "customer"
         ? { ...result, state: publicStateProjection(result.state) }
         : result,
     );
   } catch (error) {
+    const status = error instanceof ActionValidationError ? 400 : 409;
     return Response.json(
       { error: error instanceof Error ? error.message : "The operation could not be completed." },
-      { status: 409 },
+      { status },
     );
   }
 }

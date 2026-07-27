@@ -1,11 +1,13 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import {
   availabilityLabel,
   billFor,
 } from "../../lib/domain";
+import { canAccessView } from "../../lib/authz";
 import type {
   AppState,
   DemoAction,
@@ -29,6 +31,17 @@ type StatePayload = {
 };
 
 type CartLine = { item: MenuItem; quantity: number };
+type PublicAuthContext = {
+  configured: boolean;
+  user: { email: string } | null;
+  membership: {
+    restaurantId: string;
+    restaurantName: string;
+    restaurantSlug: string;
+    role: Role;
+  } | null;
+  role: Role | null;
+};
 
 const roleViews: { role: Role; view: AppView; label: string; detail: string }[] = [
   { role: "customer", view: "menu", label: "Guest", detail: "Menu & ordering" },
@@ -46,9 +59,6 @@ const paths: Record<AppView, string> = {
   waiter: "/staff",
   manager: "/dashboard",
 };
-
-const roleForView = (view: AppView): Role =>
-  view === "kitchen" ? "kitchen" : view === "waiter" ? "waiter" : view === "manager" ? "manager" : "customer";
 
 const money = (value: number) =>
   new Intl.NumberFormat("en-IN", {
@@ -74,17 +84,35 @@ export function FlowDineApp({ initialView }: { initialView: AppView }) {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("All");
   const [dietary, setDietary] = useState("All");
+  const [auth, setAuth] = useState<PublicAuthContext | null>(null);
+  const [accessError, setAccessError] = useState<{ status: number; message: string } | null>(null);
 
   const load = useCallback(async (silent = false) => {
     try {
-      const response = await fetch("/api/state", { cache: "no-store" });
+      const response = await fetch(`/api/state?view=${encodeURIComponent(view)}`, {
+        cache: "no-store",
+      });
       const payload = (await response.json()) as StatePayload & { error?: string };
-      if (!response.ok) throw new Error(payload.error ?? "Unable to load live restaurant data.");
+      if (!response.ok) {
+        setAccessError({
+          status: response.status,
+          message: payload.error ?? "Unable to load live restaurant data.",
+        });
+        throw new Error(payload.error ?? "Unable to load live restaurant data.");
+      }
       setData(payload);
       setError("");
+      setAccessError(null);
     } catch (cause) {
       if (!silent) setError(cause instanceof Error ? cause.message : "Connection interrupted.");
     }
+  }, [view]);
+
+  useEffect(() => {
+    void fetch("/api/auth/context", { cache: "no-store" })
+      .then((response) => response.json() as Promise<PublicAuthContext>)
+      .then((payload) => setAuth(payload))
+      .catch(() => setAuth(null));
   }, []);
 
   useEffect(() => {
@@ -98,18 +126,19 @@ export function FlowDineApp({ initialView }: { initialView: AppView }) {
 
   const navigate = (next: AppView) => {
     setView(next);
+    setData(null);
+    setAccessError(null);
     window.history.pushState({}, "", paths[next]);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const perform = async (action: DemoAction, overrideRole?: Role) => {
+  const perform = async (action: DemoAction) => {
     setBusy(true);
     try {
       const response = await fetch("/api/action", {
         method: "POST",
         headers: {
           "content-type": "application/json",
-          "x-demo-role": overrideRole ?? roleForView(view),
         },
         body: JSON.stringify(action),
       });
@@ -141,6 +170,28 @@ export function FlowDineApp({ initialView }: { initialView: AppView }) {
     window.setTimeout(() => setToast(""), 1_800);
   };
 
+  if (!data && accessError) {
+    const next = paths[view];
+    return (
+      <main className="route-state">
+        <p className="eyebrow">{accessError.status === 503 ? "Setup required" : "Protected workspace"}</p>
+        <h1>{accessError.message}</h1>
+        <p>
+          Staff screens use a verified Supabase session and a database-backed
+          restaurant membership. Guest ordering remains public.
+        </p>
+        <div className="account-actions">
+          {accessError.status !== 503 && (
+            <Link className="button primary" href={`/login?next=${encodeURIComponent(next)}`}>
+              Sign in securely
+            </Link>
+          )}
+          <Link className="button ghost" href="/menu">Continue as guest</Link>
+        </div>
+      </main>
+    );
+  }
+
   if (!data) {
     return (
       <main className="loading-shell">
@@ -156,6 +207,15 @@ export function FlowDineApp({ initialView }: { initialView: AppView }) {
   const state = data.state;
   const activeOrders = state.orders.filter((order) => !["completed", "cancelled"].includes(order.status));
 
+  const visibleRoleViews = roleViews.filter((item) => {
+    if (item.role === "customer") return true;
+    if (!auth?.role) return false;
+    return canAccessView(
+      auth.role,
+      item.view === "kitchen" ? "kitchen" : item.view === "waiter" ? "waiter" : "manager",
+    );
+  });
+
   return (
     <div className={`app-shell view-${view}`}>
       <header className="topbar">
@@ -169,6 +229,9 @@ export function FlowDineApp({ initialView }: { initialView: AppView }) {
           <button onClick={() => navigate("reserve")}>Reserve</button>
           <button onClick={() => navigate("queue")}>Live queue</button>
         </nav>
+        <Link className="account-button" href={auth?.user ? "/account" : "/login"}>
+          {auth?.user ? (auth.membership?.role ?? "Account") : "Staff sign in"}
+        </Link>
         <button className="cart-button" onClick={() => setCartOpen(true)}>
           Cart <span>{cart.reduce((sum, line) => sum + line.quantity, 0)}</span>
         </button>
@@ -177,7 +240,7 @@ export function FlowDineApp({ initialView }: { initialView: AppView }) {
       {view !== "home" && (
         <aside className="role-rail" aria-label="Explore demo roles">
           <p>Explore as</p>
-          {roleViews.map((item) => (
+          {visibleRoleViews.map((item) => (
             <button
               key={item.role}
               className={view === item.view ? "active" : ""}
@@ -250,16 +313,13 @@ export function FlowDineApp({ initialView }: { initialView: AppView }) {
             )
           }
           onPlace={async (guest, table, notes) => {
-            const ok = await perform(
-              {
+            const ok = await perform({
                 type: "place_order",
                 guest,
                 table,
                 notes,
                 items: cart.map((line) => ({ menuItemId: line.item.id, quantity: line.quantity })),
-              },
-              "customer",
-            );
+              });
             if (ok) {
               setCart([]);
               setCartOpen(false);

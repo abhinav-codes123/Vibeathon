@@ -36,7 +36,8 @@ flowchart LR
   K["Kitchen display"] --> API
   W["Waiter console"] --> API
   M["Manager command center"] --> API
-  API --> D["Pure domain engine"]
+  API --> A["Supabase Auth + restaurant membership"]
+  A --> D["Pure domain engine"]
   D --> DB["Cloudflare D1 shared state + audit log"]
   API --> AI["Optional Gemini REST adapter"]
   AI --> F["Deterministic fallback"]
@@ -55,7 +56,9 @@ See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) and [docs/DATABASE.md](docs/DAT
 - Vinext/Vite deployment adapter for Cloudflare
 - Cloudflare D1 for the hosted shared demo; optimistic versioned writes and audit events
 - Drizzle schema/migrations for D1
-- Supabase/PostgreSQL production reference migration with tenant IDs and initial RLS policies
+- Supabase email/password and Google OAuth with cookie-backed SSR sessions
+- PostgreSQL restaurant memberships for server-resolved staff authorization
+- Supabase/PostgreSQL production migration with tenant IDs and initial RLS policies
 - Gemini REST adapter with deterministic no-key fallback
 - CSS design system with no component library dependency
 - Node test runner, ESLint, and TypeScript compiler
@@ -97,11 +100,13 @@ cp .env.example .env.local
 | `GEMINI_API_KEY` | No | Enables live Gemini advisory responses. Kept server-side. |
 | `GEMINI_MODEL` | No | Defaults to `gemini-3.6-flash`. |
 | `NEXT_PUBLIC_SITE_URL` | No | Absolute metadata URL for local/custom-domain builds. |
-| `NEXT_PUBLIC_SUPABASE_URL` | Production migration only | Supabase project URL. |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Production migration only | Browser-safe Supabase key. |
-| `SUPABASE_SERVICE_ROLE_KEY` | Production migration only | Server-only administrative key. Never expose to the browser. |
+| `NEXT_PUBLIC_SUPABASE_URL` | Staff authentication | Supabase project URL. |
+| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Staff authentication | Browser-safe Supabase publishable key. |
+| `SUPABASE_SERVICE_ROLE_KEY` | Future owner invites | Server-only administrative key. Never expose to the browser. |
 
-The deployed hackathon path requires no paid service or AI key. D1 is injected as the `DB` binding from `.openai/hosting.json`.
+The public guest experience still works without an AI key. Verified staff access
+requires a configured Supabase project. D1 is injected as the `DB` binding from
+`.openai/hosting.json`.
 
 ## Database and migrations
 
@@ -115,7 +120,7 @@ pnpm db:generate
 - The app also creates these two tables safely on first run and seeds Saffron Circuit once.
 - Writes use a compare-and-swap version to avoid silently overwriting concurrent updates.
 
-Production Supabase reference:
+Supabase authentication and production-schema migrations:
 
 ```bash
 supabase link --project-ref YOUR_PROJECT_REF
@@ -123,6 +128,11 @@ supabase db push
 ```
 
 `supabase/migrations/202607260001_flowdine.sql` contains the normalized multi-tenant model. It is a migration path, not the persistence layer used by the hosted hackathon build. Complete organization-specific auth policies and integration tests before treating that path as production-ready.
+
+`supabase/migrations/202607270001_flowdine_auth.sql` adds profile provisioning,
+membership read policies, and the seeded restaurant. See
+[docs/AUTHENTICATION.md](docs/AUTHENTICATION.md) for provider,
+redirect, role assignment, and deployment setup.
 
 ## Quality commands
 
@@ -137,14 +147,17 @@ The domain suite covers recipe availability, stock reservation/restoration, prep
 
 ## Demo access
 
-The public judge demo intentionally has no sign-in wall. Use the visible role switcher:
+- Guest menu, ordering, reservations, and queue entry remain public.
+- Kitchen, waiter, manager, and owner workspaces require a verified Supabase
+  session and a matching `restaurant_memberships` row.
+- Email/password registration requires confirmation; Google OAuth returns through
+  the server callback.
+- Staff roles are explicitly assigned to verified accounts in Supabase for the
+  judge demo; there is no browser-controlled role-claim path.
 
-- Guest → menu and ordering
-- Kitchen → KDS
-- Waiter → service console
-- Manager → command center
-
-These role controls are a clearly labeled demo mechanism, not identity authentication. The API enforces a server-side permission matrix, but the demo role header is user-selectable. Real email/Google authentication should be connected through Supabase Auth and membership-backed RLS before handling real restaurant or personal data.
+The browser no longer supplies an authoritative role. Staff state reads,
+mutations, direct routes, and the manager copilot resolve the role from the
+verified membership on the server.
 
 ## Five-minute walkthrough
 
@@ -160,13 +173,20 @@ For a judge-ready script, see [docs/DEMO_SCRIPT.md](docs/DEMO_SCRIPT.md).
 ## Security and privacy
 
 - Mutations are validated server-side against a role/action permission matrix.
+- Staff identity is verified from Supabase cookies and authorization comes from
+  the PostgreSQL membership row, never a browser role header.
+- Public state responses redact operational, revenue, inventory, guest-name,
+  reservation-phone, allergen, and order-note fields.
 - Inventory cannot go negative; invalid transitions and stale concurrent writes are rejected.
 - Gemini receives only aggregated operational context, not phone numbers or guest identities.
 - Secrets remain server-side and `.env*` is ignored except `.env.example`.
 - Security headers disable MIME sniffing, unnecessary device permissions, and cross-origin referrer leakage.
 - D1 audit events record mutation role, action, and timestamp.
 
-**Important boundary:** the public demo role switcher is not authentication or authorization suitable for a real restaurant. Use membership-backed identity, rate limiting, stricter validation, and complete tenant RLS before real deployment.
+**Important boundary:** authentication is real, but the hackathon operational
+state is still one D1 restaurant document. Complete the normalized PostgreSQL
+runtime migration and exhaustive tenant-isolation tests before onboarding
+independent restaurants.
 
 ## Scalability path
 
@@ -174,16 +194,20 @@ The current state-document model makes the shared demo easy to understand and de
 
 ## Known limitations
 
-- Public role switching is for judging; email/Google login is not wired to the runtime.
+- Supabase provider credentials and production redirect URLs must be configured
+  before staff sign-in becomes available on a deployment.
+- Staff assignment currently uses explicit administrator-created membership rows;
+  a full owner invitation console is not yet included.
 - Payments, notifications, receipts, and exports are simulated/in-browser.
 - Synchronization uses four-second polling rather than WebSockets.
 - The seed has 18 polished dishes rather than a full 25–35 item catalogue.
 - Gemini was implemented as an optional server adapter; no live model call occurs without a user-supplied key.
-- The Supabase migration is a reviewed reference path and is not connected to the deployed D1 demo.
+- Supabase is the live identity/membership authority, while operational restaurant
+  data remains in the shared D1 demo state.
 
 ## Roadmap
 
-- Supabase Auth with email/Google, invites, and membership-backed RLS
+- Owner-managed staff invitations and membership lifecycle
 - Normalized transactional inventory with batch expiry and waste capture
 - Realtime events and offline-resilient kitchen/waiter clients
 - Payment and notification providers

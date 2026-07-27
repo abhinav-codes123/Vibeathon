@@ -1,5 +1,7 @@
 import { availablePortions, forecastSummary, insightCards } from "../../../lib/domain";
 import { readState } from "../../../lib/store";
+import { getAuthContext } from "../../../lib/auth";
+import { canAccessView } from "../../../lib/authz";
 
 export const dynamic = "force-dynamic";
 
@@ -43,6 +45,16 @@ function localAnswer(question: string, state: Awaited<ReturnType<typeof readStat
 
 export async function POST(request: Request) {
   try {
+    const context = await getAuthContext();
+    if (!context.user) {
+      return Response.json({ error: "Sign in to use the manager copilot." }, { status: 401 });
+    }
+    if (!canAccessView(context.role, "manager")) {
+      return Response.json(
+        { error: "Manager or owner access is required for the operations copilot." },
+        { status: 403 },
+      );
+    }
     const body = (await request.json()) as { question?: string };
     const question = body.question?.trim().slice(0, 500);
     if (!question) return Response.json({ error: "Ask a specific operations question." }, { status: 400 });

@@ -12,6 +12,8 @@ import {
   splitEqually,
 } from "../lib/domain.ts";
 import { seedState } from "../lib/seed.ts";
+import { canAccessView, resolveActionRole } from "../lib/authz.ts";
+import { publicStateProjection } from "../lib/state-projection.ts";
 
 const fresh = () => structuredClone(seedState);
 
@@ -89,4 +91,32 @@ test("role permissions enforce server-side operational boundaries", () => {
   assert.equal(can("waiter", "toggle_pause"), false);
   assert.equal(can("manager", "toggle_pause"), true);
   assert.equal(can("owner", "cancel_order"), true);
+});
+
+test("verified membership roles gate staff workspaces", () => {
+  assert.equal(canAccessView(null, "kitchen"), false);
+  assert.equal(canAccessView("customer", "manager"), false);
+  assert.equal(canAccessView("kitchen", "kitchen"), true);
+  assert.equal(canAccessView("waiter", "kitchen"), false);
+  assert.equal(canAccessView("manager", "kitchen"), true);
+  assert.equal(canAccessView("owner", "manager"), true);
+});
+
+test("public customer actions remain available without granting staff authority", () => {
+  assert.equal(resolveActionRole(null, "place_order"), "customer");
+  assert.equal(resolveActionRole(null, "restock"), null);
+  assert.equal(resolveActionRole("waiter", "set_table"), "waiter");
+  assert.equal(resolveActionRole("manager", "restock"), "manager");
+});
+
+test("public state projection removes operational and guest-sensitive fields", () => {
+  const projected = publicStateProjection(fresh());
+  assert.equal(projected.inventory.length, 0);
+  assert.equal(projected.movements.length, 0);
+  assert.equal(projected.serviceRequests.length, 0);
+  assert.equal(projected.revenueHistory.length, 0);
+  assert.ok(projected.orders.every((order) => order.guest === "Guest"));
+  assert.ok(projected.orders.every((order) => order.notes === ""));
+  assert.ok(projected.reservations.every((reservation) => reservation.phone === ""));
+  assert.ok(projected.queue.every((entry) => entry.name.startsWith("Party ")));
 });

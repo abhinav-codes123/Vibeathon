@@ -12,6 +12,9 @@ flowchart TB
   end
   Guest & Kitchen & Waiter & Manager --> StateAPI["GET /api/state"]
   Guest & Kitchen & Waiter & Manager --> ActionAPI["POST /api/action"]
+  Kitchen & Waiter & Manager --> Auth["Supabase Auth + memberships"]
+  Auth --> StateAPI
+  Auth --> ActionAPI
   Manager --> Copilot["POST /api/copilot"]
   ActionAPI --> Permission["Permission matrix + input checks"]
   StateAPI & Permission --> Domain["Pure domain engine"]
@@ -68,7 +71,15 @@ The menu does not use a hand-maintained availability flag. Manual pausing is sup
 | Resolve service requests and tables |  |  | ✓ | ✓ |
 | Restock, pause items, export, manage all operations |  |  |  | ✓ |
 
-The deployed judge demo selects these roles in the UI and sends `x-demo-role`. The server still applies the matrix, but the header is not a trusted identity claim. Production identity belongs in Supabase Auth plus restaurant memberships and RLS.
+Guest workflows remain public. Staff users sign in with verified Supabase
+email/password or Google OAuth. Direct staff routes, staff state reads, mutations,
+and the manager copilot resolve the role from `restaurant_memberships` on the
+server. Browser-supplied roles are ignored.
+
+The current deployment still has one operational D1 restaurant state. Supabase
+provides identity and membership authorization for the hackathon; complete
+multi-restaurant isolation requires moving operational reads and writes to the
+normalized PostgreSQL schema.
 
 ## Concurrency
 

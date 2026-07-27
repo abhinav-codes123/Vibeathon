@@ -14,13 +14,17 @@
 - [x] Server-side action permission matrix, input checks, security headers, and safe error responses
 - [x] Unit tests, strict type check, lint, browser workflow checks, and mobile inspection
 - [x] Architecture, database, judging, demo, configuration, and limitation documentation
+- [x] Supabase email/password and Google OAuth flows with cookie-backed SSR sessions
+- [x] Membership-backed staff routes, state reads, mutations, and manager copilot authorization
+- [x] Public-state privacy projection and administrator-assigned staff memberships
 
 ## Explicit demo boundaries
 
-- [ ] Real email/Google authentication and membership-backed runtime authorization
+- [x] Real email/Google authentication and membership-backed runtime authorization
 - [ ] Live payment, notification, receipt, and export providers
 - [ ] WebSocket/Supabase realtime transport
 - [ ] 25–35 item production menu (demo seed has 18)
-- [ ] Runtime Supabase integration and exhaustive RLS policy tests
+- [ ] Full operational-data migration from D1 to Supabase and exhaustive cross-tenant RLS tests
+- [ ] Live Supabase provider/runtime configuration and production sign-in verification
 - [ ] Live Gemini verification with a user-supplied API key
 - [x] Public Sites deployment, D1 first-run seed, and production smoke test

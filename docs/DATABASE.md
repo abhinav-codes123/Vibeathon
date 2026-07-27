@@ -13,7 +13,7 @@ The app creates both tables idempotently on first request and inserts the Saffro
 
 This design is intentionally narrow: it delivers shared persistent state and optimistic concurrency without pretending a state document is the right high-volume restaurant data model.
 
-## Production reference: Supabase/PostgreSQL
+## Authentication runtime and production path: Supabase/PostgreSQL
 
 `supabase/migrations/202607260001_flowdine.sql` normalizes:
 
@@ -27,6 +27,12 @@ This design is intentionally narrow: it delivers shared persistent state and opt
 - forecasts, operational insights, and audit logs
 
 Every operational entity carries `restaurant_id` so tenant boundaries can be enforced and indexed. Money uses integer minor units. Inventory movements are append-only records linked to orders when relevant.
+
+`supabase/migrations/202607270001_flowdine_auth.sql` is used by the hackathon
+runtime for verified profiles and restaurant memberships. It provisions profiles
+from Supabase Auth, allows users to read only their own membership, and seeds the
+Saffron Circuit restaurant. Staff roles are assigned explicitly by a trusted
+project administrator.
 
 ## RLS boundary
 

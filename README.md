@@ -77,14 +77,14 @@ See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) and [docs/DATABASE.md](docs/DAT
 | Level | Story | Status | FlowDine evidence |
 |---|---|---|---|
 | Bronze | **1 - Modern customer and management UX** | Complete | Responsive guest, kitchen, waiter, manager, owner, login, and account experiences. |
-| Silver | **2 - Verified email, Google OAuth, and role-based access** | Activation pending | Email confirmation and server-side restaurant roles are live. The Google flow and callback are implemented, but the production Google provider still needs its one-time Google Cloud activation. |
+| Silver | **2 - Verified email, Google OAuth, and role-based access** | Complete | Email confirmation is required, Google OAuth is published for external accounts, and restaurant roles are resolved from server-side memberships. The production Google callback and owner access were verified. |
 | Silver | **3 - Digital restaurant operations** | Complete | Digital menu, recipe-derived live availability, orders, reservations, queue, billing, notifications, and synchronized service workflows. |
 | Gold | **4 - Restaurant management dashboard** | Complete | Orders, tables, inventory, sales rhythm, forecasts, operational risks, audit-backed actions, and analytics. |
 | Platinum | **5 - Intelligent operations** | Complete | Explainable recommendations, inventory risk, demand forecasting, operational insights, and an evidence-grounded manager copilot. |
 
-The ranking is cumulative. Do not claim Silver, Gold, or Platinum until the live
-Google provider is activated and its callback is verified, because User Story 2
-explicitly requires Google OAuth.
+The ranking is cumulative. All five user stories are implemented, so the
+submission demonstrates the **Platinum** feature set plus additional
+recipe-aware availability, privacy projection, and digital-twin workflows.
 
 ## AI usage
 
@@ -232,8 +232,6 @@ The current state-document model makes the shared demo easy to understand and de
 
 ## Known limitations
 
-- Google OAuth cannot be called complete until its live provider is activated
-  and the real Google callback succeeds.
 - Staff assignment currently uses explicit administrator-created membership rows;
   a full owner invitation console is not yet included.
 - Payments, notifications, receipts, and exports are simulated/in-browser.

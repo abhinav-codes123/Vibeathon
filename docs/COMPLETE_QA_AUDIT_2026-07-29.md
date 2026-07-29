@@ -1,5 +1,11 @@
 # FlowDine AI complete QA and product audit
 
+> Update, 30 July 2026: the previously documented Google OAuth blocker is
+> resolved. The external Google app is published, Supabase reports both email
+> and Google providers enabled, and a real production callback opened the
+> owner-authorized kitchen, waiter, manager, and account workspaces. Historical
+> findings below preserve the state observed during the 29 July audit.
+
 Date: 29 July 2026
 Scope: source code, local runtime, desktop/mobile browser workflows, authorization, operational state transitions, production build, dependency security, and read-only production smoke checks.
 

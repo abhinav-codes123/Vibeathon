@@ -25,6 +25,6 @@
 - [ ] WebSocket/Supabase realtime transport
 - [ ] 25–35 item production menu (demo seed has 18)
 - [ ] Full operational-data migration from D1 to Supabase and exhaustive cross-tenant RLS tests
-- [ ] Live Supabase provider/runtime configuration and production sign-in verification
+- [x] Live Supabase email and Google providers, confirmed email account, production Google callback, and owner workspace verification
 - [ ] Live Gemini verification with a user-supplied API key
 - [x] Public Sites deployment, D1 first-run seed, and production smoke test

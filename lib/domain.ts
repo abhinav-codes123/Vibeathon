@@ -81,8 +81,32 @@ export function can(role: Role, action: string) {
     customer: ["place_order", "request_service", "join_queue", "leave_queue", "reserve"],
     kitchen: ["advance_order"],
     waiter: ["advance_order", "resolve_request", "set_table", "place_order"],
-    manager: ["advance_order", "resolve_request", "set_table", "toggle_pause", "restock", "cancel_order", "mark_paid"],
-    owner: ["advance_order", "resolve_request", "set_table", "toggle_pause", "restock", "cancel_order", "mark_paid"],
+    manager: [
+      "advance_order",
+      "resolve_request",
+      "set_table",
+      "toggle_pause",
+      "restock",
+      "cancel_order",
+      "mark_paid",
+      "set_accepting_orders",
+      "set_restaurant_open",
+      "set_reservation_status",
+    ],
+    owner: [
+      "advance_order",
+      "resolve_request",
+      "set_table",
+      "toggle_pause",
+      "restock",
+      "cancel_order",
+      "mark_paid",
+      "set_accepting_orders",
+      "set_restaurant_open",
+      "set_reservation_status",
+      "add_staff",
+      "set_staff_status",
+    ],
   };
   return permissions[role].includes(action);
 }
@@ -150,6 +174,41 @@ export function insightCards(state: AppState) {
   ];
 }
 
+export function serviceSummary(state: AppState) {
+  const completed = state.orders.filter(
+    (order) => order.status === "completed" && order.paid,
+  );
+  const cancelled = state.orders.filter((order) => order.status === "cancelled");
+  const active = state.orders.filter(
+    (order) => !["completed", "cancelled"].includes(order.status),
+  );
+  const preparationMinutes = state.orders.flatMap((order) => {
+    const started = order.timeline.find((entry) => entry.status === "preparing");
+    const ready = order.timeline.find((entry) => entry.status === "ready");
+    if (!started || !ready) return [];
+    const duration =
+      (new Date(ready.createdAt).getTime() - new Date(started.createdAt).getTime()) /
+      60_000;
+    return Number.isFinite(duration) && duration >= 0 ? [duration] : [];
+  });
+  return {
+    recordedRevenue: completed.reduce((sum, order) => sum + order.total, 0),
+    completedOrders: completed.length,
+    activeOrders: active.length,
+    cancelledOrders: cancelled.length,
+    averagePreparationMinutes: preparationMinutes.length
+      ? Math.round(
+          preparationMinutes.reduce((sum, value) => sum + value, 0) /
+            preparationMinutes.length,
+        )
+      : 0,
+    openServiceRequests: state.serviceRequests.filter((entry) => entry.status === "open")
+      .length,
+    lowStockItems: state.inventory.filter((item) => item.quantity / item.par < 0.4)
+      .length,
+  };
+}
+
 const nextStatus: Partial<Record<OrderStatus, OrderStatus>> = {
   received: "confirmed",
   confirmed: "preparing",
@@ -173,13 +232,16 @@ function canAdvanceStatus(role: Role, status: OrderStatus) {
   return false;
 }
 
-export function applyAction(
+function mutateState(
   state: AppState,
   action: DemoAction,
   actorRole: Role = "owner",
 ): ActionResult {
   const now = new Date().toISOString();
   if (action.type === "place_order") {
+    if (!state.restaurant.isOpen || !state.restaurant.acceptingOrders) {
+      throw new Error("The restaurant is not accepting new orders right now.");
+    }
     if (!action.items.length) throw new Error("Add at least one item before ordering.");
     const table = state.tables.find((entry) => entry.code === action.table);
     if (!table || ["cleaning", "out_of_service"].includes(table.status)) {
@@ -225,7 +287,7 @@ export function applyAction(
       number: `SC-${String(nextOrderNumber).padStart(3, "0")}`,
       table: action.table,
       guest: action.guest.trim() || "Guest",
-      status: "confirmed",
+      status: "received",
       items: lines.map(({ item, quantity }) => ({
         menuItemId: item.id,
         name: item.name,
@@ -239,11 +301,19 @@ export function applyAction(
       estimateMinutes: estimatePreparation(action.items, state),
       total: totals.total,
       paid: false,
+      timeline: [
+        {
+          id: crypto.randomUUID(),
+          status: "received",
+          actor: actorRole === "customer" ? "Guest" : actorRole,
+          createdAt: now,
+        },
+      ],
     };
     state.orders.unshift(order);
     table.status = "occupied";
     state.updatedAt = now;
-    return { state, message: `${order.number} confirmed. The kitchen has your ticket.` };
+    return { state, message: `${order.number} received. The kitchen will accept it next.` };
   }
 
   if (action.type === "advance_order") {
@@ -256,6 +326,12 @@ export function applyAction(
     if (!status) throw new Error("This order cannot be advanced again.");
     order.status = status;
     order.updatedAt = now;
+    order.timeline.push({
+      id: crypto.randomUUID(),
+      status,
+      actor: actorRole,
+      createdAt: now,
+    });
     state.updatedAt = now;
     return { state, message: `${order.number} moved to ${status}.` };
   }
@@ -287,6 +363,12 @@ export function applyAction(
     }
     order.status = "cancelled";
     order.updatedAt = now;
+    order.timeline.push({
+      id: crypto.randomUUID(),
+      status: "cancelled",
+      actor: actorRole,
+      createdAt: now,
+    });
     state.updatedAt = now;
     return {
       state,
@@ -330,6 +412,9 @@ export function applyAction(
   }
 
   if (action.type === "join_queue") {
+    if (!state.restaurant.isOpen) {
+      throw new Error("The restaurant is currently closed.");
+    }
     if (state.queue.filter((entry) => entry.status === "waiting").length >= 200) {
       throw new Error("The live queue is temporarily full.");
     }
@@ -373,6 +458,9 @@ export function applyAction(
   }
 
   if (action.type === "reserve") {
+    if (!state.restaurant.isOpen) {
+      throw new Error("Reservations are unavailable while the restaurant is closed.");
+    }
     if (action.partySize < 1 || action.partySize > 20) throw new Error("Party size must be between 1 and 20.");
     state.reservations.push({
       id: crypto.randomUUID(),
@@ -433,11 +521,201 @@ export function applyAction(
     order.paid = true;
     order.status = "completed";
     order.updatedAt = now;
+    order.timeline.push({
+      id: crypto.randomUUID(),
+      status: "completed",
+      actor: actorRole,
+      createdAt: now,
+    });
     const table = state.tables.find((entry) => entry.code === order.table);
-    if (table) table.status = "cleaning";
+    const anotherOpenOrder = state.orders.some(
+      (entry) =>
+        entry.id !== order.id &&
+        entry.table === order.table &&
+        !entry.paid &&
+        !["completed", "cancelled"].includes(entry.status),
+    );
+    if (table && !anotherOpenOrder) table.status = "cleaning";
     state.updatedAt = now;
-    return { state, message: "Payment recorded. The table is ready for cleaning." };
+    return {
+      state,
+      message: anotherOpenOrder
+        ? "Payment recorded. The table remains active for another open order."
+        : "Payment recorded. The table is ready for cleaning.",
+    };
+  }
+
+  if (action.type === "set_accepting_orders") {
+    if (!state.restaurant.isOpen && action.accepting) {
+      throw new Error("Open the restaurant before enabling guest orders.");
+    }
+    state.restaurant.acceptingOrders = action.accepting;
+    state.updatedAt = now;
+    return {
+      state,
+      message: action.accepting
+        ? "Guest ordering is now enabled."
+        : "New guest orders are paused. Active tickets are unchanged.",
+    };
+  }
+
+  if (action.type === "set_restaurant_open") {
+    if (!action.open) {
+      const unfinished = state.orders.filter(
+        (entry) => !["completed", "cancelled"].includes(entry.status),
+      );
+      const openRequests = state.serviceRequests.filter((entry) => entry.status === "open");
+      if (unfinished.length || openRequests.length) {
+        throw new Error(
+          `Close blocked: ${unfinished.length} active orders and ${openRequests.length} open service requests remain.`,
+        );
+      }
+      state.restaurant.isOpen = false;
+      state.restaurant.acceptingOrders = false;
+      state.restaurant.lastClosedAt = now;
+    } else {
+      state.restaurant.isOpen = true;
+      state.restaurant.acceptingOrders = true;
+      state.restaurant.lastOpenedAt = now;
+      delete state.restaurant.lastClosedAt;
+    }
+    state.updatedAt = now;
+    return {
+      state,
+      message: action.open
+        ? "Restaurant opened and guest ordering enabled."
+        : "Restaurant closed for the day.",
+    };
+  }
+
+  if (action.type === "add_staff") {
+    const normalizedEmail = action.email.trim().toLowerCase();
+    if (state.staff.some((entry) => entry.email.toLowerCase() === normalizedEmail)) {
+      throw new Error("A staff member with that email already exists.");
+    }
+    state.staff.push({
+      id: crypto.randomUUID(),
+      name: action.name.trim(),
+      email: normalizedEmail,
+      role: action.role,
+      status: "invited",
+      createdAt: now,
+    });
+    state.updatedAt = now;
+    return {
+      state,
+      message: `${action.name.trim()} added as invited ${action.role} staff.`,
+    };
+  }
+
+  if (action.type === "set_staff_status") {
+    const staff = state.staff.find((entry) => entry.id === action.staffId);
+    if (!staff) throw new Error("Staff member not found.");
+    if (staff.role === "owner") throw new Error("The restaurant owner cannot be deactivated.");
+    staff.status = action.status;
+    state.updatedAt = now;
+    return {
+      state,
+      message: `${staff.name} is now ${action.status}.`,
+    };
+  }
+
+  if (action.type === "set_reservation_status") {
+    const reservation = state.reservations.find(
+      (entry) => entry.id === action.reservationId,
+    );
+    if (!reservation) throw new Error("Reservation not found.");
+    if (reservation.status === action.status) {
+      throw new Error(`Reservation is already ${action.status}.`);
+    }
+    reservation.status = action.status;
+    state.updatedAt = now;
+    return {
+      state,
+      message: `Reservation for ${reservation.name} marked ${action.status}.`,
+    };
   }
 
   throw new Error("Unsupported action.");
+}
+
+function auditTarget(action: DemoAction, result: ActionResult) {
+  if (
+    action.type === "advance_order" ||
+    action.type === "cancel_order" ||
+    action.type === "mark_paid"
+  ) {
+    return { entityType: "order" as const, entityId: action.orderId };
+  }
+  if (action.type === "place_order") {
+    return { entityType: "order" as const, entityId: result.state.orders[0]?.id ?? "order" };
+  }
+  if (action.type === "set_table") {
+    return { entityType: "table" as const, entityId: action.tableId };
+  }
+  if (action.type === "restock") {
+    return { entityType: "inventory" as const, entityId: action.ingredientId };
+  }
+  if (action.type === "toggle_pause") {
+    return { entityType: "menu" as const, entityId: action.menuItemId };
+  }
+  if (action.type === "request_service" || action.type === "resolve_request") {
+    return {
+      entityType: "service" as const,
+      entityId: action.type === "resolve_request" ? action.requestId : action.table,
+    };
+  }
+  if (action.type === "join_queue" || action.type === "leave_queue") {
+    return {
+      entityType: "queue" as const,
+      entityId:
+        action.type === "leave_queue"
+          ? action.queueId
+          : result.queueAccess?.queueId ?? "queue",
+    };
+  }
+  if (action.type === "reserve" || action.type === "set_reservation_status") {
+    return {
+      entityType: "reservation" as const,
+      entityId:
+        action.type === "set_reservation_status"
+          ? action.reservationId
+          : result.state.reservations.at(-1)?.id ?? "reservation",
+    };
+  }
+  if (action.type === "add_staff" || action.type === "set_staff_status") {
+    return {
+      entityType: "staff" as const,
+      entityId:
+        action.type === "set_staff_status"
+          ? action.staffId
+          : result.state.staff.at(-1)?.id ?? "staff",
+    };
+  }
+  return {
+    entityType: "restaurant" as const,
+    entityId: result.state.restaurant.id,
+  };
+}
+
+export function applyAction(
+  state: AppState,
+  action: DemoAction,
+  actorRole: Role = "owner",
+  actor: string = actorRole,
+): ActionResult {
+  const result = mutateState(state, action, actorRole);
+  const target = auditTarget(action, result);
+  result.state.auditLog.unshift({
+    id: crypto.randomUUID(),
+    actor,
+    actorRole,
+    action: action.type,
+    entityType: target.entityType,
+    entityId: target.entityId,
+    summary: result.message,
+    createdAt: result.state.updatedAt,
+  });
+  result.state.auditLog = result.state.auditLog.slice(0, 250);
+  return result;
 }

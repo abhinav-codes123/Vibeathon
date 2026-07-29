@@ -1,17 +1,16 @@
+import {
+  ensureNormalizedSchema,
+  readNormalizedState,
+  upgradeState,
+  writeNormalizedState,
+  type D1DatabaseLike,
+} from "./normalized-store";
 import { seedState } from "./seed";
 import type { AppState } from "./types";
 
-type StateRow = { payload: string; version: number };
-type D1DatabaseLike = {
-  prepare(query: string): {
-    bind(...values: unknown[]): ReturnType<D1DatabaseLike["prepare"]>;
-    first<T = Record<string, unknown>>(): Promise<T | null>;
-    run(): Promise<{ meta: { changes?: number } }>;
-  };
-};
-
 declare global {
   var __flowDineLocalState: AppState | undefined;
+  var __flowDineLocalVersion: number | undefined;
   var __flowDineLocalRateLimits:
     | Map<string, { count: number; resetAt: number }>
     | undefined;
@@ -20,15 +19,23 @@ declare global {
 const timestampKeys = ["createdAt", "updatedAt", "joinedAt"] as const;
 
 function rebaseLiveTimestamps(input: AppState) {
-  const state = structuredClone(input);
+  const state = upgradeState(input);
   const sourceTime = new Date(state.updatedAt).getTime();
   const destinationTime = Date.now();
   const offset = Number.isFinite(sourceTime) ? destinationTime - sourceTime : 0;
   const shift = (value: string) => {
     const time = new Date(value).getTime();
-    return Number.isFinite(time) ? new Date(time + offset).toISOString() : new Date(destinationTime).toISOString();
+    return Number.isFinite(time)
+      ? new Date(time + offset).toISOString()
+      : new Date(destinationTime).toISOString();
   };
-  for (const collection of [state.orders, state.queue, state.serviceRequests, state.movements]) {
+  for (const collection of [
+    state.orders,
+    state.queue,
+    state.serviceRequests,
+    state.movements,
+    state.auditLog,
+  ]) {
     for (const item of collection) {
       for (const key of timestampKeys) {
         if (key in item && typeof item[key as keyof typeof item] === "string") {
@@ -39,12 +46,22 @@ function rebaseLiveTimestamps(input: AppState) {
       }
     }
   }
+  for (const order of state.orders) {
+    order.timeline = order.timeline.map((event) => ({
+      ...event,
+      createdAt: shift(event.createdAt),
+    }));
+  }
+  state.restaurant.lastOpenedAt = shift(state.restaurant.lastOpenedAt);
+  if (state.restaurant.lastClosedAt) {
+    state.restaurant.lastClosedAt = shift(state.restaurant.lastClosedAt);
+  }
   state.updatedAt = new Date(destinationTime).toISOString();
   return state;
 }
 
 function freshSeedState() {
-  return rebaseLiveTimestamps(seedState);
+  return rebaseLiveTimestamps(structuredClone(seedState));
 }
 
 async function getDatabase(): Promise<D1DatabaseLike | null> {
@@ -55,105 +72,57 @@ async function getDatabase(): Promise<D1DatabaseLike | null> {
 
 function localState() {
   globalThis.__flowDineLocalState ??= freshSeedState();
+  globalThis.__flowDineLocalVersion ??= 1;
   return globalThis.__flowDineLocalState;
 }
 
 async function ensureStore() {
   const database = await getDatabase();
   if (!database) return null;
-  await database.prepare(
-    `CREATE TABLE IF NOT EXISTS app_state (
-      restaurant_id TEXT PRIMARY KEY,
-      payload TEXT NOT NULL,
-      version INTEGER NOT NULL DEFAULT 1,
-      updated_at TEXT NOT NULL
-    )`,
-  ).run();
-  await database.prepare(
-    `CREATE TABLE IF NOT EXISTS audit_logs (
-      id TEXT PRIMARY KEY,
-      restaurant_id TEXT NOT NULL,
-      actor_role TEXT NOT NULL,
-      action TEXT NOT NULL,
-      created_at TEXT NOT NULL
-    )`,
-  ).run();
-  await database.prepare(
-    `CREATE TABLE IF NOT EXISTS rate_limits (
-      bucket_key TEXT PRIMARY KEY,
-      count INTEGER NOT NULL,
-      reset_at INTEGER NOT NULL
-    )`,
-  ).run();
-  const row = await database.prepare(
-    "SELECT restaurant_id FROM app_state WHERE restaurant_id = ?",
-  )
-    .bind(seedState.restaurant.id)
-    .first();
-  if (!row) {
-    const fresh = freshSeedState();
-    await database.prepare(
-      "INSERT INTO app_state (restaurant_id, payload, version, updated_at) VALUES (?, ?, 1, ?)",
+  await ensureNormalizedSchema(database);
+  await database
+    .prepare(
+      `CREATE TABLE IF NOT EXISTS rate_limits (
+        bucket_key TEXT PRIMARY KEY,
+        count INTEGER NOT NULL,
+        reset_at INTEGER NOT NULL
+      )`,
     )
-      .bind(seedState.restaurant.id, JSON.stringify(fresh), fresh.updatedAt)
-      .run();
-  }
+    .run();
   return database;
 }
 
 export async function readState(): Promise<AppState> {
   const database = await ensureStore();
   if (!database) return structuredClone(localState());
-  const row = await database.prepare(
-    "SELECT payload, version FROM app_state WHERE restaurant_id = ?",
-  )
-    .bind(seedState.restaurant.id)
-    .first<StateRow>();
-  if (!row) throw new Error("Restaurant state is unavailable.");
-  const state = JSON.parse(row.payload) as AppState;
+  const { state } = await readNormalizedState(database);
   const updatedAt = new Date(state.updatedAt).getTime();
   if (!Number.isFinite(updatedAt) || updatedAt < Date.now() - 365 * 24 * 60 * 60 * 1_000) {
     const repaired = rebaseLiveTimestamps(state);
-    await database.prepare(
-      "UPDATE app_state SET payload = ?, version = version + 1, updated_at = ? WHERE restaurant_id = ? AND version = ?",
-    )
-      .bind(JSON.stringify(repaired), repaired.updatedAt, seedState.restaurant.id, row.version)
-      .run();
+    const current = await readNormalizedState(database);
+    const written = await writeNormalizedState(database, repaired, current.version);
+    if (!written) throw new Error("Restaurant state changed while timestamps were repaired.");
     return repaired;
   }
   return state;
 }
 
 export async function updateState(
-  actorRole: string,
-  actionName: string,
+  _actorRole: string,
+  _actionName: string,
   updater: (state: AppState) => { state: AppState; message: string },
 ) {
   const database = await ensureStore();
   if (!database) {
     const result = updater(structuredClone(localState()));
     globalThis.__flowDineLocalState = result.state;
+    globalThis.__flowDineLocalVersion = (globalThis.__flowDineLocalVersion ?? 1) + 1;
     return result;
   }
   for (let attempt = 0; attempt < 3; attempt += 1) {
-    const row = await database.prepare(
-      "SELECT payload, version FROM app_state WHERE restaurant_id = ?",
-    )
-      .bind(seedState.restaurant.id)
-      .first<StateRow>();
-    if (!row) throw new Error("Restaurant state is unavailable.");
-    const result = updater(JSON.parse(row.payload) as AppState);
-    const write = await database.prepare(
-      "UPDATE app_state SET payload = ?, version = version + 1, updated_at = ? WHERE restaurant_id = ? AND version = ?",
-    )
-      .bind(JSON.stringify(result.state), result.state.updatedAt, seedState.restaurant.id, row.version)
-      .run();
-    if ((write.meta.changes ?? 0) === 1) {
-      await database.prepare(
-        "INSERT INTO audit_logs (id, restaurant_id, actor_role, action, created_at) VALUES (?, ?, ?, ?, ?)",
-      )
-        .bind(crypto.randomUUID(), seedState.restaurant.id, actorRole, actionName, new Date().toISOString())
-        .run();
+    const current = await readNormalizedState(database);
+    const result = updater(current.state);
+    if (await writeNormalizedState(database, result.state, current.version)) {
       return result;
     }
   }
@@ -165,15 +134,15 @@ export async function resetState() {
   const fresh = freshSeedState();
   if (!database) {
     globalThis.__flowDineLocalState = structuredClone(fresh);
+    globalThis.__flowDineLocalVersion = 1;
     globalThis.__flowDineLocalRateLimits = new Map();
     return fresh;
   }
-  await database.prepare(
-    "UPDATE app_state SET payload = ?, version = version + 1, updated_at = ? WHERE restaurant_id = ?",
-  )
-    .bind(JSON.stringify(fresh), fresh.updatedAt, seedState.restaurant.id)
-    .run();
-  return fresh;
+  for (let attempt = 0; attempt < 3; attempt += 1) {
+    const current = await readNormalizedState(database);
+    if (await writeNormalizedState(database, fresh, current.version)) return fresh;
+  }
+  throw new Error("Restaurant state changed while the test state was reset.");
 }
 
 export async function checkRateLimit(

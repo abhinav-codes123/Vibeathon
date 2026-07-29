@@ -1,4 +1,4 @@
-import type { DemoAction, DiningTable } from "./types";
+import type { DemoAction, DiningTable, StaffMember } from "./types";
 
 export class ActionValidationError extends Error {
   constructor(message: string) {
@@ -51,6 +51,13 @@ function integer(value: unknown, label: string, min: number, max: number) {
 function number(value: unknown, label: string, min: number, max: number) {
   if (typeof value !== "number" || !Number.isFinite(value) || value < min || value > max) {
     throw new ActionValidationError(`${label} must be between ${min} and ${max}.`);
+  }
+  return value;
+}
+
+function boolean(value: unknown, label: string) {
+  if (typeof value !== "boolean") {
+    throw new ActionValidationError(`${label} must be true or false.`);
   }
   return value;
 }
@@ -170,6 +177,52 @@ export function validateDemoAction(input: unknown): DemoAction {
         "cleaning",
         "out_of_service",
       ]),
+    };
+  }
+  if (type === "set_accepting_orders") {
+    return {
+      type,
+      accepting: boolean(value.accepting, "Accepting orders"),
+    };
+  }
+  if (type === "set_restaurant_open") {
+    return {
+      type,
+      open: boolean(value.open, "Restaurant open"),
+    };
+  }
+  if (type === "add_staff") {
+    return {
+      type,
+      name: text(value.name, "Staff name", { min: 2, max: 100 }),
+      email: text(value.email, "Staff email", {
+        min: 5,
+        max: 254,
+        pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+      }).toLowerCase(),
+      role: oneOf(value.role, "Staff role", ["kitchen", "waiter", "manager"] as const),
+    };
+  }
+  if (type === "set_staff_status") {
+    return {
+      type,
+      staffId: id(value.staffId, "Staff identifier"),
+      status: oneOf<StaffMember["status"]>(value.status, "Staff status", [
+        "active",
+        "inactive",
+        "invited",
+      ]),
+    };
+  }
+  if (type === "set_reservation_status") {
+    return {
+      type,
+      reservationId: id(value.reservationId, "Reservation identifier"),
+      status: oneOf(value.status, "Reservation status", [
+        "confirmed",
+        "seated",
+        "cancelled",
+      ] as const),
     };
   }
 

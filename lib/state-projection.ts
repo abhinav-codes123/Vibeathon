@@ -8,6 +8,8 @@ export function publicStateProjection(input: AppState): AppState {
   state.serviceRequests = [];
   state.revenueHistory = [];
   state.hourlyDemand = [];
+  state.staff = [];
+  state.auditLog = [];
   state.orders = state.orders.map((order) => ({
     ...order,
     guest: "Guest",

@@ -44,6 +44,13 @@ export type OrderItem = {
   unitPrice: number;
 };
 
+export type OrderTimelineEvent = {
+  id: string;
+  status: OrderStatus;
+  actor: string;
+  createdAt: string;
+};
+
 export type Order = {
   id: string;
   number: string;
@@ -58,6 +65,7 @@ export type Order = {
   estimateMinutes: number;
   total: number;
   paid: boolean;
+  timeline: OrderTimelineEvent[];
 };
 
 export type DiningTable = {
@@ -110,6 +118,26 @@ export type InventoryMovement = {
   createdAt: string;
 };
 
+export type StaffMember = {
+  id: string;
+  name: string;
+  email: string;
+  role: Exclude<Role, "customer">;
+  status: "active" | "inactive" | "invited";
+  createdAt: string;
+};
+
+export type AuditEvent = {
+  id: string;
+  actor: string;
+  actorRole: Role;
+  action: string;
+  entityType: "order" | "table" | "inventory" | "menu" | "service" | "queue" | "reservation" | "restaurant" | "staff";
+  entityId: string;
+  summary: string;
+  createdAt: string;
+};
+
 export type AppState = {
   restaurant: {
     id: string;
@@ -118,6 +146,11 @@ export type AppState = {
     location: string;
     serviceChargePercent: number;
     taxPercent: number;
+    defaultTurnoverMinutes: number;
+    isOpen: boolean;
+    acceptingOrders: boolean;
+    lastOpenedAt: string;
+    lastClosedAt?: string;
   };
   inventory: InventoryItem[];
   menu: MenuItem[];
@@ -130,6 +163,8 @@ export type AppState = {
   revenueHistory: { day: string; revenue: number; orders: number }[];
   hourlyDemand: { hour: string; actual: number; forecast: number }[];
   feedback: { rating: number; comment: string; author: string }[];
+  staff: StaffMember[];
+  auditLog: AuditEvent[];
   updatedAt: string;
 };
 
@@ -151,7 +186,17 @@ export type DemoAction =
   | { type: "toggle_pause"; menuItemId: string }
   | { type: "restock"; ingredientId: string; quantity: number }
   | { type: "set_table"; tableId: string; status: DiningTable["status"] }
-  | { type: "mark_paid"; orderId: string };
+  | { type: "mark_paid"; orderId: string }
+  | { type: "set_accepting_orders"; accepting: boolean }
+  | { type: "set_restaurant_open"; open: boolean }
+  | { type: "set_staff_status"; staffId: string; status: StaffMember["status"] }
+  | {
+      type: "add_staff";
+      name: string;
+      email: string;
+      role: Exclude<Role, "customer" | "owner">;
+    }
+  | { type: "set_reservation_status"; reservationId: string; status: Reservation["status"] };
 
 export type ActionResult = {
   state: AppState;

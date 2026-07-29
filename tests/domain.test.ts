@@ -9,6 +9,7 @@ import {
   forecastSummary,
   queueWaitEstimate,
   recommendations,
+  serviceSummary,
   splitEqually,
 } from "../lib/domain.ts";
 import { seedState } from "../lib/seed.ts";
@@ -38,6 +39,7 @@ test("placing and cancelling an order reserves then restores stock", () => {
     items: [{ menuItemId: "m1", quantity: 2 }],
   }).state;
   const order = placed.orders[0];
+  assert.equal(order.status, "received");
   assert.equal(placed.inventory.find((item) => item.id === "paneer")!.quantity, before - 360);
   const cancelled = applyAction(placed, { type: "cancel_order", orderId: order.id }).state;
   assert.equal(cancelled.inventory.find((item) => item.id === "paneer")!.quantity, before);
@@ -53,6 +55,7 @@ test("cancelling after preparation starts does not restore consumed stock", () =
     items: [{ menuItemId: "m1", quantity: 1 }],
   }).state;
   const order = placed.orders[0];
+  applyAction(placed, { type: "advance_order", orderId: order.id });
   applyAction(placed, { type: "advance_order", orderId: order.id });
   const afterPreparation = placed.inventory.find((item) => item.id === "paneer")!.quantity;
   applyAction(placed, { type: "cancel_order", orderId: order.id });
@@ -132,6 +135,8 @@ test("role permissions enforce server-side operational boundaries", () => {
   assert.equal(can("owner", "cancel_order"), true);
   assert.equal(can("customer", "mark_paid"), false);
   assert.equal(can("manager", "mark_paid"), true);
+  assert.equal(can("manager", "add_staff"), false);
+  assert.equal(can("owner", "add_staff"), true);
 });
 
 test("payment is lifecycle checked and moves the table to cleaning", () => {
@@ -221,6 +226,8 @@ test("public state projection removes operational and guest-sensitive fields", (
   assert.ok(projected.reservations.every((reservation) => reservation.phone === ""));
   assert.ok(projected.queue.every((entry) => entry.name.startsWith("Party ")));
   assert.ok(projected.queue.every((entry) => entry.managementToken === undefined));
+  assert.equal(projected.staff.length, 0);
+  assert.equal(projected.auditLog.length, 0);
 });
 
 test("runtime action validation rejects malformed and abusive payloads", () => {
@@ -282,4 +289,129 @@ test("auth provider controls fail closed and reflect Supabase settings", () => {
     }),
     { email: true, google: true },
   );
+});
+
+test("restaurant intake controls fail closed without interrupting active tickets", () => {
+  const state = fresh();
+  applyAction(
+    state,
+    { type: "set_accepting_orders", accepting: false },
+    "manager",
+    "manager@example.com",
+  );
+  assert.equal(state.restaurant.acceptingOrders, false);
+  assert.throws(
+    () =>
+      applyAction(state, {
+        type: "place_order",
+        guest: "Late guest",
+        table: "T01",
+        items: [{ menuItemId: "m1", quantity: 1 }],
+      }),
+    /not accepting/,
+  );
+  assert.ok(state.orders.some((order) => order.status === "preparing"));
+  assert.equal(state.auditLog[0].actor, "manager@example.com");
+});
+
+test("closing service is blocked until operational work is complete", () => {
+  const state = fresh();
+  assert.throws(
+    () => applyAction(state, { type: "set_restaurant_open", open: false }, "owner"),
+    /Close blocked/,
+  );
+  state.orders.forEach((order) => {
+    order.status = "completed";
+    order.paid = true;
+  });
+  state.serviceRequests.forEach((request) => {
+    request.status = "resolved";
+  });
+  applyAction(state, { type: "set_restaurant_open", open: false }, "owner");
+  assert.equal(state.restaurant.isOpen, false);
+  assert.equal(state.restaurant.acceptingOrders, false);
+  assert.throws(
+    () => applyAction(state, { type: "set_accepting_orders", accepting: true }, "manager"),
+    /Open the restaurant/,
+  );
+});
+
+test("owner manages staff invitations without allowing owner deactivation", () => {
+  const state = fresh();
+  const result = applyAction(
+    state,
+    {
+      type: "add_staff",
+      name: "New Chef",
+      email: "CHEF@EXAMPLE.COM",
+      role: "kitchen",
+    },
+    "owner",
+  );
+  const invited = result.state.staff.at(-1)!;
+  assert.equal(invited.email, "chef@example.com");
+  assert.equal(invited.status, "invited");
+  applyAction(
+    state,
+    { type: "set_staff_status", staffId: invited.id, status: "active" },
+    "owner",
+  );
+  assert.equal(invited.status, "active");
+  assert.throws(
+    () =>
+      applyAction(
+        state,
+        { type: "set_staff_status", staffId: "staff-priya", status: "inactive" },
+        "owner",
+      ),
+    /owner cannot be deactivated/,
+  );
+});
+
+test("order timeline records every controlled handoff", () => {
+  const state = fresh();
+  const result = applyAction(state, {
+    type: "place_order",
+    guest: "Timeline Guest",
+    table: "T01",
+    items: [{ menuItemId: "m1", quantity: 1 }],
+  });
+  const order = result.state.orders[0];
+  for (const role of ["kitchen", "kitchen", "kitchen", "waiter"] as const) {
+    applyAction(state, { type: "advance_order", orderId: order.id }, role);
+  }
+  applyAction(state, { type: "mark_paid", orderId: order.id }, "manager");
+  assert.deepEqual(
+    order.timeline.map((entry) => entry.status),
+    ["received", "confirmed", "preparing", "ready", "served", "completed"],
+  );
+  assert.ok(state.auditLog.filter((entry) => entry.entityId === order.id).length >= 6);
+});
+
+test("paying one of two table orders does not release the table", () => {
+  const state = fresh();
+  const first = state.orders.find((order) => order.id === "order-102")!;
+  first.status = "served";
+  const second = structuredClone(first);
+  second.id = "order-same-table";
+  second.number = "SC-999";
+  second.status = "served";
+  second.paid = false;
+  state.orders.push(second);
+  state.tables.find((table) => table.code === first.table)!.status = "occupied";
+  applyAction(state, { type: "mark_paid", orderId: first.id }, "manager");
+  assert.notEqual(
+    state.tables.find((table) => table.code === first.table)?.status,
+    "cleaning",
+  );
+});
+
+test("service summary is deterministic and separates facts from recommendations", () => {
+  const state = fresh();
+  const summary = serviceSummary(state);
+  assert.equal(summary.activeOrders, 3);
+  assert.equal(summary.cancelledOrders, 0);
+  assert.equal(summary.openServiceRequests, 2);
+  assert.ok(summary.lowStockItems > 0);
+  assert.equal(typeof summary.averagePreparationMinutes, "number");
 });

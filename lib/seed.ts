@@ -171,6 +171,10 @@ export const seedState: AppState = {
     location: "Bengaluru · Indiranagar",
     serviceChargePercent: 5,
     taxPercent: 5,
+    defaultTurnoverMinutes: 75,
+    isOpen: true,
+    acceptingOrders: true,
+    lastOpenedAt: ago(180),
   },
   inventory,
   menu,
@@ -179,16 +183,31 @@ export const seedState: AppState = {
       id: "order-104", number: "SC-104", table: "T08", guest: "Ananya",
       status: "preparing", items: [{ menuItemId: "m2", name: "Circuit Butter Chicken", quantity: 1, unitPrice: 67500 }, { menuItemId: "m9", name: "Garlic Naan", quantity: 2, unitPrice: 19500 }],
       notes: "One naan without butter", allergens: ["dairy", "gluten"], createdAt: ago(24), updatedAt: ago(8), estimateMinutes: 26, total: 117075, paid: false,
+      timeline: [
+        { id: "timeline-104-1", status: "received", actor: "Guest", createdAt: ago(24) },
+        { id: "timeline-104-2", status: "confirmed", actor: "Kitchen", createdAt: ago(22) },
+        { id: "timeline-104-3", status: "preparing", actor: "Kitchen", createdAt: ago(8) },
+      ],
     },
     {
       id: "order-105", number: "SC-105", table: "T03", guest: "Rohan",
       status: "confirmed", items: [{ menuItemId: "m4", name: "Coastal Prawn Moilee", quantity: 2, unitPrice: 79500 }],
       notes: "Shellfish allergy at adjacent seat — sanitize station", allergens: ["shellfish"], createdAt: ago(11), updatedAt: ago(11), estimateMinutes: 28, total: 175140, paid: false,
+      timeline: [
+        { id: "timeline-105-1", status: "received", actor: "Guest", createdAt: ago(12) },
+        { id: "timeline-105-2", status: "confirmed", actor: "Kitchen", createdAt: ago(11) },
+      ],
     },
     {
       id: "order-102", number: "SC-102", table: "T12", guest: "Mira",
       status: "ready", items: [{ menuItemId: "m7", name: "Dal Makhani 18H", quantity: 1, unitPrice: 49500 }, { menuItemId: "m10", name: "Saffron Pea Pulao", quantity: 1, unitPrice: 31500 }],
       notes: "", allergens: ["dairy"], createdAt: ago(39), updatedAt: ago(3), estimateMinutes: 20, total: 89100, paid: false,
+      timeline: [
+        { id: "timeline-102-1", status: "received", actor: "Guest", createdAt: ago(39) },
+        { id: "timeline-102-2", status: "confirmed", actor: "Kitchen", createdAt: ago(37) },
+        { id: "timeline-102-3", status: "preparing", actor: "Kitchen", createdAt: ago(20) },
+        { id: "timeline-102-4", status: "ready", actor: "Kitchen", createdAt: ago(3) },
+      ],
     },
   ],
   tables: Array.from({ length: 16 }, (_, index) => {
@@ -234,6 +253,16 @@ export const seedState: AppState = {
     { rating: 5, comment: "The live wait estimate was remarkably accurate.", author: "Nikita" },
     { rating: 4, comment: "Beautiful food and very attentive service.", author: "Arjun" },
     { rating: 5, comment: "Dietary filters made ordering effortless.", author: "Leena" },
+  ],
+  staff: [
+    { id: "staff-priya", name: "Priya Sharma", email: "priya@saffroncircuit.in", role: "owner", status: "active", createdAt: ago(90 * 24 * 60) },
+    { id: "staff-arjun", name: "Arjun Rao", email: "arjun@saffroncircuit.in", role: "manager", status: "active", createdAt: ago(60 * 24 * 60) },
+    { id: "staff-meera", name: "Meera Iyer", email: "meera@saffroncircuit.in", role: "kitchen", status: "active", createdAt: ago(45 * 24 * 60) },
+    { id: "staff-vikram", name: "Vikram Singh", email: "vikram@saffroncircuit.in", role: "waiter", status: "active", createdAt: ago(30 * 24 * 60) },
+  ],
+  auditLog: [
+    { id: "audit-seed-1", actor: "Manager", actorRole: "manager", action: "service_opened", entityType: "restaurant", entityId: "rest-saffron-circuit", summary: "Dinner service opened and guest ordering enabled.", createdAt: ago(180) },
+    { id: "audit-seed-2", actor: "Kitchen", actorRole: "kitchen", action: "order_ready", entityType: "order", entityId: "order-102", summary: "SC-102 marked ready at the pass.", createdAt: ago(3) },
   ],
   updatedAt: new Date().toISOString(),
 };

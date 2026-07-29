@@ -35,3 +35,10 @@ must not be represented as a general restaurant SaaS until operational state is
 migrated to tenant-scoped PostgreSQL transactions, customer records have
 identity/session ownership, and real payment/notification providers are
 integrated and verified.
+
+## Deployment provenance
+
+Production releases are built and tested locally, packaged with the Sites
+hosting manifest, and saved against the exact pushed Git commit before
+deployment. This keeps the public demo traceable to the same source revision
+that passed the release gates above.

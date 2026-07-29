@@ -18,9 +18,16 @@ export type AuthContext = {
 };
 
 const roles: Role[] = ["customer", "kitchen", "waiter", "manager", "owner"];
+const testUserSuffixes = ["alpha", "beta"] as const;
 
 function validRole(value: unknown): value is Role {
   return typeof value === "string" && roles.includes(value as Role);
+}
+
+function validTestUser(value: string | null, role: Role) {
+  if (!value) return null;
+  const suffix = testUserSuffixes.find((candidate) => value === `${role}-${candidate}`);
+  return suffix ? `${role}-${suffix}` : null;
 }
 
 async function localTestContext(): Promise<AuthContext | null> {
@@ -35,9 +42,14 @@ async function localTestContext(): Promise<AuthContext | null> {
   }
   const role = requestHeaders.get("x-flowdine-test-role");
   if (!validRole(role)) return { configured: true, user: null, membership: null, role: null };
+  const testUser = validTestUser(requestHeaders.get("x-flowdine-test-user"), role);
+  if (requestHeaders.has("x-flowdine-test-user") && !testUser) {
+    return { configured: true, user: null, membership: null, role: null };
+  }
+  const identity = testUser ?? role;
   return {
     configured: true,
-    user: { id: `local-test-${role}`, email: `${role}@flowdine.test` },
+    user: { id: `local-test-${identity}`, email: `${identity}@flowdine.test` },
     membership: {
       restaurantId: "saffron-circuit",
       restaurantName: "Saffron Circuit",

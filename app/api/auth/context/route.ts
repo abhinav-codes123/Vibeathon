@@ -7,7 +7,7 @@ export async function GET() {
   return Response.json(
     {
       configured: context.configured,
-      user: context.user ? { email: context.user.email } : null,
+      user: context.user ? { id: context.user.id, email: context.user.email } : null,
       membership: context.membership,
       role: context.role,
     },

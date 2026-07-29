@@ -314,7 +314,7 @@ test("protected staff pages render only with an authorized verified role", async
 test("critical public pages have no serious or critical automated accessibility violations", async ({
   page,
 }) => {
-  for (const path of ["/", "/menu", "/reserve", "/queue"]) {
+  for (const path of ["/", "/menu", "/reserve", "/queue", "/login", "/update-password"]) {
     await page.goto(path);
     await expect(page.locator("main")).toBeVisible();
     await expect(page.locator(".loading-shell")).toHaveCount(0);

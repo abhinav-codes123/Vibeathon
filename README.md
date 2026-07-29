@@ -8,6 +8,15 @@ FlowDine AI is a live restaurant digital twin for the fictional flagship restaur
 
 ![FlowDine AI social card](public/og.png)
 
+## Hackathon submission
+
+| Required item | Submission detail |
+|---|---|
+| Team name | **FlowDine AI** |
+| Hosted application | [flowdine-ai.abhinavchaudhary484.chatgpt.site](https://flowdine-ai.abhinavchaudhary484.chatgpt.site) |
+| Public repository | [github.com/abhinav-codes123/Vibeathon](https://github.com/abhinav-codes123/Vibeathon) |
+| Problem statement | VibeAthon 6.0 - Smart Restaurant Management System |
+
 ## Why it exists
 
 Restaurants often run the dining room, kitchen, stock room, and guest journey in separate tools. That fragmentation creates unavailable-item orders, missed service requests, long waits, hidden bottlenecks, and reactive purchasing. FlowDine makes the restaurant observable and actionable as one system.
@@ -62,6 +71,32 @@ See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) and [docs/DATABASE.md](docs/DAT
 - Gemini REST adapter with deterministic no-key fallback
 - CSS design system with no component library dependency
 - Node test runner, ESLint, and TypeScript compiler
+
+## User stories completed
+
+| Level | Story | Status | FlowDine evidence |
+|---|---|---|---|
+| Bronze | **1 - Modern customer and management UX** | Complete | Responsive guest, kitchen, waiter, manager, owner, login, and account experiences. |
+| Silver | **2 - Verified email, Google OAuth, and role-based access** | Activation pending | Email confirmation and server-side restaurant roles are live. The Google flow and callback are implemented, but the production Google provider still needs its one-time Google Cloud activation. |
+| Silver | **3 - Digital restaurant operations** | Complete | Digital menu, recipe-derived live availability, orders, reservations, queue, billing, notifications, and synchronized service workflows. |
+| Gold | **4 - Restaurant management dashboard** | Complete | Orders, tables, inventory, sales rhythm, forecasts, operational risks, audit-backed actions, and analytics. |
+| Platinum | **5 - Intelligent operations** | Complete | Explainable recommendations, inventory risk, demand forecasting, operational insights, and an evidence-grounded manager copilot. |
+
+The ranking is cumulative. Do not claim Silver, Gold, or Platinum until the live
+Google provider is activated and its callback is verified, because User Story 2
+explicitly requires Google OAuth.
+
+## AI usage
+
+- The manager copilot can call the Gemini REST API when `GEMINI_API_KEY` is
+  configured.
+- Only aggregated restaurant metrics are sent to Gemini; guest identities,
+  phone numbers, and private order notes are excluded.
+- Recipe availability, totals, forecasts, permissions, and other operational
+  facts are calculated by deterministic application code. The model only
+  explains evidence and suggests priorities.
+- Without a Gemini key, the same interface uses a deterministic evidence-based
+  fallback, so the demo remains functional and honest.
 
 ## Seeded demo
 
@@ -141,9 +176,12 @@ pnpm typecheck
 pnpm lint
 pnpm test
 pnpm build
+pnpm verify:production-auth
 ```
 
 The domain suite covers recipe availability, stock reservation/restoration, preparation estimates, queue estimates, paise-safe bill splitting, safe recommendations, forecasting, and role permissions.
+`verify:production-auth` checks the live providers, anonymous isolation,
+protected dashboards, protected staff APIs, and the manager copilot boundary.
 
 ## Demo access
 
@@ -194,8 +232,8 @@ The current state-document model makes the shared demo easy to understand and de
 
 ## Known limitations
 
-- Supabase provider credentials and production redirect URLs must be configured
-  before staff sign-in becomes available on a deployment.
+- Google OAuth cannot be called complete until its live provider is activated
+  and the real Google callback succeeds.
 - Staff assignment currently uses explicit administrator-created membership rows;
   a full owner invitation console is not yet included.
 - Payments, notifications, receipts, and exports are simulated/in-browser.
@@ -223,7 +261,12 @@ The current state-document model makes the shared demo easy to understand and de
 - [Judging criteria](docs/JUDGING_CRITERIA.md)
 - [Implementation plan](docs/IMPLEMENTATION_PLAN.md)
 - [Public deployment](https://flowdine-ai.abhinavchaudhary484.chatgpt.site)
+- [Public GitHub repository](https://github.com/abhinav-codes123/Vibeathon)
 
 ## Team
 
-Built as a complete hackathon vertical slice. Replace this section with team names, roles, and repository/deployment links before submission.
+**Team name:** FlowDine AI
+
+FlowDine AI was built as a complete hackathon vertical slice: product design,
+full-stack implementation, authentication and authorization, data modeling,
+testing, security review, documentation, and deployment.

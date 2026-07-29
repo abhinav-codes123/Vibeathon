@@ -98,6 +98,7 @@ export async function getAuthContext(): Promise<AuthContext> {
     .from("restaurant_memberships")
     .select("restaurant_id, role, restaurants(name, slug)")
     .eq("profile_id", subject)
+    .eq("status", "active")
     .limit(1)
     .maybeSingle();
 

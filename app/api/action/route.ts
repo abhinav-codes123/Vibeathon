@@ -4,6 +4,7 @@ import { getAuthContext } from "../../../lib/auth";
 import { resolveActionRole } from "../../../lib/authz";
 import { publicStateProjection } from "../../../lib/state-projection";
 import { ActionValidationError, validateDemoAction } from "../../../lib/validation";
+import { syncStaffAccess } from "../../../lib/staff-access";
 
 export const dynamic = "force-dynamic";
 
@@ -60,8 +61,9 @@ export async function POST(request: Request) {
     if (!can(role, action.type)) {
       return Response.json({ error: `${role} access cannot perform this operation.` }, { status: 403 });
     }
+    await syncStaffAccess(context, action);
     const result = await updateState(role, action.type, (state) =>
-      applyAction(state, action, role),
+      applyAction(state, action, role, context.user?.email || role),
     );
     return Response.json(
       role === "customer"

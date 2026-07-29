@@ -14,6 +14,7 @@
     "test": "node --experimental-strip-types --test tests/domain.test.ts",
     "test:e2e": "playwright test",
     "test:e2e:report": "playwright show-report test-results/playwright-report",
+    "verify:production-auth": "node scripts/verify-production-auth.mjs",
     "typecheck": "tsc --noEmit",
     "lint": "eslint . --ignore-pattern dist --ignore-pattern .next",
     "db:generate": "drizzle-kit generate"

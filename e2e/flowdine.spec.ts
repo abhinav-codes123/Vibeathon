@@ -34,6 +34,11 @@ async function stateFor(
       }>;
       inventory: Array<{ id: string; quantity: number }>;
       tables: Array<{ code: string; status: string }>;
+      menu: Array<{ id: string; paused?: boolean }>;
+      restaurant: { isOpen: boolean; acceptingOrders: boolean };
+      staff: Array<{ id: string; email: string; role: string; status: string }>;
+      auditLog: Array<{ action: string; actorRole: string; summary: string }>;
+      reservations: Array<{ id: string; status: string }>;
     };
   };
 }
@@ -68,7 +73,7 @@ test("master restaurant workflow keeps guest, kitchen, waiter, payment, inventor
     manager.state.inventory.find((item) => item.id === "paneer")!.quantity,
   ).toBe(paneerBefore - 180);
 
-  for (const role of ["kitchen", "kitchen", "waiter"] as const) {
+  for (const role of ["kitchen", "kitchen", "kitchen", "waiter"] as const) {
     const response = await request.post("/api/action", {
       headers: headersFor(role),
       data: { type: "advance_order", orderId },
@@ -190,6 +195,113 @@ test("anonymous payment and queue IDOR attempts fail without changing state", as
       })
     ).status(),
   ).toBe(200);
+});
+
+test("manager intake controls stop new orders while active work continues", async ({ request }) => {
+  const pause = await request.post("/api/action", {
+    headers: headersFor("manager"),
+    data: { type: "set_accepting_orders", accepting: false },
+  });
+  expect(pause.status()).toBe(200);
+
+  const blocked = await request.post("/api/action", {
+    data: {
+      type: "place_order",
+      guest: "Paused Guest",
+      table: "T01",
+      items: [{ menuItemId: "m1", quantity: 1 }],
+    },
+  });
+  expect(blocked.status()).toBe(409);
+  expect((await blocked.json()) as { error: string }).toMatchObject({
+    error: expect.stringContaining("not accepting"),
+  });
+
+  let manager = await stateFor(request, "manager");
+  expect(manager.state.restaurant.acceptingOrders).toBe(false);
+  expect(manager.state.orders.some((order) => order.status === "preparing")).toBe(true);
+  expect(manager.state.auditLog[0]).toMatchObject({
+    action: "set_accepting_orders",
+    actorRole: "manager",
+  });
+
+  expect(
+    (
+      await request.post("/api/action", {
+        headers: headersFor("manager"),
+        data: { type: "set_accepting_orders", accepting: true },
+      })
+    ).status(),
+  ).toBe(200);
+  manager = await stateFor(request, "manager");
+  expect(manager.state.restaurant.acceptingOrders).toBe(true);
+});
+
+test("owner staff roster actions are validated, audited, and owner-only", async ({ request }) => {
+  expect(
+    (
+      await request.post("/api/action", {
+        headers: headersFor("manager"),
+        data: {
+          type: "add_staff",
+          name: "Pilot Chef",
+          email: "pilot-chef@example.com",
+          role: "kitchen",
+        },
+      })
+    ).status(),
+  ).toBe(403);
+
+  const added = await request.post("/api/action", {
+    headers: headersFor("owner"),
+    data: {
+      type: "add_staff",
+      name: "Pilot Chef",
+      email: "PILOT-CHEF@EXAMPLE.COM",
+      role: "kitchen",
+    },
+  });
+  expect(added.status()).toBe(200);
+  let state = await stateFor(request, "owner");
+  const staff = state.state.staff.find((entry) => entry.email === "pilot-chef@example.com")!;
+  expect(staff).toMatchObject({ role: "kitchen", status: "invited" });
+
+  expect(
+    (
+      await request.post("/api/action", {
+        headers: headersFor("owner"),
+        data: { type: "set_staff_status", staffId: staff.id, status: "active" },
+      })
+    ).status(),
+  ).toBe(200);
+  state = await stateFor(request, "owner");
+  expect(state.state.staff.find((entry) => entry.id === staff.id)?.status).toBe("active");
+  expect(state.state.auditLog.some((entry) => entry.action === "add_staff")).toBe(true);
+});
+
+test("reservation checkpoints and close-day guard preserve active operations", async ({
+  request,
+}) => {
+  const state = await stateFor(request, "manager");
+  const reservation = state.state.reservations.find((entry) => entry.status === "confirmed")!;
+  expect(
+    (
+      await request.post("/api/action", {
+        headers: headersFor("manager"),
+        data: {
+          type: "set_reservation_status",
+          reservationId: reservation.id,
+          status: "seated",
+        },
+      })
+    ).status(),
+  ).toBe(200);
+  const close = await request.post("/api/action", {
+    headers: headersFor("owner"),
+    data: { type: "set_restaurant_open", open: false },
+  });
+  expect(close.status()).toBe(409);
+  expect(((await close.json()) as { error: string }).error).toContain("Close blocked");
 });
 
 test("runtime validation rejects malformed JSON, invalid quantities, past reservations, and unusable tables", async ({

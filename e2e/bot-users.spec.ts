@@ -197,7 +197,7 @@ test("two bots per role complete every implemented restaurant action", async ({ 
 
   let managerState = await stateFor(request, managerAlpha);
   const botOrder = managerState.state.orders.find((order) => order.number === orderNumber)!;
-  for (const actor of [kitchenAlpha, kitchenBeta]) {
+  for (const actor of [kitchenAlpha, kitchenBeta, kitchenAlpha]) {
     expect(
       (
         await request.post("/api/action", {
@@ -331,6 +331,27 @@ test("both bots for each staff role render their authorized workspace", async ({
     await expect(page.getByRole("heading", { name: target.heading })).toBeVisible();
     await context.close();
   }
+});
+
+test("owner dashboard exposes daily controls, staff roster, and audit checkpoints", async ({
+  browser,
+}) => {
+  const context = await browser.newContext({
+    extraHTTPHeaders: headersFor(bot("owner", "alpha")),
+  });
+  const page = await context.newPage();
+  await page.goto("/dashboard");
+  await expect(page.getByRole("heading", { name: "Service control" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Current service summary" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Staff roster" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Operational audit timeline" })).toBeVisible();
+
+  await page.getByLabel("Name").last().fill("Browser Chef");
+  await page.getByLabel("Email").fill("browser-chef@example.com");
+  await page.getByLabel("Role").selectOption("kitchen");
+  await page.getByRole("button", { name: "Add invitation" }).click();
+  await expect(page.getByText("Browser Chef", { exact: true })).toBeVisible();
+  await context.close();
 });
 
 test("protected staff workspaces have no serious or critical automated accessibility violations", async ({

@@ -6,6 +6,7 @@ import { useCallback, useEffect, useState } from "react";
 import {
   availabilityLabel,
   billFor,
+  serviceSummary,
 } from "../../lib/domain";
 import { canAccessView } from "../../lib/authz";
 import type {
@@ -267,7 +268,15 @@ export function FlowDineApp({ initialView }: { initialView: AppView }) {
           <span className="brand-mark">F</span>
           <span><b>FlowDine</b><small>Saffron Circuit</small></span>
         </button>
-        <div className="live-pill"><span /> Live digital twin <em>{timeAgo(state.updatedAt)}</em></div>
+        <div className={`live-pill ${state.restaurant.isOpen ? "" : "closed"}`}>
+          <span />
+          {state.restaurant.isOpen
+            ? state.restaurant.acceptingOrders
+              ? "Open · accepting orders"
+              : "Open · orders paused"
+            : "Closed"}
+          <em>{timeAgo(state.updatedAt)}</em>
+        </div>
         <nav className="topnav" aria-label="Primary navigation">
           <button onClick={() => navigate("menu")}>Menu</button>
           <button onClick={() => navigate("reserve")}>Reserve</button>
@@ -282,8 +291,8 @@ export function FlowDineApp({ initialView }: { initialView: AppView }) {
       </header>
 
       {view !== "home" && (
-        <aside className="role-rail" aria-label="Explore demo roles">
-          <p>Explore as</p>
+        <aside className="role-rail" aria-label="Restaurant workspaces">
+          <p>Workspaces</p>
           {visibleRoleViews.map((item) => (
             <button
               key={item.role}
@@ -335,6 +344,7 @@ export function FlowDineApp({ initialView }: { initialView: AppView }) {
             perform={perform}
             busy={busy}
             activeOrders={activeOrders}
+            role={auth?.role ?? null}
           />
         )}
       </main>
@@ -508,7 +518,21 @@ function Menu({
         eyebrow="Guest menu · inventory-aware"
         title="Dinner, without the guesswork."
         copy="Availability and preparation estimates update from the live kitchen and ingredient state."
-        action={<div className="service-promise"><span className="status-dot" /><b>Kitchen accepting orders</b><small>Average promise: 24 min</small></div>}
+        action={
+          <div className={`service-promise ${state.restaurant.acceptingOrders ? "" : "closed"}`}>
+            <span className={`status-dot ${state.restaurant.acceptingOrders ? "" : "warning"}`} />
+            <b>
+              {state.restaurant.acceptingOrders
+                ? "Kitchen accepting orders"
+                : "New orders temporarily paused"}
+            </b>
+            <small>
+              {state.restaurant.acceptingOrders
+                ? "Average promise: 24 min"
+                : "Existing tickets continue normally"}
+            </small>
+          </div>
+        }
       />
       <section className="filter-bar">
         <label className="search-field">
@@ -550,7 +574,17 @@ function Menu({
                 </div>
                 <div className="dish-footer">
                   <small>{item.calories} kcal · {item.allergens.length ? `Contains ${item.allergens.join(", ")}` : "No declared allergens"}</small>
-                  <button disabled={portions <= 0} onClick={() => addToCart(item)} aria-label={`Add ${item.name} to cart`}>{portions <= 0 ? "Paused" : "Add +"}</button>
+                  <button
+                    disabled={portions <= 0 || !state.restaurant.acceptingOrders}
+                    onClick={() => addToCart(item)}
+                    aria-label={`Add ${item.name} to cart`}
+                  >
+                    {!state.restaurant.acceptingOrders
+                      ? "Orders paused"
+                      : portions <= 0
+                        ? "Paused"
+                        : "Add +"}
+                  </button>
                 </div>
               </div>
             </article>
@@ -607,10 +641,18 @@ function Cart({
           <p><span>Service charge</span><b>{money(bill.service)}</b></p>
           <p className="grand"><span>Total</span><b>{money(bill.total)}</b></p>
         </div>
-        <button className="button primary full-button" disabled={!lines.length || busy} onClick={() => void onPlace(guest, table, notes)}>
+        <button
+          className="button primary full-button"
+          disabled={!lines.length || busy || !state.restaurant.acceptingOrders}
+          onClick={() => void onPlace(guest, table, notes)}
+        >
           {busy ? "Confirming with kitchen…" : "Place dine-in order"}
         </button>
-        <small className="demo-note">Demo payment is simulated. Inventory is reserved server-side when the kitchen confirms this order.</small>
+        <small className="demo-note">
+          {!state.restaurant.acceptingOrders
+            ? "New orders are paused by the manager. Your cart will remain on this device."
+            : "Payment is recorded manually for this pilot. Inventory is reserved server-side when the order is placed."}
+        </small>
       </aside>
     </div>
   );
@@ -704,10 +746,11 @@ function QueueView({ state, perform, busy }: { state: AppState; perform: (action
 }
 
 function Kitchen({ state, perform, busy }: { state: AppState; perform: (action: DemoAction) => Promise<ActionResponse | null>; busy: boolean }) {
-  const columns: { status: Order["status"]; title: string; action: string }[] = [
-    { status: "confirmed", title: "New & accepted", action: "Start preparing" },
+  const columns: { status: Order["status"]; title: string; action?: string }[] = [
+    { status: "received", title: "New orders", action: "Accept ticket" },
+    { status: "confirmed", title: "Accepted", action: "Start preparing" },
     { status: "preparing", title: "Preparing", action: "Mark ready" },
-    { status: "ready", title: "Ready at pass", action: "Hand to waiter" },
+    { status: "ready", title: "Ready at pass" },
   ];
   const active = state.orders.filter((o) => columns.some((column) => column.status === o.status));
   return (
@@ -724,7 +767,18 @@ function Kitchen({ state, perform, busy }: { state: AppState; perform: (action: 
           return (
             <div className="kds-column" key={column.status}>
               <header><h2>{column.title}</h2><span>{orders.length}</span></header>
-              {orders.map((order) => <Ticket key={order.id} order={order} referenceTime={state.updatedAt} action={column.action} busy={busy} onAdvance={() => perform({ type: "advance_order", orderId: order.id })} />)}
+              {orders.map((order) => (
+                <Ticket
+                  key={order.id}
+                  order={order}
+                  referenceTime={state.updatedAt}
+                  action={column.action}
+                  busy={busy}
+                  onAdvance={() =>
+                    perform({ type: "advance_order", orderId: order.id })
+                  }
+                />
+              ))}
               {!orders.length && <div className="column-empty">No tickets here. The next update will appear automatically.</div>}
             </div>
           );
@@ -734,7 +788,7 @@ function Kitchen({ state, perform, busy }: { state: AppState; perform: (action: 
   );
 }
 
-function Ticket({ order, referenceTime, action, busy, onAdvance }: { order: Order; referenceTime: string; action: string; busy: boolean; onAdvance: () => Promise<ActionResponse | null> }) {
+function Ticket({ order, referenceTime, action, busy, onAdvance }: { order: Order; referenceTime: string; action?: string; busy: boolean; onAdvance: () => Promise<ActionResponse | null> }) {
   const age = Math.max(0, Math.floor((new Date(referenceTime).getTime() - new Date(order.createdAt).getTime()) / 60_000));
   const delayed = age > order.estimateMinutes;
   return (
@@ -744,7 +798,14 @@ function Ticket({ order, referenceTime, action, busy, onAdvance }: { order: Orde
       <ul>{order.items.map((line) => <li key={line.menuItemId}><b>{line.quantity}×</b> {line.name}</li>)}</ul>
       {order.notes && <p className="order-note"><b>Note</b>{order.notes}</p>}
       {order.allergens.length > 0 && <p className="allergen"><b>Allergens</b>{order.allergens.join(" · ")}</p>}
-      <footer><small>Promise {order.estimateMinutes} min</small><button disabled={busy} onClick={() => void onAdvance()}>{action}</button></footer>
+      <footer>
+        <small>Promise {order.estimateMinutes} min</small>
+        {action ? (
+          <button disabled={busy} onClick={() => void onAdvance()}>{action}</button>
+        ) : (
+          <b className="handoff-state">Waiting for runner</b>
+        )}
+      </footer>
     </article>
   );
 }
@@ -796,11 +857,13 @@ function Manager({
   perform,
   busy,
   activeOrders,
+  role,
 }: {
   data: StatePayload;
   perform: (action: DemoAction) => Promise<ActionResponse | null>;
   busy: boolean;
   activeOrders: Order[];
+  role: Role | null;
 }) {
   const [question, setQuestion] = useState("What should I prioritize in the next 15 minutes?");
   const [copilotAnswer, setCopilotAnswer] = useState("");
@@ -812,6 +875,7 @@ function Manager({
   const avgOrder = Math.round(todayRevenue / Math.max(1, state.revenueHistory.at(-1)?.orders ?? 1));
   const low = state.inventory.filter((item) => item.quantity / item.par < 0.4).sort((a, b) => a.quantity / a.par - b.quantity / b.par);
   const maxRevenue = Math.max(...state.revenueHistory.map((row) => row.revenue));
+  const summary = serviceSummary(state);
   const askCopilot = async () => {
     setCopilotBusy(true);
     try {
@@ -850,6 +914,75 @@ function Manager({
         <Metric label="Average order" value={money(avgOrder)} change="+₹84 week over week" />
       </section>
       <section className="manager-grid">
+        <div className="panel operations-panel">
+          <header>
+            <div>
+              <p className="eyebrow">Daily controls</p>
+              <h2>Service control</h2>
+            </div>
+            <span className={state.restaurant.isOpen ? "control-open" : "control-closed"}>
+              {state.restaurant.isOpen ? "Open" : "Closed"}
+            </span>
+          </header>
+          <div className="control-status">
+            <div>
+              <b>{state.restaurant.acceptingOrders ? "Guest orders enabled" : "New orders paused"}</b>
+              <small>
+                {activeOrders.length} active tickets and {summary.openServiceRequests} open service requests
+              </small>
+            </div>
+            <button
+              disabled={busy || !state.restaurant.isOpen}
+              onClick={() =>
+                void perform({
+                  type: "set_accepting_orders",
+                  accepting: !state.restaurant.acceptingOrders,
+                })
+              }
+            >
+              {state.restaurant.acceptingOrders ? "Pause intake" : "Resume intake"}
+            </button>
+          </div>
+          <div className="control-actions">
+            <button
+              className="button ghost"
+              disabled={busy || state.restaurant.isOpen}
+              onClick={() => void perform({ type: "set_restaurant_open", open: true })}
+            >
+              Open restaurant
+            </button>
+            <button
+              className="button danger-button"
+              disabled={busy || !state.restaurant.isOpen}
+              onClick={() => void perform({ type: "set_restaurant_open", open: false })}
+            >
+              Close day
+            </button>
+          </div>
+          <small className="control-note">
+            Closing is blocked until every ticket is completed or cancelled and every service
+            request is resolved.
+          </small>
+        </div>
+        <div className="panel summary-panel">
+          <header>
+            <div>
+              <p className="eyebrow">Recorded facts</p>
+              <h2>Current service summary</h2>
+            </div>
+            <span>Live</span>
+          </header>
+          <div className="summary-grid">
+            <div><b>{summary.completedOrders}</b><small>completed orders</small></div>
+            <div><b>{summary.cancelledOrders}</b><small>cancellations</small></div>
+            <div><b>{summary.averagePreparationMinutes || "—"}</b><small>avg prep minutes</small></div>
+            <div><b>{money(summary.recordedRevenue)}</b><small>recorded payments</small></div>
+          </div>
+          <p>
+            These values come directly from order timelines and recorded manual payments.
+            Copilot recommendations are shown separately below.
+          </p>
+        </div>
         <div className="panel revenue-panel">
           <header><div><p className="eyebrow">Revenue rhythm</p><h2>Seven-day performance</h2></div><span>This week</span></header>
           <div className="bar-chart" aria-label="Revenue by day">
@@ -894,6 +1027,72 @@ function Manager({
             );
           })}
         </div>
+        <div className="panel menu-control-panel">
+          <header>
+            <div><p className="eyebrow">Menu control</p><h2>Live availability overrides</h2></div>
+            <span>{state.menu.filter((item) => item.paused).length} paused</span>
+          </header>
+          <div className="compact-list">
+            {state.menu.slice(0, 8).map((item) => (
+              <div key={item.id}>
+                <span>
+                  <b>{item.name}</b>
+                  <small>{item.category} · {item.paused ? "Manually paused" : "Live"}</small>
+                </span>
+                <button
+                  disabled={busy}
+                  onClick={() => void perform({ type: "toggle_pause", menuItemId: item.id })}
+                >
+                  {item.paused ? "Resume" : "Pause"}
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="panel reservations-panel">
+          <header>
+            <div><p className="eyebrow">Host operations</p><h2>Today’s reservations</h2></div>
+            <span>{state.reservations.filter((entry) => entry.status === "confirmed").length} due</span>
+          </header>
+          <div className="compact-list">
+            {state.reservations.slice(0, 6).map((reservation) => (
+              <div key={reservation.id}>
+                <span>
+                  <b>{reservation.name} · {reservation.time}</b>
+                  <small>Party of {reservation.partySize} · {reservation.status}</small>
+                </span>
+                {reservation.status === "confirmed" && (
+                  <span className="inline-actions">
+                    <button
+                      disabled={busy}
+                      onClick={() =>
+                        void perform({
+                          type: "set_reservation_status",
+                          reservationId: reservation.id,
+                          status: "seated",
+                        })
+                      }
+                    >
+                      Seat
+                    </button>
+                    <button
+                      disabled={busy}
+                      onClick={() =>
+                        void perform({
+                          type: "set_reservation_status",
+                          reservationId: reservation.id,
+                          status: "cancelled",
+                        })
+                      }
+                    >
+                      Cancel
+                    </button>
+                  </span>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
         <div className="panel forecast-panel">
           <header><div><p className="eyebrow">Explainable forecast</p><h2>Tonight’s second wave</h2></div><span>{data.forecast.confidence} confidence</span></header>
           <div className="forecast-number"><b>{data.forecast.expectedOrders}</b><span>expected orders</span><small>Weighted four-day moving average</small></div>
@@ -907,8 +1106,129 @@ function Manager({
             <div className="manager-order" key={order.id}><b>{order.number}</b><div><span>{order.table} · {order.items.length} items</span><small>{order.guest}</small></div><em className={`status-${order.status}`}>{order.status}</em></div>
           ))}
         </div>
+        {role === "owner" && (
+          <StaffPanel state={state} perform={perform} busy={busy} />
+        )}
+        <div className="panel audit-panel">
+          <header>
+            <div><p className="eyebrow">Accountability</p><h2>Operational audit timeline</h2></div>
+            <span>{state.auditLog.length} events</span>
+          </header>
+          <div className="audit-list">
+            {state.auditLog.slice(0, 10).map((event) => (
+              <div key={event.id}>
+                <span className={`audit-role role-${event.actorRole}`}>
+                  {event.actorRole.slice(0, 1).toUpperCase()}
+                </span>
+                <p>
+                  <b>{event.summary}</b>
+                  <small>{event.actor} · {event.entityType} · {timeAgo(event.createdAt)} ago</small>
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
       </section>
     </>
+  );
+}
+
+function StaffPanel({
+  state,
+  perform,
+  busy,
+}: {
+  state: AppState;
+  perform: (action: DemoAction) => Promise<ActionResponse | null>;
+  busy: boolean;
+}) {
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    role: "kitchen" as "kitchen" | "waiter" | "manager",
+  });
+  return (
+    <div className="panel staff-panel">
+      <header>
+        <div><p className="eyebrow">Owner control</p><h2>Staff roster</h2></div>
+        <span>{state.staff.filter((entry) => entry.status === "active").length} active</span>
+      </header>
+      <form
+        className="staff-form"
+        onSubmit={(event) => {
+          event.preventDefault();
+          void perform({ type: "add_staff", ...form }).then((result) => {
+            if (result) setForm({ name: "", email: "", role: "kitchen" });
+          });
+        }}
+      >
+        <label>
+          Name
+          <input
+            required
+            minLength={2}
+            value={form.name}
+            onChange={(event) => setForm({ ...form, name: event.target.value })}
+            placeholder="Team member"
+          />
+        </label>
+        <label>
+          Email
+          <input
+            required
+            type="email"
+            value={form.email}
+            onChange={(event) => setForm({ ...form, email: event.target.value })}
+            placeholder="name@example.com"
+          />
+        </label>
+        <label>
+          Role
+          <select
+            value={form.role}
+            onChange={(event) =>
+              setForm({
+                ...form,
+                role: event.target.value as typeof form.role,
+              })
+            }
+          >
+            <option value="kitchen">Kitchen</option>
+            <option value="waiter">Waiter</option>
+            <option value="manager">Manager</option>
+          </select>
+        </label>
+        <button className="button primary" disabled={busy}>Add invitation</button>
+      </form>
+      <div className="compact-list">
+        {state.staff.map((staff) => (
+          <div key={staff.id}>
+            <span>
+              <b>{staff.name}</b>
+              <small>{staff.email} · {staff.role} · {staff.status}</small>
+            </span>
+            {staff.role !== "owner" && (
+              <button
+                disabled={busy}
+                onClick={() =>
+                  void perform({
+                    type: "set_staff_status",
+                    staffId: staff.id,
+                    status: staff.status === "active" ? "inactive" : "active",
+                  })
+                }
+              >
+                {staff.status === "active" ? "Deactivate" : "Activate"}
+              </button>
+            )}
+          </div>
+        ))}
+      </div>
+      <small className="control-note">
+        The roster controls operational access status. Supabase email verification remains the
+        identity checkpoint before a staff membership becomes usable.
+      </small>
+    </div>
   );
 }
 

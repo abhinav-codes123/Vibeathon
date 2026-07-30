@@ -127,6 +127,65 @@ test("all bot roles enforce the protected workspace matrix", async ({ request })
   }
 });
 
+test("customer orders are account-owned, private, and live across devices", async ({
+  request,
+}) => {
+  const customerAlpha = bot("customer", "alpha");
+  const customerBeta = bot("customer", "beta");
+  const kitchenAlpha = bot("kitchen", "alpha");
+
+  const placed = await request.post("/api/action", {
+    headers: headersFor(customerAlpha),
+    data: {
+      type: "place_order",
+      guest: "Customer Alpha Bot",
+      table: "T01",
+      items: [{ menuItemId: "m1", quantity: 1 }],
+    },
+  });
+  expect(placed.status()).toBe(200);
+  const access = ((await placed.json()) as {
+    orderAccess: { orderId: string; orderNumber: string };
+  }).orderAccess;
+
+  const firstDevice = await request.get(`/api/orders/${access.orderId}`, {
+    headers: headersFor(customerAlpha),
+  });
+  expect(firstDevice.status()).toBe(200);
+  expect((await firstDevice.json()).order).toMatchObject({
+    id: access.orderId,
+    number: access.orderNumber,
+    status: "received",
+  });
+
+  const secondAccount = await request.get(`/api/orders/${access.orderId}`, {
+    headers: headersFor(customerBeta),
+  });
+  expect(secondAccount.status()).toBe(404);
+
+  expect(
+    (
+      await request.post("/api/action", {
+        headers: headersFor(kitchenAlpha),
+        data: { type: "advance_order", orderId: access.orderId },
+      })
+    ).status(),
+  ).toBe(200);
+
+  const sameAccountAnotherDevice = await request.get("/api/orders", {
+    headers: headersFor(customerAlpha),
+  });
+  expect(sameAccountAnotherDevice.status()).toBe(200);
+  expect((await sameAccountAnotherDevice.json()).orders).toEqual(
+    expect.arrayContaining([
+      expect.objectContaining({
+        id: access.orderId,
+        status: "confirmed",
+      }),
+    ]),
+  );
+});
+
 test("two bots per role complete every implemented restaurant action", async ({ request }) => {
   const customerAlpha = bot("customer", "alpha");
   const customerBeta = bot("customer", "beta");

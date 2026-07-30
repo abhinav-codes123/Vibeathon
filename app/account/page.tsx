@@ -41,6 +41,7 @@ export default async function AccountPage() {
         )}
         <div className="account-actions">
           <Link className="button primary" href={workspaceHref}>Open workspace</Link>
+          <Link className="button ghost" href="/orders">My orders</Link>
           <form action="/auth/signout" method="post">
             <button className="button ghost" type="submit">Sign out</button>
           </form>

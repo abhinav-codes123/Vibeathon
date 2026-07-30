@@ -4,7 +4,8 @@ import type { Order } from "./types";
 export type CustomerOrder = Omit<Order, "customerId">;
 
 function customerView(order: Order): CustomerOrder {
-  const { customerId: _customerId, ...visible } = order;
+  const visible = { ...order };
+  delete visible.customerId;
   return visible;
 }
 

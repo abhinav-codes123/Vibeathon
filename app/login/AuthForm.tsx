@@ -136,7 +136,7 @@ export function AuthForm({
       <p>
         {mode === "recover"
           ? "We will email a single-use recovery link."
-          : "Staff roles are assigned by the restaurant owner and cannot be selected here."}
+          : "Use Google or a verified email account. Staff roles remain invitation-only."}
       </p>
 
       {mode !== "recover" && googleEnabled && (
@@ -205,7 +205,7 @@ export function AuthForm({
           {busy
             ? "Please wait…"
             : mode === "signin"
-              ? "Sign in securely"
+              ? "Continue with Email"
               : mode === "signup"
                 ? "Create account"
                 : "Send recovery email"}

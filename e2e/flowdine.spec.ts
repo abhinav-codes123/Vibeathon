@@ -54,6 +54,7 @@ test("master restaurant workflow keeps guest, kitchen, waiter, payment, inventor
   const paneerBefore = before.state.inventory.find((item) => item.id === "paneer")!.quantity;
 
   const placed = await request.post("/api/action", {
+    headers: headersFor("customer"),
     data: {
       type: "place_order",
       guest: "Master QA Guest",
@@ -63,9 +64,13 @@ test("master restaurant workflow keeps guest, kitchen, waiter, payment, inventor
     },
   });
   expect(placed.status()).toBe(200);
-  const placedBody = (await placed.json()) as { message: string };
+  const placedBody = (await placed.json()) as {
+    message: string;
+    orderAccess: { orderId: string; orderNumber: string };
+  };
   const orderNumber = placedBody.message.match(/SC-\d+/)?.[0];
   expect(orderNumber).toBeTruthy();
+  expect(placedBody.orderAccess.orderNumber).toBe(orderNumber);
 
   let manager = await stateFor(request, "manager");
   const orderId = manager.state.orders.find((order) => order.number === orderNumber)!.id;
@@ -100,6 +105,18 @@ test("authorization matrix rejects anonymous, customer, and cross-role staff esc
   request,
 }) => {
   expect((await request.get("/api/state?view=manager")).status()).toBe(401);
+  expect(
+    (
+      await request.post("/api/action", {
+        data: {
+          type: "place_order",
+          guest: "Anonymous",
+          table: "T01",
+          items: [{ menuItemId: "m1", quantity: 1 }],
+        },
+      })
+    ).status(),
+  ).toBe(401);
   expect(
     (
       await request.post("/api/action", {
@@ -205,6 +222,7 @@ test("manager intake controls stop new orders while active work continues", asyn
   expect(pause.status()).toBe(200);
 
   const blocked = await request.post("/api/action", {
+    headers: headersFor("customer"),
     data: {
       type: "place_order",
       guest: "Paused Guest",
@@ -318,6 +336,7 @@ test("runtime validation rejects malformed JSON, invalid quantities, past reserv
   expect(
     (
       await request.post("/api/action", {
+        headers: headersFor("customer"),
         data: {
           type: "place_order",
           guest: "QA",
@@ -344,6 +363,7 @@ test("runtime validation rejects malformed JSON, invalid quantities, past reserv
   expect(
     (
       await request.post("/api/action", {
+        headers: headersFor("customer"),
         data: {
           type: "place_order",
           guest: "QA",
@@ -379,6 +399,7 @@ test("final available portions are not oversold by concurrent requests", async (
   const attempts = await Promise.all(
     ["T01", "T02", "T03"].map((table, index) =>
       request.post("/api/action", {
+        headers: headersFor("customer"),
         data: {
           type: "place_order",
           guest: `Concurrent ${index + 1}`,
@@ -400,12 +421,44 @@ test("guest cart and private queue receipt survive a refresh", async ({ page }) 
   await expect(page.getByRole("button", { name: /Cart/ })).toContainText("1");
   await page.reload();
   await expect(page.getByRole("button", { name: /Cart/ })).toContainText("1");
+  await page.getByRole("button", { name: /Cart/ }).click();
+  await page.getByRole("button", { name: "Sign in to place order" }).click();
+  await expect(page.getByRole("button", { name: "Continue with Google" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Continue with Email" })).toBeVisible();
 
   await page.goto("/queue");
   await page.getByRole("button", { name: "Get live position" }).click();
   await expect(page.getByRole("button", { name: "Leave" })).toBeVisible();
   await page.reload();
   await expect(page.getByRole("button", { name: "Leave" })).toBeVisible();
+});
+
+test("verified customer checkout redirects to private tracking and appears on another device", async ({
+  browser,
+  request,
+}) => {
+  const customerHeaders = headersFor("customer");
+  const firstDevice = await browser.newContext({ extraHTTPHeaders: customerHeaders });
+  const checkout = await firstDevice.newPage();
+  await checkout.goto("/menu");
+  await checkout.getByRole("button", { name: /Add .* to cart/ }).first().click();
+  await checkout.getByRole("button", { name: /Cart/ }).click();
+  await checkout.getByRole("button", { name: "Place dine-in order" }).click();
+  await expect(checkout).toHaveURL(/\/orders\/[0-9a-f-]+/);
+  await expect(checkout.getByText("Live order tracking")).toBeVisible();
+  const orderUrl = checkout.url();
+
+  const secondDevice = await browser.newContext({ extraHTTPHeaders: customerHeaders });
+  const history = await secondDevice.newPage();
+  await history.goto("/orders");
+  await expect(history.getByText("Track this order →")).toBeVisible();
+  await history.goto(orderUrl);
+  await expect(history.getByText("Live order tracking")).toBeVisible();
+
+  const anonymousOrders = await request.get("/api/orders");
+  expect(anonymousOrders.status()).toBe(401);
+  await firstDevice.close();
+  await secondDevice.close();
 });
 
 test("protected staff pages render only with an authorized verified role", async ({ browser }) => {

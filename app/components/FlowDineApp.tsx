@@ -9,6 +9,7 @@ import {
   serviceSummary,
 } from "../../lib/domain";
 import { canAccessView } from "../../lib/authz";
+import { getSupabaseBrowserClient } from "../../lib/supabase/client";
 import type {
   AppState,
   DemoAction,
@@ -35,6 +36,10 @@ type CartLine = { item: MenuItem; quantity: number };
 type ActionResponse = {
   message?: string;
   error?: string;
+  orderAccess?: {
+    orderId: string;
+    orderNumber: string;
+  };
   queueAccess?: {
     queueId: string;
     managementToken: string;
@@ -42,7 +47,7 @@ type ActionResponse = {
 };
 type PublicAuthContext = {
   configured: boolean;
-  user: { email: string } | null;
+  user: { id: string; email: string } | null;
   membership: {
     restaurantId: string;
     restaurantName: string;
@@ -169,6 +174,15 @@ export function FlowDineApp({ initialView }: { initialView: AppView }) {
     );
   }, [cart, cartHydrated]);
 
+  useEffect(() => {
+    if (!cartHydrated) return;
+    const timer = window.setTimeout(() => {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("checkout") === "1") setCartOpen(true);
+    }, 0);
+    return () => window.clearTimeout(timer);
+  }, [cartHydrated]);
+
   const navigate = (next: AppView) => {
     setView(next);
     setData(null);
@@ -215,6 +229,24 @@ export function FlowDineApp({ initialView }: { initialView: AppView }) {
     window.setTimeout(() => setToast(""), 1_800);
   };
 
+  const continueCheckoutWithGoogle = async () => {
+    setBusy(true);
+    try {
+      const supabase = await getSupabaseBrowserClient();
+      const next = "/menu?checkout=1";
+      const redirectTo = `${window.location.origin}/auth/callback?next=${encodeURIComponent(next)}`;
+      const { error: authError } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: { redirectTo },
+      });
+      if (authError) throw authError;
+    } catch (cause) {
+      setToast(cause instanceof Error ? cause.message : "Google sign-in failed.");
+      window.setTimeout(() => setToast(""), 4_000);
+      setBusy(false);
+    }
+  };
+
   if (!data && accessError) {
     const next = paths[view];
     return (
@@ -223,7 +255,7 @@ export function FlowDineApp({ initialView }: { initialView: AppView }) {
         <h1>{accessError.message}</h1>
         <p>
           Staff screens use a verified Supabase session and a database-backed
-          restaurant membership. Guest ordering remains public.
+          restaurant membership. Menu browsing remains public.
         </p>
         <div className="account-actions">
           {accessError.status !== 503 && (
@@ -282,8 +314,11 @@ export function FlowDineApp({ initialView }: { initialView: AppView }) {
           <button onClick={() => navigate("reserve")}>Reserve</button>
           <button onClick={() => navigate("queue")}>Live queue</button>
         </nav>
-        <Link className="account-button" href={auth?.user ? "/account" : "/login"}>
-          {auth?.user ? (auth.membership?.role ?? "Account") : "Staff sign in"}
+        <Link
+          className="account-button"
+          href={auth?.user ? (auth.membership ? "/account" : "/orders") : "/login"}
+        >
+          {auth?.user ? (auth.membership?.role ?? "My orders") : "Sign in"}
         </Link>
         <button className="cart-button" onClick={() => setCartOpen(true)}>
           Cart <span>{cart.reduce((sum, line) => sum + line.quantity, 0)}</span>
@@ -354,6 +389,7 @@ export function FlowDineApp({ initialView }: { initialView: AppView }) {
           lines={cart}
           state={state}
           busy={busy}
+          auth={auth}
           onClose={() => setCartOpen(false)}
           onChange={(id, delta) =>
             setCart((current) =>
@@ -367,18 +403,24 @@ export function FlowDineApp({ initialView }: { initialView: AppView }) {
             )
           }
           onPlace={async (guest, table, notes) => {
-            const ok = await perform({
+            const result = await perform({
                 type: "place_order",
                 guest,
                 table,
                 notes,
                 items: cart.map((line) => ({ menuItemId: line.item.id, quantity: line.quantity })),
               });
-            if (ok) {
+            if (result?.orderAccess) {
+              window.localStorage.removeItem("flowdine-cart-v1");
               setCart([]);
               setCartOpen(false);
+              window.location.assign(`/orders/${result.orderAccess.orderId}`);
             }
           }}
+          onContinueWithEmail={() => {
+            window.location.assign(`/login?next=${encodeURIComponent("/menu?checkout=1")}`);
+          }}
+          onContinueWithGoogle={continueCheckoutWithGoogle}
         />
       )}
       {toast && <div className="toast" role="status">{toast}</div>}
@@ -600,20 +642,27 @@ function Cart({
   lines,
   state,
   busy,
+  auth,
   onClose,
   onChange,
   onPlace,
+  onContinueWithEmail,
+  onContinueWithGoogle,
 }: {
   lines: CartLine[];
   state: AppState;
   busy: boolean;
+  auth: PublicAuthContext | null;
   onClose: () => void;
   onChange: (id: string, delta: number) => void;
   onPlace: (guest: string, table: string, notes: string) => Promise<void>;
+  onContinueWithEmail: () => void;
+  onContinueWithGoogle: () => Promise<void>;
 }) {
   const [guest, setGuest] = useState("Demo Guest");
   const [table, setTable] = useState("T01");
   const [notes, setNotes] = useState("");
+  const [showAuth, setShowAuth] = useState(false);
   const subtotal = lines.reduce((sum, line) => sum + line.item.price * line.quantity, 0);
   const bill = billFor(subtotal, state.restaurant.taxPercent, state.restaurant.serviceChargePercent);
   return (
@@ -641,17 +690,58 @@ function Cart({
           <p><span>Service charge</span><b>{money(bill.service)}</b></p>
           <p className="grand"><span>Total</span><b>{money(bill.total)}</b></p>
         </div>
+        {!auth?.user && showAuth && (
+          <section className="checkout-auth" aria-live="polite">
+            <p className="eyebrow">Secure checkout</p>
+            <h3>Sign in to place and track this order.</h3>
+            <p>Your cart will return after authentication and stay on this device.</p>
+            <button
+              className="google-button"
+              disabled={busy}
+              onClick={() => void onContinueWithGoogle()}
+              type="button"
+            >
+              <span aria-hidden="true">G</span> Continue with Google
+            </button>
+            <button
+              className="button ghost full-button"
+              disabled={busy}
+              onClick={onContinueWithEmail}
+              type="button"
+            >
+              Continue with Email
+            </button>
+          </section>
+        )}
+        {auth?.user && (
+          <p className="checkout-identity">
+            <span className="status-dot" />
+            Order will be saved to <b>{auth.user.email}</b>
+          </p>
+        )}
         <button
           className="button primary full-button"
           disabled={!lines.length || busy || !state.restaurant.acceptingOrders}
-          onClick={() => void onPlace(guest, table, notes)}
+          onClick={() => {
+            if (!auth?.user) {
+              setShowAuth(true);
+              return;
+            }
+            void onPlace(guest, table, notes);
+          }}
         >
-          {busy ? "Confirming with kitchen…" : "Place dine-in order"}
+          {busy
+            ? "Please wait…"
+            : auth?.user
+              ? "Place dine-in order"
+              : "Sign in to place order"}
         </button>
         <small className="demo-note">
           {!state.restaurant.acceptingOrders
             ? "New orders are paused by the manager. Your cart will remain on this device."
-            : "Payment is recorded manually for this pilot. Inventory is reserved server-side when the order is placed."}
+            : auth?.user
+              ? "Payment is recorded manually for this pilot. Your order will sync to every device using this account."
+              : "Browse and build your cart freely. A verified Google or email account is required only when you place the order."}
         </small>
       </aside>
     </div>

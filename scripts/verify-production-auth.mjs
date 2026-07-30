@@ -39,6 +39,11 @@ assert(
     publicPayload.state.inventory.length === 0,
   "Public state exposed protected inventory data.",
 );
+assert(
+  Array.isArray(publicPayload.state?.orders) &&
+    publicPayload.state.orders.length === 0,
+  "Public state exposed customer orders.",
+);
 checks.push("public guest state with staff-data redaction");
 
 const authConfig = await request("/api/auth/config");
@@ -62,7 +67,7 @@ assert(
 );
 checks.push("anonymous session isolation");
 
-for (const path of ["/kitchen", "/staff", "/dashboard", "/account"]) {
+for (const path of ["/kitchen", "/staff", "/dashboard", "/account", "/orders"]) {
   const response = await request(path);
   assert(
     [303, 307, 308].includes(response.status),
@@ -74,6 +79,27 @@ for (const path of ["/kitchen", "/staff", "/dashboard", "/account"]) {
   );
 }
 checks.push("protected kitchen, waiter, manager, owner/account pages");
+
+const anonymousOrders = await request("/api/orders");
+assert(
+  anonymousOrders.status === 401,
+  `Anonymous customer order history returned ${anonymousOrders.status}.`,
+);
+const anonymousCheckout = await request("/api/action", {
+  method: "POST",
+  headers: { "content-type": "application/json" },
+  body: JSON.stringify({
+    type: "place_order",
+    guest: "Anonymous verifier",
+    table: "T01",
+    items: [{ menuItemId: "m1", quantity: 1 }],
+  }),
+});
+assert(
+  anonymousCheckout.status === 401,
+  `Anonymous checkout returned ${anonymousCheckout.status}.`,
+);
+checks.push("customer order ownership and checkout authentication");
 
 for (const view of ["kitchen", "waiter", "manager"]) {
   const response = await request(`/api/state?view=${view}`);

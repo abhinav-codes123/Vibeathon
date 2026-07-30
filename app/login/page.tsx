@@ -4,8 +4,8 @@ import { AuthForm } from "./AuthForm";
 import { safeReturnPath } from "../../lib/auth";
 
 export const metadata: Metadata = {
-  title: "Staff sign in",
-  description: "Secure staff access for FlowDine AI.",
+  title: "Sign in",
+  description: "Secure customer and restaurant-team access for FlowDine AI.",
 };
 
 export default async function LoginPage({
@@ -14,6 +14,8 @@ export default async function LoginPage({
   searchParams: Promise<{ next?: string; error?: string }>;
 }) {
   const params = await searchParams;
+  const next = safeReturnPath(params.next, "/account");
+  const checkout = next.startsWith("/menu?checkout=1");
   return (
     <main className="auth-page">
       <Link className="auth-brand" href="/">
@@ -22,26 +24,37 @@ export default async function LoginPage({
       </Link>
       <section className="auth-card">
         <div className="auth-copy">
-          <p className="eyebrow">Verified operations</p>
-          <h1>One identity.<br />The right workspace.</h1>
+          <p className="eyebrow">{checkout ? "Verified customer checkout" : "Verified operations"}</p>
+          <h1>
+            {checkout ? <>Sign in once.<br />Track every course.</> : <>One identity.<br />The right workspace.</>}
+          </h1>
           <p>
-            Sign in to access the kitchen, floor-service, or management tools assigned
-            to your restaurant membership.
+            {checkout
+              ? "Your cart is waiting. Continue with Google or email, then place and track your order across devices."
+              : "Sign in to access your customer orders or the restaurant workspace assigned to your membership."}
           </p>
-          <ul>
-            <li>Email confirmation before access</li>
-            <li>Server-verified sessions on every protected request</li>
-            <li>Database-backed kitchen, waiter, manager, and owner roles</li>
-          </ul>
+          {checkout ? (
+            <ul>
+              <li>Your cart returns after sign-in</li>
+              <li>Every order is linked to your verified account</li>
+              <li>Kitchen updates synchronize across your devices</li>
+            </ul>
+          ) : (
+            <ul>
+              <li>Email confirmation before access</li>
+              <li>Server-verified sessions on every protected request</li>
+              <li>Database-backed customer and staff access</li>
+            </ul>
+          )}
         </div>
         <AuthForm
-          next={safeReturnPath(params.next, "/account")}
+          next={next}
           initialError={params.error ?? ""}
         />
       </section>
       <p className="auth-footnote">
-        Guest menu, reservations, and queue access remain available without a staff
-        account.
+        Menu browsing, reservations, and queue access remain public. A verified account
+        is required only when placing an order.
       </p>
     </main>
   );

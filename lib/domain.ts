@@ -565,9 +565,18 @@ function mutateState(
         (entry) => !["completed", "cancelled"].includes(entry.status),
       );
       const openRequests = state.serviceRequests.filter((entry) => entry.status === "open");
-      if (unfinished.length || openRequests.length) {
+      const waitingParties = state.queue.filter((entry) => entry.status === "waiting");
+      const activeTables = state.tables.filter((entry) =>
+        ["occupied", "bill_requested"].includes(entry.status),
+      );
+      if (
+        unfinished.length ||
+        openRequests.length ||
+        waitingParties.length ||
+        activeTables.length
+      ) {
         throw new Error(
-          `Close blocked: ${unfinished.length} active orders and ${openRequests.length} open service requests remain.`,
+          `Close blocked: ${unfinished.length} active orders, ${openRequests.length} open service requests, ${waitingParties.length} waiting parties, and ${activeTables.length} active tables remain.`,
         );
       }
       state.restaurant.isOpen = false;

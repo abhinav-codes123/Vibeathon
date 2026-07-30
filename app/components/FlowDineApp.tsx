@@ -960,8 +960,8 @@ function Manager({
             </button>
           </div>
           <small className="control-note">
-            Closing is blocked until every ticket is completed or cancelled and every service
-            request is resolved.
+            Closing is blocked until every ticket, service request, waiting
+            party, and occupied table is cleared.
           </small>
         </div>
         <div className="panel summary-panel">
@@ -1225,8 +1225,8 @@ function StaffPanel({
         ))}
       </div>
       <small className="control-note">
-        The roster controls operational access status. Supabase email verification remains the
-        identity checkpoint before a staff membership becomes usable.
+        No email is sent. Share the normal signup link; the exact invited email
+        must complete Supabase verification before its membership becomes usable.
       </small>
     </div>
   );

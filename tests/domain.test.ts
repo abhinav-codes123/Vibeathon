@@ -327,6 +327,14 @@ test("closing service is blocked until operational work is complete", () => {
   state.serviceRequests.forEach((request) => {
     request.status = "resolved";
   });
+  state.queue.forEach((entry) => {
+    entry.status = "left";
+  });
+  state.tables.forEach((table) => {
+    if (["occupied", "bill_requested"].includes(table.status)) {
+      table.status = "available";
+    }
+  });
   applyAction(state, { type: "set_restaurant_open", open: false }, "owner");
   assert.equal(state.restaurant.isOpen, false);
   assert.equal(state.restaurant.acceptingOrders, false);

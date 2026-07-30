@@ -25,7 +25,7 @@ tenant-scoped operational persistence and self-service restaurant provisioning.
 | Operational persistence | Pass locally | Normalized D1 tables, legacy import, atomic guarded batches, entity audit timeline |
 | Multi-tenant isolation | Out of scope | Branch intentionally targets one Saffron Circuit deployment |
 | Clean migrations and seed | Pass locally | All D1 migrations apply to disposable SQLite; invite-lifecycle Supabase migration is ready to apply |
-| Automated browser coverage | Pass | 44/44 desktop/mobile cases; screenshot and trace artifacts configured |
+| Automated browser coverage | Pass | 46/46 desktop/mobile cases; screenshot and trace artifacts configured |
 | Accessibility | Pass automated | Zero serious/critical Axe violations on four public routes |
 | Dependency security | Pass | No known production vulnerabilities |
 | Lint/typecheck/unit/build | Pass | 0 lint errors, 24/24 unit, typecheck, and Vinext build pass |

@@ -8,7 +8,8 @@
 - [x] Kitchen display with received, accepted, preparing, and ready checkpoints
 - [x] Waiter priority queue, service requests, ready dishes, and table state controls
 - [x] Manager opening/intake controls, factual daily summary, reservations, menu controls, metrics, stock risks, forecast, audit timeline, and export
-- [x] Owner staff roster with verified-email invitation and activation lifecycle
+- [x] Invite-first staff management with email delivery, verified acceptance, pending/active/inactive states, and automatic role landing
+- [x] Owner-only manager creation plus manager-scoped kitchen/waiter administration
 - [x] Deterministic insight engine and optional Gemini REST copilot with safe fallback
 - [x] Normalized D1 persistence, atomic version-token batches, audit timeline, legacy import, seed data, and migration
 - [x] Normalized Supabase/PostgreSQL production reference migration with tenant IDs and initial RLS
@@ -17,7 +18,7 @@
 - [x] Architecture, database, judging, demo, configuration, and limitation documentation
 - [x] Supabase email/password and Google OAuth flows with cookie-backed SSR sessions
 - [x] Membership-backed staff routes, state reads, mutations, and manager copilot authorization
-- [x] Public-state privacy projection and owner-managed staff memberships
+- [x] Public-state privacy projection and protected owner/manager staff memberships
 - [x] Private customer-order APIs with server-verified ownership and cross-account isolation
 
 ## Explicit demo boundaries

@@ -34,8 +34,8 @@ The central proof is an end-to-end order:
 - **Guest:** public menu browsing and cart, verified Google/email checkout, cross-device order history, private live tracking, reservations, and queue.
 - **Kitchen:** received, accepted, preparing, and ready checkpoints with ticket age, lateness, allergens, notes, workload, and role-owned transitions.
 - **Waiter:** prioritized ready dishes and guest requests plus a live table map.
-- **Manager:** opening/intake controls, reservations, menu availability, revenue rhythm, factual service summary, stockout watch, audit history, export, and an operations copilot.
-- **Owner:** manager capabilities plus a verified-email staff invitation and activation roster.
+- **Manager:** opening/intake controls, kitchen and waiter visibility, kitchen/waiter invitations, reservations, menu availability, revenue rhythm, factual service summary, stockout watch, audit history, export, and an operations copilot.
+- **Owner:** manager capabilities plus manager creation, safe first-owner setup, and full staff lifecycle control.
 - **AI workflow:** optional Gemini 3.6 Flash advisory answers via REST. With no key, the same UI returns deterministic evidence-based recommendations.
 
 ## Architecture
@@ -138,6 +138,8 @@ cp .env.example .env.local
 | `NEXT_PUBLIC_SITE_URL` | No | Absolute metadata URL for local/custom-domain builds. |
 | `NEXT_PUBLIC_SUPABASE_URL` | Authentication | Supabase project URL. |
 | `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Authentication | Browser-safe Supabase publishable key. |
+| `SUPABASE_SERVICE_ROLE_KEY` | Staff invitations | Server-only key used to send invitations and perform guarded first-owner setup. |
+| `FLOWDINE_BOOTSTRAP_OWNER_EMAIL` | First setup | Verified email allowed to become the first owner when no owner exists. |
 The public guest experience still works without an AI key. Verified staff access
 requires a configured Supabase project. D1 is injected as the `DB` binding from
 `.openai/hosting.json`.
@@ -177,6 +179,11 @@ redirect, role assignment, and deployment setup.
 staff invitations. An invited email receives its assigned role only after that
 same email completes Supabase verification.
 
+`supabase/migrations/202607300002_staff_invite_lifecycle.sql` adds real invitation
+delivery support, pending/accepted status, owner-only manager creation,
+manager-scoped kitchen/waiter administration, verified acceptance, and guarded
+first-owner bootstrap.
+
 ## Quality commands
 
 ```bash
@@ -201,8 +208,11 @@ protected staff APIs, and the manager copilot boundary.
   session and a matching `restaurant_memberships` row.
 - Email/password registration requires confirmation; Google OAuth returns through
   the server callback.
-- Staff roles are explicitly assigned to verified accounts in Supabase for the
-  judge demo; there is no browser-controlled role-claim path.
+- Owners invite managers; owners and managers invite kitchen/waiter staff.
+  Every role is resolved from the protected membership table and never from a
+  browser-controlled claim.
+- Default sign-in routes kitchen staff to `/kitchen`, waiters to `/staff`,
+  managers and owners to `/dashboard`, and customers to `/menu`.
 
 The browser no longer supplies an authoritative role. Staff state reads,
 mutations, direct routes, and the manager copilot resolve the role from the
@@ -215,7 +225,8 @@ verified membership on the server.
 3. Place the restored cart and open the private live order tracker.
 4. Switch to **Kitchen** and demonstrate receive → accept → prepare → ready while the tracker updates.
 5. Open the same customer account on another device and show the synchronized order.
-6. Open **Manager** and explain the updated metrics, stock risks, and evidence-grounded copilot.
+6. Open **Manager**, send a kitchen/waiter invitation, and explain the operational metrics.
+7. Open **Owner** to show owner-only manager creation.
 
 For a judge-ready script, see [docs/DEMO_SCRIPT.md](docs/DEMO_SCRIPT.md).
 
@@ -249,9 +260,9 @@ from operational writes.
 
 ## Known limitations
 
-- Owner invitations pre-authorize a verified email; FlowDine does not send an
-  invitation email, so the owner must share the normal signup link.
-- Payments, notifications, receipts, and exports are simulated/in-browser.
+- Staff invitations use Supabase email delivery. Production deliverability
+  still depends on the configured Supabase SMTP provider and rate limits.
+- Payments, customer notifications, receipts, and exports are simulated/in-browser.
 - Restaurant workspaces poll every four seconds and customer trackers every
   three seconds rather than using WebSockets.
 - The seed has 18 polished dishes rather than a full 25–35 item catalogue.

@@ -15,6 +15,9 @@ authorization.
 - The server reads the role from `restaurant_memberships`; the browser cannot
   choose or send an authoritative role.
 - Manager copilot and all staff mutations use the same membership check.
+- Managers can administer kitchen/waiter access. Only owners can create or
+  change manager access.
+- Invitation acceptance requires the exact invited email to be verified.
 - Public state responses remove customer orders, inventory, revenue, service
   requests, guest names, reservation phone numbers, and audit movements.
 
@@ -42,7 +45,9 @@ In Supabase Dashboard:
    `https://flowdine-ai.abhinavchaudhary484.chatgpt.site`
 5. Add these exact redirect URLs:
    - `https://flowdine-ai.abhinavchaudhary484.chatgpt.site/auth/callback`
+   - `https://flowdine-ai.abhinavchaudhary484.chatgpt.site/auth/invite`
    - `http://localhost:3000/auth/callback`
+   - `http://localhost:3000/auth/invite`
 6. Configure custom SMTP before relying on real email delivery.
 
 ## 3. Configure Google OAuth
@@ -69,49 +74,52 @@ Copy `.env.example` to `.env.local`:
 NEXT_PUBLIC_SUPABASE_URL=https://YOUR_PROJECT.supabase.co
 NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=YOUR_PUBLISHABLE_KEY
 NEXT_PUBLIC_SITE_URL=https://flowdine-ai.abhinavchaudhary484.chatgpt.site
+SUPABASE_SERVICE_ROLE_KEY=YOUR_SERVER_ONLY_SECRET_KEY
+FLOWDINE_BOOTSTRAP_OWNER_EMAIL=owner@example.com
 ```
 
 Add the same values to the Sites production runtime before deploying. The
-current sign-in and membership checks do not require a service-role key.
+service-role key must remain server-only; it sends staff invitation emails and
+performs the guarded initial-owner assignment.
 
 ## 5. Bootstrap the owner account
 
-Create and verify the owner account first, then bootstrap its membership once
-in the Supabase SQL editor:
-
-```sql
-insert into public.restaurant_memberships (restaurant_id, profile_id, role)
-select
-  r.id,
-  u.id,
-  'owner'::public.member_role
-from public.restaurants r
-join auth.users u on u.email = 'kitchen@example.com'
-where r.slug = 'saffron-circuit'
-on conflict (restaurant_id, profile_id)
-do update set role = excluded.role;
-```
-
-Only the initial owner bootstrap should use SQL. There is deliberately no
-public first-user or browser-controlled role-claim endpoint.
+Set `FLOWDINE_BOOTSTRAP_OWNER_EMAIL` during restaurant setup. The matching
+account must verify its email or use Google. When no active owner exists, the
+server-only bootstrap function assigns that verified profile as owner. The
+function is inaccessible to browser/authenticated clients and stops working as
+soon as an owner exists.
 
 ## 6. Invite restaurant staff
 
-After the owner signs in:
+After the owner or manager signs in:
 
 1. Open `/dashboard`.
-2. Find **Staff roster**.
-3. Enter the employee name, exact email, and kitchen, waiter, or manager role.
-4. Select **Add invitation**.
-5. Share the normal FlowDine signup link with that employee. The pilot does not
-   send invitation email.
-6. The employee must register or sign in with the invited email and complete
-   email verification or Google OAuth.
+2. Find **Staff management**.
+3. Enter the employee name, exact email, and permitted role.
+4. Select **Send invitation**.
+5. FlowDine creates a pending staff record and sends a Supabase invitation.
+6. The employee opens the one-time invitation link. `/auth/invite` establishes
+   the verified session, removes its tokens from the address bar, and routes the
+   employee through `/workspace`.
 
-The `owner_manage_staff` database function verifies the caller is an active
-owner. If the account already exists, its membership is updated immediately.
-If it does not exist, the profile trigger claims the invitation only when the
-matching email completes authentication.
+The `manage_restaurant_staff` function permits managers to administer only
+kitchen and waiter roles. Owners may additionally create and manage managers.
+If the account already exists and is verified, its membership updates
+immediately. Otherwise, the profile trigger activates the pending invitation
+only after the matching email is verified.
+
+After normal sign-in, `/workspace` routes automatically:
+
+- Kitchen → `/kitchen`
+- Waiter → `/staff`
+- Manager or owner → `/dashboard`
+- Customer → `/menu`
+
+The built-in Supabase mailer is enough for a controlled pilot but is
+rate-limited. Configure custom SMTP before sending production-scale staff
+invitations. The app supports the standard Supabase invite template, so custom
+template editing is not required.
 
 ## 7. Required verification
 
@@ -129,7 +137,9 @@ Test all of the following before submission:
 - Waiter accounts can manage tables and service requests but cannot open the
   manager dashboard.
 - Manager and owner accounts can open the command center.
-- Managers cannot invite or deactivate staff.
+- Managers can invite, reassign, activate, or deactivate kitchen/waiter staff.
+- Managers cannot create, change, or deactivate managers or owners.
+- Only owners can create or change manager access.
 - An owner invitation grants the selected role only to the matching verified
   email.
 - Deactivating staff removes operational access after the next session refresh.

@@ -32,7 +32,7 @@ is not treated as a multi-tenant test database.
 | Analytics and AI copilot | Implemented demo aggregates/fallback | Not tenant production data; Gemini optional |
 | Customer history, private tracking, preferences | Not implemented | No order/reservation/bill ownership binding |
 | Notifications | Schema/roadmap only | No delivery pipeline or user-facing notification center |
-| Staff invitation lifecycle | Implemented | Owner-only RPC; verified-email membership claim; production apply pending |
+| Staff invitation lifecycle | Implemented | Manager/owner RPC, protected membership claim, hosted migration applied |
 | Multi-restaurant isolation | Out of scope | Operational D1 records intentionally belong to Saffron Circuit |
 
 ## Automated suites

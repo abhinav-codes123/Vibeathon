@@ -39,4 +39,4 @@ persists in normalized D1 tables with atomic guarded writes, while Supabase
 provides verified identity and owner-managed staff access.”
 
 Mention the honest boundaries: one restaurant, manually recorded payments,
-four-second polling, no invitation email provider, and optional AI credentials.
+four-second polling, rate-limited Supabase invitation email delivery, and optional AI credentials.

@@ -208,7 +208,7 @@ test("verified membership roles gate staff workspaces", () => {
   assert.equal(canAccessView("owner", "manager"), true);
 });
 
-test("public customer actions remain available without granting staff authority", () => {
+test("customer actions stay role-scoped without granting staff authority", () => {
   assert.equal(resolveActionRole(null, "place_order"), "customer");
   assert.equal(resolveActionRole(null, "restock"), null);
   assert.equal(resolveActionRole("waiter", "set_table"), "waiter");
@@ -221,8 +221,7 @@ test("public state projection removes operational and guest-sensitive fields", (
   assert.equal(projected.movements.length, 0);
   assert.equal(projected.serviceRequests.length, 0);
   assert.equal(projected.revenueHistory.length, 0);
-  assert.ok(projected.orders.every((order) => order.guest === "Guest"));
-  assert.ok(projected.orders.every((order) => order.notes === ""));
+  assert.equal(projected.orders.length, 0);
   assert.ok(projected.reservations.every((reservation) => reservation.phone === ""));
   assert.ok(projected.queue.every((entry) => entry.name.startsWith("Party ")));
   assert.ok(projected.queue.every((entry) => entry.managementToken === undefined));

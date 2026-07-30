@@ -46,6 +46,15 @@ export async function POST(request: Request) {
       );
     }
     const context = await getAuthContext();
+    if (action.type === "place_order" && !context.user) {
+      return Response.json(
+        {
+          error: "Sign in with Google or email to place and track your order.",
+          code: "AUTH_REQUIRED_FOR_ORDER",
+        },
+        { status: 401 },
+      );
+    }
     const role = resolveActionRole(context.role, action.type);
     if (!role) {
       const status = context.user ? 403 : 401;
@@ -61,9 +70,13 @@ export async function POST(request: Request) {
     if (!can(role, action.type)) {
       return Response.json({ error: `${role} access cannot perform this operation.` }, { status: 403 });
     }
-    await syncStaffAccess(context, action);
+    const authorizedAction =
+      action.type === "place_order"
+        ? { ...action, customerId: context.user!.id }
+        : action;
+    await syncStaffAccess(context, authorizedAction);
     const result = await updateState(role, action.type, (state) =>
-      applyAction(state, action, role, context.user?.email || role),
+      applyAction(state, authorizedAction, role, context.user?.email || role),
     );
     return Response.json(
       role === "customer"

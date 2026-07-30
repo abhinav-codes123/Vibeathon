@@ -56,6 +56,7 @@ export type Order = {
   number: string;
   table: string;
   guest: string;
+  customerId?: string;
   status: OrderStatus;
   items: OrderItem[];
   notes: string;
@@ -174,6 +175,7 @@ export type DemoAction =
       guest: string;
       table: string;
       notes?: string;
+      customerId?: string;
       items: { menuItemId: string; quantity: number }[];
     }
   | { type: "advance_order"; orderId: string }
@@ -201,6 +203,10 @@ export type DemoAction =
 export type ActionResult = {
   state: AppState;
   message: string;
+  orderAccess?: {
+    orderId: string;
+    orderNumber: string;
+  };
   queueAccess?: {
     queueId: string;
     managementToken: string;

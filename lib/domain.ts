@@ -287,6 +287,7 @@ function mutateState(
       number: `SC-${String(nextOrderNumber).padStart(3, "0")}`,
       table: action.table,
       guest: action.guest.trim() || "Guest",
+      ...(action.customerId ? { customerId: action.customerId } : {}),
       status: "received",
       items: lines.map(({ item, quantity }) => ({
         menuItemId: item.id,
@@ -313,7 +314,14 @@ function mutateState(
     state.orders.unshift(order);
     table.status = "occupied";
     state.updatedAt = now;
-    return { state, message: `${order.number} received. The kitchen will accept it next.` };
+    return {
+      state,
+      message: `${order.number} received. The kitchen will accept it next.`,
+      orderAccess: {
+        orderId: order.id,
+        orderNumber: order.number,
+      },
+    };
   }
 
   if (action.type === "advance_order") {

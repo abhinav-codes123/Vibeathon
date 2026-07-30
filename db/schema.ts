@@ -73,6 +73,7 @@ export const orders = sqliteTable(
     number: text("number").notNull(),
     tableCode: text("table_code").notNull(),
     guest: text("guest").notNull(),
+    customerId: text("customer_id"),
     status: text("status").notNull(),
     notes: text("notes").notNull(),
     allergensJson: text("allergens_json").notNull(),
@@ -85,6 +86,7 @@ export const orders = sqliteTable(
   (table) => [
     uniqueIndex("orders_restaurant_number_idx").on(table.restaurantId, table.number),
     index("orders_restaurant_status_idx").on(table.restaurantId, table.status),
+    index("orders_customer_created_idx").on(table.customerId, table.createdAt),
   ],
 );
 

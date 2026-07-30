@@ -10,14 +10,7 @@ export function publicStateProjection(input: AppState): AppState {
   state.hourlyDemand = [];
   state.staff = [];
   state.auditLog = [];
-  state.orders = state.orders.map((order) => ({
-    ...order,
-    guest: "Guest",
-    notes: "",
-    allergens: [],
-    items: [],
-    total: 0,
-  }));
+  state.orders = [];
   state.reservations = state.reservations.map((reservation) => ({
     ...reservation,
     name: "Guest",

@@ -6,14 +6,17 @@ authorization.
 
 ## Security model
 
-- Guest menu, ordering, reservations, and queue entry remain public.
+- Menu browsing, cart building, reservations, and queue entry remain public.
+- Placing an order requires Google OAuth or a verified email session.
+- The server stores the verified Supabase user ID on the order. `/api/orders`
+  and `/api/orders/[orderId]` return only that account's records.
 - Kitchen, waiter, manager, and owner workspaces require a verified Supabase
   session.
 - The server reads the role from `restaurant_memberships`; the browser cannot
   choose or send an authoritative role.
 - Manager copilot and all staff mutations use the same membership check.
-- Public state responses remove inventory, revenue, service requests, order
-  notes, allergens, guest names, reservation phone numbers, and audit movements.
+- Public state responses remove customer orders, inventory, revenue, service
+  requests, guest names, reservation phone numbers, and audit movements.
 
 ## 1. Create and migrate Supabase
 
@@ -114,6 +117,11 @@ matching email completes authentication.
 
 Test all of the following before submission:
 
+- Anonymous customers can browse and build a cart but cannot place an order.
+- Google and email checkout return to the preserved cart.
+- A placed order appears in `/orders` on another device using the same account.
+- A different customer account cannot read or track that order.
+- Kitchen and waiter status changes appear in the customer tracker.
 - Unauthenticated users are redirected from `/kitchen`, `/staff`, and
   `/dashboard`.
 - Customer accounts cannot open any staff workspace.

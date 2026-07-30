@@ -6,10 +6,6 @@ FlowDine AI is a live restaurant digital twin for the fictional flagship restaur
 
 [**Open the live public demo →**](https://flowdine-ai.abhinavchaudhary484.chatgpt.site)
 
-> The public URL currently serves the stable hackathon release. The normalized
-> single-restaurant pilot work on `codex/single-restaurant-pilot` is intentionally
-> not promoted until its D1 and Supabase migrations are applied and live-verified.
-
 ![FlowDine AI social card](public/og.png)
 
 ## Hackathon submission
@@ -28,14 +24,14 @@ Restaurants often run the dining room, kitchen, stock room, and guest journey in
 The central proof is an end-to-end order:
 
 1. The menu calculates portions from the limiting recipe ingredient.
-2. A guest places a dine-in order with notes and allergen context.
-3. The server validates available stock, reserves ingredients, records inventory movements, and creates a received kitchen ticket.
-4. Kitchen explicitly accepts, starts, and completes the ticket before the waiter can serve it.
-5. Manager metrics, forecasts, risks, and the copilot update from that state.
+2. A guest builds a cart, then verifies their identity with Google or email at checkout.
+3. The server links the order to that verified account, reserves ingredients, records inventory movements, and creates a received kitchen ticket.
+4. Kitchen and waiter checkpoints update the customer's private tracker on every signed-in device.
+5. Manager metrics, forecasts, risks, and the copilot update from the same state.
 
 ## Product surfaces
 
-- **Guest:** live menu, search and filters, stock-aware availability, cart, preparation promise, reservations, queue, and service entry points.
+- **Guest:** public menu browsing and cart, verified Google/email checkout, cross-device order history, private live tracking, reservations, and queue.
 - **Kitchen:** received, accepted, preparing, and ready checkpoints with ticket age, lateness, allergens, notes, workload, and role-owned transitions.
 - **Waiter:** prioritized ready dishes and guest requests plus a live table map.
 - **Manager:** opening/intake controls, reservations, menu availability, revenue rhythm, factual service summary, stockout watch, audit history, export, and an operations copilot.
@@ -82,7 +78,7 @@ See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) and [docs/DATABASE.md](docs/DAT
 | Level | Story | Status | FlowDine evidence |
 |---|---|---|---|
 | Bronze | **1 - Modern customer and management UX** | Complete | Responsive guest, kitchen, waiter, manager, owner, login, and account experiences. |
-| Silver | **2 - Verified email, Google OAuth, and role-based access** | Complete | Email confirmation is required, Google OAuth is published for external accounts, and restaurant roles are resolved from server-side memberships. The production Google callback and owner access were verified. |
+| Silver | **2 - Verified email, Google OAuth, and role-based access** | Complete | Checkout offers Google and verified-email authentication, orders are account-owned across devices, and staff roles are resolved from server-side memberships. |
 | Silver | **3 - Digital restaurant operations** | Complete | Digital menu, recipe-derived live availability, orders, reservations, queue, billing, notifications, and synchronized service workflows. |
 | Gold | **4 - Restaurant management dashboard** | Complete | Orders, tables, inventory, sales rhythm, forecasts, operational risks, audit-backed actions, and analytics. |
 | Platinum | **5 - Intelligent operations** | Complete | Explainable recommendations, inventory risk, demand forecasting, operational insights, and an evidence-grounded manager copilot. |
@@ -140,8 +136,8 @@ cp .env.example .env.local
 | `GEMINI_API_KEY` | No | Enables live Gemini advisory responses. Kept server-side. |
 | `GEMINI_MODEL` | No | Defaults to `gemini-3.6-flash`. |
 | `NEXT_PUBLIC_SITE_URL` | No | Absolute metadata URL for local/custom-domain builds. |
-| `NEXT_PUBLIC_SUPABASE_URL` | Staff authentication | Supabase project URL. |
-| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Staff authentication | Browser-safe Supabase publishable key. |
+| `NEXT_PUBLIC_SUPABASE_URL` | Authentication | Supabase project URL. |
+| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Authentication | Browser-safe Supabase publishable key. |
 The public guest experience still works without an AI key. Verified staff access
 requires a configured Supabase project. D1 is injected as the `DB` binding from
 `.openai/hosting.json`.
@@ -158,6 +154,8 @@ pnpm db:generate
 - `drizzle/0001_normalized_operations.sql` creates separate restaurant, menu,
   recipe, inventory, order, timeline, table, queue, reservation, request, staff,
   movement, and audit tables.
+- `drizzle/0002_customer_order_ownership.sql` links orders to the verified
+  Supabase user ID and indexes cross-device customer history.
 - First run imports an existing snapshot or seeds Saffron Circuit. Writes use one
   guarded D1 batch so related operational records change atomically.
 
@@ -191,11 +189,14 @@ pnpm verify:production-auth
 
 The domain suite covers recipe availability, stock reservation/restoration, preparation estimates, queue estimates, paise-safe bill splitting, safe recommendations, forecasting, and role permissions.
 `verify:production-auth` checks the live providers, anonymous isolation,
-protected dashboards, protected staff APIs, and the manager copilot boundary.
+authenticated checkout boundary, private order APIs, protected dashboards,
+protected staff APIs, and the manager copilot boundary.
 
 ## Demo access
 
-- Guest menu, ordering, reservations, and queue entry remain public.
+- Menu browsing, cart building, reservations, and queue entry remain public.
+- Placing an order requires Google or verified-email authentication. The order
+  then appears under `/orders` on every device using that account.
 - Kitchen, waiter, manager, and owner workspaces require a verified Supabase
   session and a matching `restaurant_memberships` row.
 - Email/password registration requires confirmation; Google OAuth returns through
@@ -210,11 +211,11 @@ verified membership on the server.
 ## Five-minute walkthrough
 
 1. Open the landing page and explain the live digital twin.
-2. Enter **Guest**, add a limited-stock dish, and place an order.
-3. Switch to **Kitchen** and demonstrate receive → accept → prepare → ready.
-4. Switch to **Waiter**, resolve a service request or advance a ready dish.
-5. Open **Manager**, show the changed metrics and recipe-derived stock risks.
-6. Ask the operations copilot what to prioritize. It will use Gemini when configured or the deterministic local engine otherwise.
+2. Enter **Guest**, add a limited-stock dish, and choose Google or email at checkout.
+3. Place the restored cart and open the private live order tracker.
+4. Switch to **Kitchen** and demonstrate receive → accept → prepare → ready while the tracker updates.
+5. Open the same customer account on another device and show the synchronized order.
+6. Open **Manager** and explain the updated metrics, stock risks, and evidence-grounded copilot.
 
 For a judge-ready script, see [docs/DEMO_SCRIPT.md](docs/DEMO_SCRIPT.md).
 
@@ -223,8 +224,10 @@ For a judge-ready script, see [docs/DEMO_SCRIPT.md](docs/DEMO_SCRIPT.md).
 - Mutations are validated server-side against a role/action permission matrix.
 - Staff identity is verified from Supabase cookies and authorization comes from
   the PostgreSQL membership row, never a browser role header.
-- Public state responses redact operational, revenue, inventory, guest-name,
-  reservation-phone, allergen, and order-note fields.
+- Public state responses exclude customer orders and redact operational,
+  revenue, inventory, guest-name, reservation-phone, and audit data.
+- Private order APIs filter by the server-verified Supabase user ID; another
+  customer receives no order details.
 - Inventory cannot go negative; invalid transitions and stale concurrent writes are rejected.
 - Gemini receives only aggregated operational context, not phone numbers or guest identities.
 - Secrets remain server-side and `.env*` is ignored except `.env.example`.
@@ -249,7 +252,8 @@ from operational writes.
 - Owner invitations pre-authorize a verified email; FlowDine does not send an
   invitation email, so the owner must share the normal signup link.
 - Payments, notifications, receipts, and exports are simulated/in-browser.
-- Synchronization uses four-second polling rather than WebSockets.
+- Restaurant workspaces poll every four seconds and customer trackers every
+  three seconds rather than using WebSockets.
 - The seed has 18 polished dishes rather than a full 25–35 item catalogue.
 - Gemini was implemented as an optional server adapter; no live model call occurs without a user-supplied key.
 - Supabase is the live identity/membership authority, while Saffron Circuit

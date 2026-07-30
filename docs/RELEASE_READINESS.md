@@ -7,14 +7,15 @@ independent restaurant onboarding.
 
 The implemented single-restaurant pilot slice passes its automated and live
 authentication gates. General restaurant SaaS onboarding remains blocked by
-tenant-scoped operational persistence and customer-owned records.
+tenant-scoped operational persistence and self-service restaurant provisioning.
 
 ## Gate status
 
 | Gate | Status | Notes |
 |---|---|---|
 | Application startup | Pass | Next QA runtime and Vinext production build pass |
-| Public guest demo | Pass | Menu, cart persistence, ordering, reservation, queue and responsive smoke pass |
+| Public guest demo | Pass | Menu and cart stay public; checkout requires Google or verified email |
+| Customer order ownership | Pass locally | Orders bind to the verified Supabase user ID; private history, tracking, cross-device sync, and cross-account denial pass |
 | Email authentication | Pass | Confirmation required and a confirmed production account record verified |
 | Google OAuth | Pass | External app published; Supabase provider and real production callback verified |
 | Staff authorization | Pass locally | Role matrix, owner invitation RPC, active-membership filter, stage ownership, and protected workspaces implemented |
@@ -23,8 +24,8 @@ tenant-scoped operational persistence and customer-owned records.
 | Inventory integrity | Pass implemented slice | Reservation, cancellation and final-portion concurrency assertions pass |
 | Operational persistence | Pass locally | Normalized D1 tables, legacy import, atomic guarded batches, entity audit timeline |
 | Multi-tenant isolation | Out of scope | Branch intentionally targets one Saffron Circuit deployment |
-| Clean migrations and seed | Pass locally | D1 migration applies to disposable SQLite; Supabase staff migration requires remote apply |
-| Automated browser coverage | Pass | 36/36 desktop/mobile cases; screenshot and trace artifacts configured |
+| Clean migrations and seed | Pass locally | All D1 migrations apply to disposable SQLite; Supabase staff migration is already applied |
+| Automated browser coverage | Pass | 40/40 desktop/mobile cases; screenshot and trace artifacts configured |
 | Accessibility | Pass automated | Zero serious/critical Axe violations on four public routes |
 | Dependency security | Pass | No known production vulnerabilities |
 | Lint/typecheck/unit/build | Pass | 0 lint errors, 24/24 unit, typecheck, and Vinext build pass |
@@ -32,10 +33,9 @@ tenant-scoped operational persistence and customer-owned records.
 ## Release boundary
 
 This branch targets a controlled Saffron Circuit pilot with manually recorded
-payments and no sensitive customer data. It must not be represented as a
-general restaurant SaaS. Before a real pilot, apply both new migrations, verify
-an invited staff signup against production Supabase, and promote the branch
-only after production smoke checks.
+payments. It must not be represented as a general restaurant SaaS. Before each
+promotion, apply the pending D1 migration and repeat production authentication,
+checkout, ownership, and tracking smoke checks.
 
 ## Deployment provenance
 

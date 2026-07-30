@@ -3,7 +3,7 @@
 ## Shipped
 
 - [x] Premium responsive landing, role rail, metadata, favicon, and generated Open Graph card
-- [x] Customer menu with search, category/dietary filters, recipe-derived availability, cart, notes, billing, and ordering
+- [x] Public customer menu and cart with Google/email checkout, cart restoration, account-owned orders, cross-device history, and live tracking
 - [x] Reservations and live queue join/leave with explainable estimates
 - [x] Kitchen display with received, accepted, preparing, and ready checkpoints
 - [x] Waiter priority queue, service requests, ready dishes, and table state controls
@@ -18,6 +18,7 @@
 - [x] Supabase email/password and Google OAuth flows with cookie-backed SSR sessions
 - [x] Membership-backed staff routes, state reads, mutations, and manager copilot authorization
 - [x] Public-state privacy projection and owner-managed staff memberships
+- [x] Private customer-order APIs with server-verified ownership and cross-account isolation
 
 ## Explicit demo boundaries
 

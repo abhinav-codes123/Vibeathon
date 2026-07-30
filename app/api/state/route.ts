@@ -6,6 +6,10 @@ import { publicStateProjection } from "../../../lib/state-projection";
 
 export const dynamic = "force-dynamic";
 
+const NO_STORE_HEADERS = {
+  "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
+} as const;
+
 export async function GET(request: Request) {
   try {
     const requestedView = new URL(request.url).searchParams.get("view") ?? "home";
@@ -15,19 +19,19 @@ export async function GET(request: Request) {
       if (!context.configured) {
         return Response.json(
           { error: "Staff authentication is not configured yet.", code: "AUTH_NOT_CONFIGURED" },
-          { status: 503 },
+          { status: 503, headers: NO_STORE_HEADERS },
         );
       }
       if (!context.user) {
         return Response.json(
           { error: "Sign in to open this staff workspace.", code: "AUTH_REQUIRED" },
-          { status: 401 },
+          { status: 401, headers: NO_STORE_HEADERS },
         );
       }
       if (!canAccessView(context.role, protectedView)) {
         return Response.json(
           { error: "Your assigned restaurant role cannot open this workspace.", code: "ROLE_REQUIRED" },
-          { status: 403 },
+          { status: 403, headers: NO_STORE_HEADERS },
         );
       }
     }
@@ -43,11 +47,11 @@ export async function GET(request: Request) {
         ? forecastSummary(sourceState)
         : { expectedOrders: 0, confidence: "Protected", risks: [] },
       insights: protectedView ? insightCards(sourceState) : [],
-    });
+    }, { headers: NO_STORE_HEADERS });
   } catch (error) {
     return Response.json(
       { error: error instanceof Error ? error.message : "Unable to load restaurant state." },
-      { status: 500 },
+      { status: 500, headers: NO_STORE_HEADERS },
     );
   }
 }

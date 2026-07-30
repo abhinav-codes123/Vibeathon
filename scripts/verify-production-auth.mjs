@@ -9,11 +9,15 @@ function assert(condition, message) {
 }
 
 async function request(path, init = {}) {
-  return fetch(new URL(path, siteUrl), {
+  const url = new URL(path, siteUrl);
+  url.searchParams.set("_verify", `${Date.now()}-${Math.random().toString(36).slice(2)}`);
+  return fetch(url, {
+    cache: "no-store",
     redirect: "manual",
     ...init,
     headers: {
       "user-agent": "flowdine-production-auth-verifier/1.0",
+      "cache-control": "no-cache",
       ...init.headers,
     },
   });
@@ -43,6 +47,10 @@ assert(
   Array.isArray(publicPayload.state?.orders) &&
     publicPayload.state.orders.length === 0,
   "Public state exposed customer orders.",
+);
+assert(
+  publicState.headers.get("cache-control")?.includes("no-store"),
+  "Public state is missing no-store cache protection.",
 );
 checks.push("public guest state with staff-data redaction");
 

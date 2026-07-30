@@ -255,20 +255,34 @@ test("manager intake controls stop new orders while active work continues", asyn
   expect(manager.state.restaurant.acceptingOrders).toBe(true);
 });
 
-test("owner staff roster actions are validated, audited, and owner-only", async ({ request }) => {
+test("manager and owner staff actions enforce the role hierarchy", async ({ request }) => {
   expect(
     (
       await request.post("/api/action", {
         headers: headersFor("manager"),
         data: {
           type: "add_staff",
-          name: "Pilot Chef",
-          email: "pilot-chef@example.com",
+          name: "Manager Chef",
+          email: "manager-chef@example.com",
           role: "kitchen",
         },
       })
     ).status(),
-  ).toBe(403);
+  ).toBe(200);
+
+  expect(
+    (
+      await request.post("/api/action", {
+        headers: headersFor("manager"),
+        data: {
+          type: "add_staff",
+          name: "Unauthorized Manager",
+          email: "second-manager@example.com",
+          role: "manager",
+        },
+      })
+    ).status(),
+  ).toBe(409);
 
   const added = await request.post("/api/action", {
     headers: headersFor("owner"),
@@ -295,6 +309,40 @@ test("owner staff roster actions are validated, audited, and owner-only", async 
   state = await stateFor(request, "owner");
   expect(state.state.staff.find((entry) => entry.id === staff.id)?.status).toBe("active");
   expect(state.state.auditLog.some((entry) => entry.action === "add_staff")).toBe(true);
+});
+
+test("default post-login route opens the assigned workspace", async ({ browser }) => {
+  for (const target of [
+    { role: "customer" as const, path: "/menu" },
+    { role: "kitchen" as const, path: "/kitchen" },
+    { role: "waiter" as const, path: "/staff" },
+    { role: "manager" as const, path: "/dashboard" },
+    { role: "owner" as const, path: "/dashboard" },
+  ]) {
+    const context = await browser.newContext({
+      extraHTTPHeaders: headersFor(target.role),
+    });
+    const page = await context.newPage();
+    await page.goto("/workspace");
+    await expect(page).toHaveURL(new RegExp(`${target.path.replace("/", "\\/")}$`));
+    await context.close();
+  }
+});
+
+test("staff invite page fails closed without one-time session tokens", async ({
+  page,
+}) => {
+  await page.goto("/auth/invite");
+  await expect(
+    page.getByText(
+      "This invitation link is invalid or has expired. Ask your manager to send a new invitation.",
+    ),
+  ).toBeVisible();
+  await expect(
+    page.getByText(
+      "Your role is assigned by the restaurant. It cannot be changed from your Google profile or account settings.",
+    ),
+  ).toBeVisible();
 });
 
 test("reservation checkpoints and close-day guard preserve active operations", async ({

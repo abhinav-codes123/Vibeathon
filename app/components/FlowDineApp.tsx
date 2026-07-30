@@ -45,6 +45,10 @@ type ActionResponse = {
     managementToken: string;
   };
 };
+type StaffRosterMember = AppState["staff"][number] & {
+  acceptedAt?: string | null;
+  actionable?: boolean;
+};
 type PublicAuthContext = {
   configured: boolean;
   user: { id: string; email: string } | null;
@@ -285,9 +289,11 @@ export function FlowDineApp({ initialView }: { initialView: AppView }) {
   const activeOrders = state.orders.filter((order) => !["completed", "cancelled"].includes(order.status));
 
   const visibleRoleViews = roleViews.filter((item) => {
-    if (item.role === "customer") return true;
-    if (!auth?.role) return false;
-    return canAccessView(
+    if (!auth?.role || auth.role === "customer") return item.role === "customer";
+    if (auth.role === "kitchen" || auth.role === "waiter") {
+      return item.role === auth.role;
+    }
+    return item.role !== "customer" && canAccessView(
       auth.role,
       item.view === "kitchen" ? "kitchen" : item.view === "waiter" ? "waiter" : "manager",
     );
@@ -1196,8 +1202,8 @@ function Manager({
             <div className="manager-order" key={order.id}><b>{order.number}</b><div><span>{order.table} · {order.items.length} items</span><small>{order.guest}</small></div><em className={`status-${order.status}`}>{order.status}</em></div>
           ))}
         </div>
-        {role === "owner" && (
-          <StaffPanel state={state} perform={perform} busy={busy} />
+        {(role === "manager" || role === "owner") && (
+          <StaffPanel state={state} perform={perform} busy={busy} actorRole={role} />
         )}
         <div className="panel audit-panel">
           <header>
@@ -1227,27 +1233,53 @@ function StaffPanel({
   state,
   perform,
   busy,
+  actorRole,
 }: {
   state: AppState;
   perform: (action: DemoAction) => Promise<ActionResponse | null>;
   busy: boolean;
+  actorRole: "manager" | "owner";
 }) {
   const [form, setForm] = useState({
     name: "",
     email: "",
     role: "kitchen" as "kitchen" | "waiter" | "manager",
   });
+  const [roster, setRoster] = useState<StaffRosterMember[]>(
+    state.staff.map((staff) => ({ ...staff, actionable: staff.role !== "owner" })),
+  );
+  const loadRoster = useCallback(async () => {
+    const response = await fetch("/api/staff", { cache: "no-store" });
+    if (!response.ok) return;
+    const payload = await response.json() as { staff: StaffRosterMember[] };
+    setRoster(payload.staff);
+  }, []);
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => void loadRoster(), 0);
+    return () => window.clearTimeout(timer);
+  }, [loadRoster]);
+
+  const performAndRefresh = async (action: DemoAction) => {
+    const result = await perform(action);
+    if (result) await loadRoster();
+    return result;
+  };
+
   return (
     <div className="panel staff-panel">
       <header>
-        <div><p className="eyebrow">Owner control</p><h2>Staff roster</h2></div>
-        <span>{state.staff.filter((entry) => entry.status === "active").length} active</span>
+        <div>
+          <p className="eyebrow">{actorRole === "owner" ? "Owner control" : "Manager control"}</p>
+          <h2>Staff management</h2>
+        </div>
+        <span>{roster.filter((entry) => entry.status === "active").length} active</span>
       </header>
       <form
         className="staff-form"
         onSubmit={(event) => {
           event.preventDefault();
-          void perform({ type: "add_staff", ...form }).then((result) => {
+          void performAndRefresh({ type: "add_staff", ...form }).then((result) => {
             if (result) setForm({ name: "", email: "", role: "kitchen" });
           });
         }}
@@ -1285,23 +1317,47 @@ function StaffPanel({
           >
             <option value="kitchen">Kitchen</option>
             <option value="waiter">Waiter</option>
-            <option value="manager">Manager</option>
+            {actorRole === "owner" && <option value="manager">Manager</option>}
           </select>
         </label>
-        <button className="button primary" disabled={busy}>Add invitation</button>
+        <button className="button primary" disabled={busy}>Send invitation</button>
       </form>
       <div className="compact-list">
-        {state.staff.map((staff) => (
+        {roster.map((staff) => {
+          const canEdit =
+            staff.actionable !== false &&
+            staff.role !== "owner" &&
+            (actorRole === "owner" || staff.role === "kitchen" || staff.role === "waiter");
+          return (
           <div key={staff.id}>
             <span>
               <b>{staff.name}</b>
-              <small>{staff.email} · {staff.role} · {staff.status}</small>
+              <small>
+                {staff.email} · {staff.status === "invited" ? "invite pending" : staff.status}
+              </small>
             </span>
-            {staff.role !== "owner" && (
+            {canEdit ? (
+              <span className="inline-actions staff-actions">
+                <select
+                  aria-label={`Role for ${staff.name}`}
+                  disabled={busy}
+                  value={staff.role}
+                  onChange={(event) =>
+                    void performAndRefresh({
+                      type: "set_staff_role",
+                      staffId: staff.id,
+                      role: event.target.value as "kitchen" | "waiter" | "manager",
+                    })
+                  }
+                >
+                  <option value="kitchen">Kitchen</option>
+                  <option value="waiter">Waiter</option>
+                  {actorRole === "owner" && <option value="manager">Manager</option>}
+                </select>
               <button
                 disabled={busy}
                 onClick={() =>
-                  void perform({
+                  void performAndRefresh({
                     type: "set_staff_status",
                     staffId: staff.id,
                     status: staff.status === "active" ? "inactive" : "active",
@@ -1310,13 +1366,18 @@ function StaffPanel({
               >
                 {staff.status === "active" ? "Deactivate" : "Activate"}
               </button>
+              </span>
+            ) : (
+              <b className="role-chip">{staff.role}</b>
             )}
           </div>
-        ))}
+          );
+        })}
       </div>
       <small className="control-note">
-        No email is sent. Share the normal signup link; the exact invited email
-        must complete Supabase verification before its membership becomes usable.
+        New staff receive an email invitation. Their workspace activates only
+        after the exact invited address is verified. Managers can administer
+        kitchen and waiter access; only the owner can create managers.
       </small>
     </div>
   );

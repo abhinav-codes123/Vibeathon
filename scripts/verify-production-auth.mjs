@@ -75,7 +75,7 @@ assert(
 );
 checks.push("anonymous session isolation");
 
-for (const path of ["/kitchen", "/staff", "/dashboard", "/account", "/orders"]) {
+for (const path of ["/workspace", "/kitchen", "/staff", "/dashboard", "/account", "/orders"]) {
   const response = await request(path);
   assert(
     [303, 307, 308].includes(response.status),
@@ -109,6 +109,12 @@ assert(
 );
 checks.push("customer order ownership and checkout authentication");
 
+const anonymousStaff = await request("/api/staff");
+assert(
+  anonymousStaff.status === 401,
+  `Anonymous staff roster returned ${anonymousStaff.status}.`,
+);
+
 for (const view of ["kitchen", "waiter", "manager"]) {
   const response = await request(`/api/state?view=${view}`);
   assert(
@@ -118,7 +124,7 @@ for (const view of ["kitchen", "waiter", "manager"]) {
   const payload = await response.json();
   assert(payload.code === "AUTH_REQUIRED", `${view} state returned the wrong error code.`);
 }
-checks.push("protected staff APIs");
+checks.push("protected staff routes, roster, and operational APIs");
 
 const copilot = await request("/api/copilot", {
   method: "POST",

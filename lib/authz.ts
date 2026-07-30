@@ -22,3 +22,11 @@ export function resolveActionRole(role: Role | null, action: string): Role | nul
   if (can("customer", action)) return "customer";
   return null;
 }
+
+export function canManageStaffRole(
+  actorRole: Role | null,
+  targetRole: Exclude<Role, "customer">,
+) {
+  if (actorRole === "owner") return true;
+  return actorRole === "manager" && (targetRole === "kitchen" || targetRole === "waiter");
+}

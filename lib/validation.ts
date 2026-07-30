@@ -214,6 +214,13 @@ export function validateDemoAction(input: unknown): DemoAction {
       ]),
     };
   }
+  if (type === "set_staff_role") {
+    return {
+      type,
+      staffId: id(value.staffId, "Staff identifier"),
+      role: oneOf(value.role, "Staff role", ["kitchen", "waiter", "manager"] as const),
+    };
+  }
   if (type === "set_reservation_status") {
     return {
       type,

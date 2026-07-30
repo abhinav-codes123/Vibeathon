@@ -13,7 +13,11 @@ import {
   splitEqually,
 } from "../lib/domain.ts";
 import { seedState } from "../lib/seed.ts";
-import { canAccessView, resolveActionRole } from "../lib/authz.ts";
+import {
+  canAccessView,
+  canManageStaffRole,
+  resolveActionRole,
+} from "../lib/authz.ts";
 import { publicStateProjection } from "../lib/state-projection.ts";
 import { parseSupabaseAuthProviders } from "../lib/supabase/config.ts";
 import { ActionValidationError, validateDemoAction } from "../lib/validation.ts";
@@ -135,8 +139,12 @@ test("role permissions enforce server-side operational boundaries", () => {
   assert.equal(can("owner", "cancel_order"), true);
   assert.equal(can("customer", "mark_paid"), false);
   assert.equal(can("manager", "mark_paid"), true);
-  assert.equal(can("manager", "add_staff"), false);
+  assert.equal(can("manager", "add_staff"), true);
   assert.equal(can("owner", "add_staff"), true);
+  assert.equal(canManageStaffRole("manager", "kitchen"), true);
+  assert.equal(canManageStaffRole("manager", "waiter"), true);
+  assert.equal(canManageStaffRole("manager", "manager"), false);
+  assert.equal(canManageStaffRole("owner", "manager"), true);
 });
 
 test("payment is lifecycle checked and moves the table to cleaning", () => {
@@ -343,7 +351,7 @@ test("closing service is blocked until operational work is complete", () => {
   );
 });
 
-test("owner manages staff invitations without allowing owner deactivation", () => {
+test("staff invitations support controlled role changes without changing the owner", () => {
   const state = fresh();
   const result = applyAction(
     state,
@@ -364,6 +372,12 @@ test("owner manages staff invitations without allowing owner deactivation", () =
     "owner",
   );
   assert.equal(invited.status, "active");
+  applyAction(
+    state,
+    { type: "set_staff_role", staffId: invited.id, role: "waiter" },
+    "manager",
+  );
+  assert.equal(invited.role, "waiter");
   assert.throws(
     () =>
       applyAction(
@@ -372,6 +386,15 @@ test("owner manages staff invitations without allowing owner deactivation", () =
         "owner",
       ),
     /owner cannot be deactivated/,
+  );
+  assert.throws(
+    () =>
+      applyAction(
+        state,
+        { type: "set_staff_role", staffId: "staff-priya", role: "manager" },
+        "owner",
+      ),
+    /owner role cannot be changed/,
   );
 });
 

@@ -74,14 +74,26 @@ export async function POST(request: Request) {
       action.type === "place_order"
         ? { ...action, customerId: context.user!.id }
         : action;
-    await syncStaffAccess(context, authorizedAction);
+    const staffSync = await syncStaffAccess(
+      context,
+      authorizedAction,
+      new URL(request.url).origin,
+    );
     const result = await updateState(role, action.type, (state) =>
       applyAction(state, authorizedAction, role, context.user?.email || role),
     );
+    const staffMessage =
+      staffSync?.delivery === "sent"
+        ? "Invitation email sent. Access activates after the employee verifies the invited address."
+        : staffSync?.delivery === "existing"
+          ? "The verified account is linked. Its assigned workspace will open at the next sign-in."
+          : null;
     return Response.json(
       role === "customer"
         ? { ...result, state: publicStateProjection(result.state) }
-        : result,
+        : staffMessage
+          ? { ...result, message: staffMessage }
+          : result,
     );
   } catch (error) {
     const status = error instanceof ActionValidationError ? 400 : 409;

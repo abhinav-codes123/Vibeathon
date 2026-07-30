@@ -402,14 +402,33 @@ test("owner dashboard exposes daily controls, staff roster, and audit checkpoint
   await page.goto("/dashboard");
   await expect(page.getByRole("heading", { name: "Service control" })).toBeVisible();
   await expect(page.getByRole("heading", { name: "Current service summary" })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Staff roster" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Staff management" })).toBeVisible();
   await expect(page.getByRole("heading", { name: "Operational audit timeline" })).toBeVisible();
 
-  await page.getByLabel("Name").last().fill("Browser Chef");
-  await page.getByLabel("Email").fill("browser-chef@example.com");
-  await page.getByLabel("Role").selectOption("kitchen");
-  await page.getByRole("button", { name: "Add invitation" }).click();
+  await page.getByLabel("Name", { exact: true }).fill("Browser Chef");
+  await page.getByLabel("Email", { exact: true }).fill("browser-chef@example.com");
+  await page.locator(".staff-form select").selectOption("kitchen");
+  await page.getByRole("button", { name: "Send invitation" }).click();
   await expect(page.getByText("Browser Chef", { exact: true })).toBeVisible();
+  await context.close();
+});
+
+test("manager staff management exposes only kitchen and waiter assignment", async ({
+  browser,
+}) => {
+  const context = await browser.newContext({
+    extraHTTPHeaders: headersFor(bot("manager", "alpha")),
+  });
+  const page = await context.newPage();
+  await page.goto("/dashboard");
+  await expect(page.getByRole("heading", { name: "Staff management" })).toBeVisible();
+  const role = page.locator(".staff-form select");
+  await expect(role.locator("option")).toHaveCount(2);
+  await role.selectOption("waiter");
+  await page.getByLabel("Name", { exact: true }).fill("Manager Waiter");
+  await page.getByLabel("Email", { exact: true }).fill("manager-waiter@example.com");
+  await page.getByRole("button", { name: "Send invitation" }).click();
+  await expect(page.getByText("Manager Waiter", { exact: true })).toBeVisible();
   await context.close();
 });
 

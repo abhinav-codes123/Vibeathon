@@ -4,7 +4,7 @@ import { resetState } from "../../../../lib/store";
 export const dynamic = "force-dynamic";
 
 export async function POST() {
-  if (process.env.NODE_ENV === "production" || process.env.FLOWDINE_TEST_MODE !== "1") {
+  if (process.env.FLOWDINE_TEST_MODE !== "1") {
     return Response.json({ error: "Not found." }, { status: 404 });
   }
   const secret = process.env.FLOWDINE_TEST_SECRET;

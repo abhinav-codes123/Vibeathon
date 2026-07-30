@@ -430,6 +430,8 @@ img { display: block; max-width: 100%; }
 .compact-list > div > span:first-child { min-width: 0; }
 .compact-list b, .compact-list small { display: block; }.compact-list b { overflow: hidden; font-size: 9px; text-overflow: ellipsis; white-space: nowrap; }.compact-list small { margin-top: 3px; color: var(--muted); font-size: 7px; text-transform: capitalize; }
 .inline-actions { display: flex; gap: 5px; }
+.staff-actions { align-items: center; flex-shrink: 0; }
+.staff-actions select { min-height: 30px; padding: 6px 8px; border: 1px solid var(--line); border-radius: 8px; background: var(--paper); color: var(--ink); font-size: 8px; font-weight: 800; text-transform: capitalize; }
 .staff-form { display: grid; grid-template-columns: 1fr 1.2fr 0.8fr auto; gap: 8px; align-items: end; margin-bottom: 14px; padding: 12px; border-radius: 12px; background: #f2eee6; }
 .staff-form label { color: var(--muted); font-size: 7px; font-weight: 800; }
 .staff-form input, .staff-form select { display: block; width: 100%; min-height: 38px; margin-top: 5px; padding: 8px; border: 1px solid var(--line); border-radius: 8px; background: var(--paper); font-size: 9px; }

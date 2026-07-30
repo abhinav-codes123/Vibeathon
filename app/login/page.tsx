@@ -14,7 +14,7 @@ export default async function LoginPage({
   searchParams: Promise<{ next?: string; error?: string }>;
 }) {
   const params = await searchParams;
-  const next = safeReturnPath(params.next, "/account");
+  const next = safeReturnPath(params.next, "/workspace");
   const checkout = next.startsWith("/menu?checkout=1");
   return (
     <main className="auth-page">

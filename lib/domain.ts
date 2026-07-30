@@ -92,6 +92,9 @@ export function can(role: Role, action: string) {
       "set_accepting_orders",
       "set_restaurant_open",
       "set_reservation_status",
+      "add_staff",
+      "set_staff_status",
+      "set_staff_role",
     ],
     owner: [
       "advance_order",
@@ -106,6 +109,7 @@ export function can(role: Role, action: string) {
       "set_reservation_status",
       "add_staff",
       "set_staff_status",
+      "set_staff_role",
     ],
   };
   return permissions[role].includes(action);
@@ -637,6 +641,18 @@ function mutateState(
     };
   }
 
+  if (action.type === "set_staff_role") {
+    const staff = state.staff.find((entry) => entry.id === action.staffId);
+    if (!staff) throw new Error("Staff member not found.");
+    if (staff.role === "owner") throw new Error("The restaurant owner role cannot be changed.");
+    staff.role = action.role;
+    state.updatedAt = now;
+    return {
+      state,
+      message: `${staff.name} is now assigned to ${action.role}.`,
+    };
+  }
+
   if (action.type === "set_reservation_status") {
     const reservation = state.reservations.find(
       (entry) => entry.id === action.reservationId,
@@ -700,11 +716,15 @@ function auditTarget(action: DemoAction, result: ActionResult) {
           : result.state.reservations.at(-1)?.id ?? "reservation",
     };
   }
-  if (action.type === "add_staff" || action.type === "set_staff_status") {
+  if (
+    action.type === "add_staff" ||
+    action.type === "set_staff_status" ||
+    action.type === "set_staff_role"
+  ) {
     return {
       entityType: "staff" as const,
       entityId:
-        action.type === "set_staff_status"
+        action.type === "set_staff_status" || action.type === "set_staff_role"
           ? action.staffId
           : result.state.staff.at(-1)?.id ?? "staff",
     };

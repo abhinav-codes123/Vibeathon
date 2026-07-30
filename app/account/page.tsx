@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { getAuthContext } from "../../lib/auth";
+import { getAuthContext, workspacePathForRole } from "../../lib/auth";
 
 export const metadata: Metadata = { title: "Account access" };
 export const dynamic = "force-dynamic";
@@ -10,14 +10,7 @@ export default async function AccountPage() {
   const context = await getAuthContext();
   if (!context.user) redirect("/login?next=/account");
 
-  const workspaceHref =
-    context.role === "kitchen"
-      ? "/kitchen"
-      : context.role === "waiter"
-        ? "/staff"
-        : context.role === "manager" || context.role === "owner"
-          ? "/dashboard"
-          : "/menu";
+  const workspaceHref = workspacePathForRole(context.role);
 
   return (
     <main className="account-page">

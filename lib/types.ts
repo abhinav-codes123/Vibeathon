@@ -193,6 +193,11 @@ export type DemoAction =
   | { type: "set_restaurant_open"; open: boolean }
   | { type: "set_staff_status"; staffId: string; status: StaffMember["status"] }
   | {
+      type: "set_staff_role";
+      staffId: string;
+      role: Exclude<Role, "customer" | "owner">;
+    }
+  | {
       type: "add_staff";
       name: string;
       email: string;

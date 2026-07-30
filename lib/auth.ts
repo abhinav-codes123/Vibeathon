@@ -1,5 +1,6 @@
 import type { Role } from "./types";
 import { getSupabaseServerClient } from "./supabase/server";
+import { getSupabaseAdminClient } from "./supabase/admin";
 import { isSupabaseConfigured } from "./supabase/config";
 import { headers } from "next/headers";
 
@@ -19,6 +20,7 @@ export type AuthContext = {
 
 const roles: Role[] = ["customer", "kitchen", "waiter", "manager", "owner"];
 const testUserSuffixes = ["alpha", "beta"] as const;
+const pilotRestaurantId = "00000000-0000-4000-8000-000000000001";
 
 function validRole(value: unknown): value is Role {
   return typeof value === "string" && roles.includes(value as Role);
@@ -31,7 +33,7 @@ function validTestUser(value: string | null, role: Role) {
 }
 
 async function localTestContext(): Promise<AuthContext | null> {
-  if (process.env.NODE_ENV === "production" || process.env.FLOWDINE_TEST_MODE !== "1") {
+  if (process.env.FLOWDINE_TEST_MODE !== "1") {
     return null;
   }
   const secret = process.env.FLOWDINE_TEST_SECRET;
@@ -73,6 +75,33 @@ function restaurantFrom(row: MembershipRow) {
   return Array.isArray(row.restaurants) ? row.restaurants[0] : row.restaurants;
 }
 
+async function membershipFor(
+  supabase: NonNullable<Awaited<ReturnType<typeof getSupabaseServerClient>>>,
+  subject: string,
+) {
+  const { data } = await supabase
+    .from("restaurant_memberships")
+    .select("restaurant_id, role, restaurants(name, slug)")
+    .eq("profile_id", subject)
+    .eq("status", "active")
+    .limit(1)
+    .maybeSingle();
+  return data as MembershipRow | null;
+}
+
+async function bootstrapOwnerIfEligible(subject: string, email: string) {
+  const expectedEmail = process.env.FLOWDINE_BOOTSTRAP_OWNER_EMAIL?.trim().toLowerCase();
+  if (!expectedEmail || email.toLowerCase() !== expectedEmail) return false;
+
+  const admin = getSupabaseAdminClient();
+  if (!admin) return false;
+  const { data, error } = await admin.rpc("bootstrap_initial_owner", {
+    target_restaurant: pilotRestaurantId,
+    target_profile: subject,
+  });
+  return !error && data === true;
+}
+
 export async function getAuthContext(): Promise<AuthContext> {
   const testContext = await localTestContext();
   if (testContext) return testContext;
@@ -94,15 +123,10 @@ export async function getAuthContext(): Promise<AuthContext> {
 
   const email =
     typeof claimsData?.claims?.email === "string" ? claimsData.claims.email : "";
-  const { data } = await supabase
-    .from("restaurant_memberships")
-    .select("restaurant_id, role, restaurants(name, slug)")
-    .eq("profile_id", subject)
-    .eq("status", "active")
-    .limit(1)
-    .maybeSingle();
-
-  const row = data as MembershipRow | null;
+  let row = await membershipFor(supabase, subject);
+  if (!row && (await bootstrapOwnerIfEligible(subject, email))) {
+    row = await membershipFor(supabase, subject);
+  }
   const restaurant = row ? restaurantFrom(row) : null;
   const membership =
     row && restaurant && validRole(row.role)
@@ -125,4 +149,11 @@ export async function getAuthContext(): Promise<AuthContext> {
 export function safeReturnPath(value: string | null | undefined, fallback = "/") {
   if (!value || !value.startsWith("/") || value.startsWith("//")) return fallback;
   return value;
+}
+
+export function workspacePathForRole(role: Role | null) {
+  if (role === "kitchen") return "/kitchen";
+  if (role === "waiter") return "/staff";
+  if (role === "manager" || role === "owner") return "/dashboard";
+  return "/menu";
 }

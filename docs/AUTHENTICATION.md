@@ -71,10 +71,10 @@ NEXT_PUBLIC_SITE_URL=https://flowdine-ai.abhinavchaudhary484.chatgpt.site
 Add the same values to the Sites production runtime before deploying. The
 current sign-in and membership checks do not require a service-role key.
 
-## 5. Assign the owner, judge, or staff accounts
+## 5. Bootstrap the owner account
 
-Create and verify the account first, then assign its membership in the Supabase
-SQL editor:
+Create and verify the owner account first, then bootstrap its membership once
+in the Supabase SQL editor:
 
 ```sql
 insert into public.restaurant_memberships (restaurant_id, profile_id, role)
@@ -89,11 +89,28 @@ on conflict (restaurant_id, profile_id)
 do update set role = excluded.role;
 ```
 
-Change the email and role to create `kitchen`, `waiter`, or `manager` accounts.
-Only trusted project administrators should run this statement; there is no
-public first-user or role-claim endpoint.
+Only the initial owner bootstrap should use SQL. There is deliberately no
+public first-user or browser-controlled role-claim endpoint.
 
-## 6. Required verification
+## 6. Invite restaurant staff
+
+After the owner signs in:
+
+1. Open `/dashboard`.
+2. Find **Staff roster**.
+3. Enter the employee name, exact email, and kitchen, waiter, or manager role.
+4. Select **Add invitation**.
+5. Share the normal FlowDine signup link with that employee. The pilot does not
+   send invitation email.
+6. The employee must register or sign in with the invited email and complete
+   email verification or Google OAuth.
+
+The `owner_manage_staff` database function verifies the caller is an active
+owner. If the account already exists, its membership is updated immediately.
+If it does not exist, the profile trigger claims the invitation only when the
+matching email completes authentication.
+
+## 7. Required verification
 
 Test all of the following before submission:
 
@@ -104,6 +121,10 @@ Test all of the following before submission:
 - Waiter accounts can manage tables and service requests but cannot open the
   manager dashboard.
 - Manager and owner accounts can open the command center.
+- Managers cannot invite or deactivate staff.
+- An owner invitation grants the selected role only to the matching verified
+  email.
+- Deactivating staff removes operational access after the next session refresh.
 - Removing a membership removes access after session refresh.
 - Editing or adding `x-demo-role` has no effect.
 - Email confirmation, Google sign-in, sign-out, and password recovery all work

@@ -10,11 +10,13 @@ Point to the live service card: tables, tickets, queue, and ingredient risk.
 
 Open **Guest**. Filter or search the menu. Point out recipe-derived portions and allergen/preparation information. Add **Ember Paneer Tikka**, open the cart, enter a note, and place the order.
 
-Explain that the server rechecks stock and records the movement before confirming.
+Explain that the server rechecks stock, reserves ingredients, records the
+movement, and creates a received ticket awaiting kitchen acceptance.
 
 ## 1:45–2:35 — Kitchen
 
-Switch to **Kitchen**. Locate the newest SC ticket. Show the age, promised time, notes, and allergens. Advance it to preparing.
+Switch to **Kitchen**. Locate the newest SC ticket. Show the age, promised time,
+notes, and allergens. Demonstrate received → accepted → preparing → ready.
 
 Explain that invalid or duplicate transitions are rejected.
 
@@ -24,12 +26,17 @@ Switch to **Waiter**. Resolve one guest request or run a ready dish. Advance a t
 
 ## 3:15–4:25 — Manager
 
-Switch to **Manager**. Show revenue rhythm, occupancy, ticket load, recipe-derived stock risks, forecast method, and the live order.
+Switch to **Manager**. Show service controls, factual service summary, menu
+overrides, reservations, revenue rhythm, stock risks, staff roster, and the
+actor-attributed audit timeline.
 
 Ask: “What should I prioritize in the next 15 minutes?” State clearly whether the badge says **Gemini** or **Local engine**.
 
 ## 4:25–5:00 — Close
 
-“The AI recommends; deterministic rules remain authoritative. The public demo persists in D1 with optimistic concurrency and audit events, and a normalized Supabase/RLS migration shows the scale-up path.”
+“The AI recommends; deterministic rules remain authoritative. Saffron Circuit
+persists in normalized D1 tables with atomic guarded writes, while Supabase
+provides verified identity and owner-managed staff access.”
 
-Mention the honest boundaries: demo roles, simulated payments, polling realtime, and optional AI credentials.
+Mention the honest boundaries: one restaurant, manually recorded payments,
+four-second polling, no invitation email provider, and optional AI credentials.

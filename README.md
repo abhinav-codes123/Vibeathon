@@ -6,6 +6,10 @@ FlowDine AI is a live restaurant digital twin for the fictional flagship restaur
 
 [**Open the live public demo →**](https://flowdine-ai.abhinavchaudhary484.chatgpt.site)
 
+> The public URL currently serves the stable hackathon release. The normalized
+> single-restaurant pilot work on `codex/single-restaurant-pilot` is intentionally
+> not promoted until its D1 and Supabase migrations are applied and live-verified.
+
 ![FlowDine AI social card](public/og.png)
 
 ## Hackathon submission
@@ -25,16 +29,17 @@ The central proof is an end-to-end order:
 
 1. The menu calculates portions from the limiting recipe ingredient.
 2. A guest places a dine-in order with notes and allergen context.
-3. The server validates the role and available stock, reserves ingredients, records inventory movements, and creates a kitchen ticket.
-4. Kitchen and waiter roles advance the same order state.
+3. The server validates available stock, reserves ingredients, records inventory movements, and creates a received kitchen ticket.
+4. Kitchen explicitly accepts, starts, and completes the ticket before the waiter can serve it.
 5. Manager metrics, forecasts, risks, and the copilot update from that state.
 
 ## Product surfaces
 
 - **Guest:** live menu, search and filters, stock-aware availability, cart, preparation promise, reservations, queue, and service entry points.
-- **Kitchen:** three-stage KDS, ticket age, lateness, allergens, notes, workload, and one-action transitions.
+- **Kitchen:** received, accepted, preparing, and ready checkpoints with ticket age, lateness, allergens, notes, workload, and role-owned transitions.
 - **Waiter:** prioritized ready dishes and guest requests plus a live table map.
-- **Manager:** revenue rhythm, digital twin metrics, stockout watch, explainable forecast, service flow, restocking, export, and an operations copilot.
+- **Manager:** opening/intake controls, reservations, menu availability, revenue rhythm, factual service summary, stockout watch, audit history, export, and an operations copilot.
+- **Owner:** manager capabilities plus a verified-email staff invitation and activation roster.
 - **AI workflow:** optional Gemini 3.6 Flash advisory answers via REST. With no key, the same UI returns deterministic evidence-based recommendations.
 
 ## Architecture
@@ -47,7 +52,7 @@ flowchart LR
   M["Manager command center"] --> API
   API --> A["Supabase Auth + restaurant membership"]
   A --> D["Pure domain engine"]
-  D --> DB["Cloudflare D1 shared state + audit log"]
+  D --> DB["Cloudflare D1 normalized operations + audit timeline"]
   API --> AI["Optional Gemini REST adapter"]
   AI --> F["Deterministic fallback"]
   DB --> P["4-second client synchronization"]
@@ -63,7 +68,7 @@ See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) and [docs/DATABASE.md](docs/DAT
 
 - Next.js 16 App Router, React 19, strict TypeScript
 - Vinext/Vite deployment adapter for Cloudflare
-- Cloudflare D1 for the hosted shared demo; optimistic versioned writes and audit events
+- Cloudflare D1 normalized operational tables with atomic version-token batches
 - Drizzle schema/migrations for D1
 - Supabase email/password and Google OAuth with cookie-backed SSR sessions
 - PostgreSQL restaurant memberships for server-resolved staff authorization
@@ -137,8 +142,6 @@ cp .env.example .env.local
 | `NEXT_PUBLIC_SITE_URL` | No | Absolute metadata URL for local/custom-domain builds. |
 | `NEXT_PUBLIC_SUPABASE_URL` | Staff authentication | Supabase project URL. |
 | `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Staff authentication | Browser-safe Supabase publishable key. |
-| `SUPABASE_SERVICE_ROLE_KEY` | Future owner invites | Server-only administrative key. Never expose to the browser. |
-
 The public guest experience still works without an AI key. Verified staff access
 requires a configured Supabase project. D1 is injected as the `DB` binding from
 `.openai/hosting.json`.
@@ -151,9 +154,12 @@ Hosted demo:
 pnpm db:generate
 ```
 
-- `drizzle/0000_flowdine_state.sql` creates the D1 state and audit tables.
-- The app also creates these two tables safely on first run and seeds Saffron Circuit once.
-- Writes use a compare-and-swap version to avoid silently overwriting concurrent updates.
+- `drizzle/0000_flowdine_state.sql` preserves the legacy snapshot for one-time migration.
+- `drizzle/0001_normalized_operations.sql` creates separate restaurant, menu,
+  recipe, inventory, order, timeline, table, queue, reservation, request, staff,
+  movement, and audit tables.
+- First run imports an existing snapshot or seeds Saffron Circuit. Writes use one
+  guarded D1 batch so related operational records change atomically.
 
 Supabase authentication and production-schema migrations:
 
@@ -168,6 +174,10 @@ supabase db push
 membership read policies, and the seeded restaurant. See
 [docs/AUTHENTICATION.md](docs/AUTHENTICATION.md) for provider,
 redirect, role assignment, and deployment setup.
+
+`supabase/migrations/202607300001_single_restaurant_staff.sql` adds owner-managed
+staff invitations. An invited email receives its assigned role only after that
+same email completes Supabase verification.
 
 ## Quality commands
 
@@ -201,7 +211,7 @@ verified membership on the server.
 
 1. Open the landing page and explain the live digital twin.
 2. Enter **Guest**, add a limited-stock dish, and place an order.
-3. Switch to **Kitchen** and advance the new ticket.
+3. Switch to **Kitchen** and demonstrate receive → accept → prepare → ready.
 4. Switch to **Waiter**, resolve a service request or advance a ready dish.
 5. Open **Manager**, show the changed metrics and recipe-derived stock risks.
 6. Ask the operations copilot what to prioritize. It will use Gemini when configured or the deterministic local engine otherwise.
@@ -219,32 +229,35 @@ For a judge-ready script, see [docs/DEMO_SCRIPT.md](docs/DEMO_SCRIPT.md).
 - Gemini receives only aggregated operational context, not phone numbers or guest identities.
 - Secrets remain server-side and `.env*` is ignored except `.env.example`.
 - Security headers disable MIME sniffing, unnecessary device permissions, and cross-origin referrer leakage.
-- D1 audit events record mutation role, action, and timestamp.
+- D1 audit events record the actor, role, action, affected entity, summary, and timestamp.
 
-**Important boundary:** authentication is real, but the hackathon operational
-state is still one D1 restaurant document. Complete the normalized PostgreSQL
-runtime migration and exhaustive tenant-isolation tests before onboarding
-independent restaurants.
+**Important boundary:** authentication and the single-restaurant operational
+database are real, but this branch is intentionally optimized for Saffron
+Circuit. It is not a multi-restaurant SaaS and payments remain manually
+recorded.
 
 ## Scalability path
 
-The current state-document model makes the shared demo easy to understand and deploy. At higher write volume, move to the normalized PostgreSQL schema, transactionally lock inventory rows, stream domain events, use a proper realtime channel, cache menu reads, queue kitchen work, and partition analytics from operational writes.
+The normalized D1 model is appropriate for this controlled single-location
+pilot. At higher write volume or for multiple locations, move operations to the
+normalized PostgreSQL schema, lock inventory rows transactionally, stream
+domain events, use realtime delivery, cache menu reads, and partition analytics
+from operational writes.
 
 ## Known limitations
 
-- Staff assignment currently uses explicit administrator-created membership rows;
-  a full owner invitation console is not yet included.
+- Owner invitations pre-authorize a verified email; FlowDine does not send an
+  invitation email, so the owner must share the normal signup link.
 - Payments, notifications, receipts, and exports are simulated/in-browser.
 - Synchronization uses four-second polling rather than WebSockets.
 - The seed has 18 polished dishes rather than a full 25–35 item catalogue.
 - Gemini was implemented as an optional server adapter; no live model call occurs without a user-supplied key.
-- Supabase is the live identity/membership authority, while operational restaurant
-  data remains in the shared D1 demo state.
+- Supabase is the live identity/membership authority, while Saffron Circuit
+  operational records use normalized D1 tables.
 
 ## Roadmap
 
-- Owner-managed staff invitations and membership lifecycle
-- Normalized transactional inventory with batch expiry and waste capture
+- Inventory batch expiry, receiving, and waste capture
 - Realtime events and offline-resilient kitchen/waiter clients
 - Payment and notification providers
 - Multi-location owner analytics and menu rollouts

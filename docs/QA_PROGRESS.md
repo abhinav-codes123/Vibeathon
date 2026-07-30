@@ -15,6 +15,16 @@
 - Local Supabase container runtime: unavailable because Docker is not installed.
 - Supabase seed: configured but missing at baseline.
 
+## Single-restaurant pilot branch
+
+- Branch: `codex/single-restaurant-pilot`
+- Operational store: normalized D1 entity tables with guarded atomic batches.
+- Identity: Supabase verified sessions plus active memberships and owner-managed
+  invitation RPC.
+- Order flow: received → accepted → preparing → ready → served → completed.
+- Latest local verification: 24/24 Node tests and 36/36 desktop/mobile
+  Playwright cases passed; lint and typecheck passed.
+
 ## Execution log
 
 | Phase | Status | Evidence |

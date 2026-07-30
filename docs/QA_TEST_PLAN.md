@@ -15,8 +15,8 @@ analytics, resilience, accessibility, security, migrations, and deployment.
 | Hosted Supabase project | Identity configuration, RLS, and migration verification | Non-destructive inspection only |
 | Sites production deployment | Production routing, headers, provider status, and smoke tests | No destructive state reset |
 
-The hosted operational state is a shared D1 demo document. It is not treated as
-a safe multi-tenant test database.
+The branch operational state uses normalized D1 tables for one restaurant. It
+is not treated as a multi-tenant test database.
 
 ## Feature inventory
 
@@ -25,14 +25,15 @@ a safe multi-tenant test database.
 | Public menu, search, dietary/category filters | Implemented | Browser and accessibility tests |
 | Cart and dine-in order | Implemented for same-device guest | Local persistence; server prices and stock authoritative |
 | Kitchen, waiter, manager dashboards | Implemented for one restaurant | Supabase membership guard; automated role seam local-only |
-| Queue and reservation | Implemented basic flow | Queue receipt ownership; no reservation capacity allocator |
+| Queue and reservation | Implemented pilot flow | Queue receipt ownership; host seating/cancellation checkpoints; no capacity allocator |
 | Table and service lifecycle | Implemented basic flow | Transition graph and duplicate request guards |
-| Inventory and recipe availability | Implemented in demo store | Atomic final-portion test; normalized Supabase runtime not wired |
+| Inventory and recipe availability | Implemented in normalized D1 | Atomic final-portion test and movement ledger |
 | Simulated billing | Implemented demo-only | No real gateway, refunds, invoice/tax compliance, or payment webhooks |
 | Analytics and AI copilot | Implemented demo aggregates/fallback | Not tenant production data; Gemini optional |
 | Customer history, private tracking, preferences | Not implemented | No order/reservation/bill ownership binding |
 | Notifications | Schema/roadmap only | No delivery pipeline or user-facing notification center |
-| Multi-restaurant isolation | Reference schema only | Operational D1 state remains one Saffron Circuit document |
+| Staff invitation lifecycle | Implemented | Owner-only RPC; verified-email membership claim; production apply pending |
+| Multi-restaurant isolation | Out of scope | Operational D1 records intentionally belong to Saffron Circuit |
 
 ## Automated suites
 
@@ -69,11 +70,12 @@ The executable scenario covers the implemented connected slice:
 3. Add normal and limited dishes.
 4. Change quantities and enter a table and preparation note.
 5. Place the order and verify the API/state/inventory result.
-6. Open kitchen context, advance to preparing and ready.
+6. Open kitchen context, accept, start, and mark the ticket ready.
 7. Open waiter context, mark served and request/resolve service.
 8. Open manager context, verify inventory and analytics changes.
-9. Complete a simulated manager-authorized payment.
-10. Sign out or remove the test role and confirm protected access denial.
+9. Complete a manager-authorized manual payment.
+10. Exercise owner staff invitation, intake pause, reservation, and audit checks.
+11. Sign out or remove the test role and confirm protected access denial.
 
 Account verification, real Google OAuth, and inbox-driven password reset require
 external account activation and are separately gated.

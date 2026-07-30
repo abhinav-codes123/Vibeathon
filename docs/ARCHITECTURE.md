@@ -18,7 +18,7 @@ flowchart TB
   Manager --> Copilot["POST /api/copilot"]
   ActionAPI --> Permission["Permission matrix + input checks"]
   StateAPI & Permission --> Domain["Pure domain engine"]
-  Domain --> Store["Versioned state store"]
+  Domain --> Store["Normalized operational repository"]
   Store --> D1[("Cloudflare D1")]
   D1 --> Audit[("Audit log")]
   Copilot --> Context["Aggregated operational context"]
@@ -32,11 +32,13 @@ The operational UI reads one authoritative restaurant state every four seconds. 
 
 ```mermaid
 stateDiagram-v2
-  [*] --> confirmed: Guest places order
+  [*] --> received: Guest places order
+  received --> confirmed: Kitchen accepts
   confirmed --> preparing: Kitchen starts
   preparing --> ready: Kitchen completes
   ready --> served: Waiter runs dish
   served --> completed: Service closes
+  received --> cancelled: Authorized cancellation
   confirmed --> cancelled: Authorized cancellation
   preparing --> cancelled: Authorized cancellation
   cancelled --> [*]: Ingredients restored
@@ -69,21 +71,24 @@ The menu does not use a hand-maintained availability flag. Manual pausing is sup
 | Place order, reserve, join queue, request service | ✓ |  |  | ✓ |
 | Advance kitchen stages |  | ✓ | Limited | ✓ |
 | Resolve service requests and tables |  |  | ✓ | ✓ |
-| Restock, pause items, export, manage all operations |  |  |  | ✓ |
+| Restock, pause items, reservations, opening controls |  |  |  | ✓ |
+| Invite or deactivate staff |  |  |  | Owner only |
 
 Guest workflows remain public. Staff users sign in with verified Supabase
 email/password or Google OAuth. Direct staff routes, staff state reads, mutations,
 and the manager copilot resolve the role from `restaurant_memberships` on the
 server. Browser-supplied roles are ignored.
 
-The current deployment still has one operational D1 restaurant state. Supabase
-provides identity and membership authorization for the hackathon; complete
-multi-restaurant isolation requires moving operational reads and writes to the
-normalized PostgreSQL schema.
+The pilot intentionally supports one Saffron Circuit location. Supabase
+provides verified identity, membership authorization, and owner-managed email
+invitations. D1 stores normalized operational records for that restaurant.
 
 ## Concurrency
 
-D1 stores a version integer alongside the state document. Each mutation reads the current version and updates only when that version still matches. A collision retries up to three times, then returns a safe retry message.
+D1 stores a version and short-lived write token on the restaurant operations
+row. Each mutation updates all affected normalized tables in one guarded batch.
+A version collision writes no entity rows, retries up to three times, then
+returns a safe retry message.
 
 ## AI boundary
 
